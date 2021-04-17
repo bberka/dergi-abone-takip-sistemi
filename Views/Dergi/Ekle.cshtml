@@ -1,0 +1,32 @@
+﻿@model DergiAboneProje.Models.Dergiler
+@{
+    ViewData["Title"] = "Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+<div class="eklediv">
+
+    <form class="form-group" method="post">
+        <h2>Dergi Ekle</h2>
+        <div class="txtbox">
+            <h4>Dergi Ad</h4>
+            @Html.TextBoxFor(x => x.DergiAD, new { @class = "form-control" })
+        </div>
+        <br />
+        <div class="txtbox">
+            <h4>Kategori ID</h4>
+            @Html.TextBoxFor(x => x.KategoriID, new { @class = "form-control" })
+        </div>
+
+        <br />
+
+        <button class="btn btn-info">Dergi Ekle</button>
+        @*<script>
+            function checkblack() {
+                if (document.getElementById('ekle').value == "") {
+                    alert('please');
+                }
+            }
+        </script>*@
+    </form>
+</div>

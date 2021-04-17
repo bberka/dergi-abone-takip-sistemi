@@ -1,0 +1,39 @@
+﻿@model DergiAboneProje.Models.Abonelikler
+@{
+    ViewData["Title"] = "Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+<div class="eklediv">
+    <form class="form-group" method="post">
+        <h2>Yeni Abonelik</h2>
+        <div class="txtbox">
+            <h4>Kayıt Tarihi</h4>
+            @Html.TextBoxFor(x => x.KayıtTarihi, new { @class = "form-control" })
+        </div>
+        <br />
+        <div class="txtbox">
+            <h4>Kayıt Süresi (ay)</h4>
+            @Html.TextBoxFor(x => x.KayıtSuresi, new { @class = "form-control" })
+        </div>
+        <br />
+        <div class="txtbox">
+            <h4>Uye ID</h4>
+            @Html.TextBoxFor(x => x.UyeID, new { @class = "form-control" })
+        </div>
+        <br />
+        <div class="txtbox">
+            <h4>Dergi ID</h4>
+            @Html.TextBoxFor(x => x.DergiID, new { @class = "form-control" })
+        </div>
+        <br />
+        <button class="btn btn-info">Kategori Ekle</button>
+        @*<script>
+            function checkblack() {
+                if (document.getElementById('ekle').value == "") {
+                    alert('please');
+                }
+            }
+        </script>*@
+    </form>
+</div>

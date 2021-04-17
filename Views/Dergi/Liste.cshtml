@@ -1,0 +1,59 @@
+﻿@using DergiAboneProje.Models
+@model List<Dergiler>
+
+@{
+    ViewData["Title"] = "Liste";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+
+
+
+
+<div>
+
+    <script>
+        $(document).ready(function () {
+            $('#DergiTable').DataTable();
+        });
+    </script>
+
+    <h2>Dergiler</h2>
+    <br />
+
+    <table id="DergiTable" class="row-border stripe hover table-bordered">
+        <thead>
+            <tr>
+                <th>Dergi ID</th>
+                <th>Dergi Adı</th>
+                <th>Tarih</th>
+                <th>Kategori ID</th>
+                <th>Düzenle</th>
+                <th>Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model)
+            {
+            <tr>
+                <td>@x.DergiID</td>
+                <td>@x.DergiAD</td>
+                <td>@x.DergiTARIH</td>
+                <td>@x.KategoriID</td>
+                <td><a href="/Dergi/DergiDuzenle/@x.DergiID" class="btn btn-success">Düzenle</a></td>
+                <td><a href="/Dergi/Sil/@x.DergiID" class="btn btn-danger">Sil</a></td>           
+            </tr>
+            }
+        <tbody>
+
+    </table>
+    <br />
+    <a href="/Dergi/Ekle/" class="btn btn-success">Yeni Dergi Ekle</a>
+
+</div>
+
+
+
+

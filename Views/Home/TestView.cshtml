@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "TestView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/login.css" rel="stylesheet" />
+<body>
+    <div class="content">
+        <!--Echo out errors here. See example-->
+        <!--<p class=error>Error, wrong username or password used. Please, try again.-->
+        <form>
+            <div class="mat-in">
+                <input type="text" name="username" value="" required>
+                <span class="bar"></span>
+                <label>Username</label>
+            </div>
+            <div class="mat-in">
+                <input type="password" name="password" value="" required>
+                <span class="bar"></span>
+                <label>Password</label>
+            </div>
+            <button type="submit" name="submit" id="login">Login</button>
+        </form>
+    </div>
+
+</body>

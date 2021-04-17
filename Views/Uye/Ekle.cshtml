@@ -1,0 +1,43 @@
+﻿@model DergiAboneProje.Models.Uyeler
+@{
+    ViewData["Title"] = "Üyelik";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+<div class="eklediv">
+
+
+    <form class="form-group" method="post">
+        <h2>Üye Ekle</h2>
+        <div class="txtbox">
+            <h4>Üye Adı</h4>
+            @Html.TextBoxFor(x => x.UyeAD, new { @class = "form-control" })
+        </div>
+        <br />
+        <div class="txtbox">
+            <h4>Email</h4>
+            @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+        </div>
+        <br />
+        <div class="txtbox">
+            <h4>Telno</h4>
+            @Html.TextBoxFor(x => x.TelNo, new { @class = "form-control" })
+        </div>
+        <br />
+        <div class="txtbox">
+            <h4>Tarih</h4>
+            @Html.TextBoxFor(x => x.Tarih, new { @class = "form-control" })
+        </div>
+        <br />
+
+        <button class="btn btn-info">Üye Ekle</button>
+        @*<script>
+            function checkblack() {
+                if (document.getElementById('ekle').value == "") {
+                    alert('please');
+                }
+            }
+        </script>*@
+    </form>
+
+</div>

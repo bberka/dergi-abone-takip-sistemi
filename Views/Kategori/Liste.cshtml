@@ -1,0 +1,47 @@
+﻿@using DergiAboneProje.Models
+@model List<Kategoriler>
+@{
+    ViewData["Title"] = "Kategoriler";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div>
+
+    <h2>Kategoriler</h2>
+    <br />
+    <script>
+        $(document).ready(function () {
+            $('#KategoriTable').DataTable();
+        });
+    </script>
+
+    <div>
+        <table id="KategoriTable" class="row-border stripe hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Kategori ID</th>
+                    <th>Kategori Adı</th>
+                    <th>Sil</th>
+                </tr>
+            </thead>
+           
+                @foreach (var x in Model)
+                {
+                    <tr>
+                        <td>@x.KategoriID</td>
+                        <td>@x.KategoriAD</td>
+                        <td><a href="/Kategori/Sil/@x.KategoriID" class="btn btn-danger">Sil</a></td>                        
+                    </tr>
+                }
+            
+        </table>
+    </div>
+   
+
+   <br />
+    <a href="/Kategori/Ekle/" class="btn btn-success">Yeni Kategori Ekle</a>
+
+</div>
+
+

@@ -1,0 +1,33 @@
+﻿@model DergiAboneProje.Models.Kategoriler
+@{
+    ViewData["Title"] = "YeniKategori";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+<div class="eklediv">
+
+
+    <form class="form-group" method="post">
+        <h2>Kategori Ekle</h2>
+
+        <div class="txtbox">
+            @Html.TextBoxFor(x => x.KategoriAD, new { @class = "form-control" })
+        </div>
+
+        <br />
+
+        <button class="btn btn-info">Kategori Ekle</button>
+
+    </form>
+</div>
+@*<script>
+    var KategoriFunc = function () {
+        var KategoriAD = $('#KategoriAD').val();
+
+        if (KategoriAD == "" || KategoriAD == undefined) {
+            alert("Kategori ad alanı boş bırakılamaz.")
+            return false;
+        }
+    }
+
+</script>*@

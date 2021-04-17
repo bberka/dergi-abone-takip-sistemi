@@ -1,0 +1,51 @@
+﻿@using DergiAboneProje.Models
+@model List<Abonelikler>
+@{
+    ViewData["Title"] = "AboneOlanlar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div>
+
+    <h2>Abonelikler</h2>
+    <br />
+    <script>
+        $(document).ready(function () {
+            $('#AbonelikTable').DataTable();
+        });
+    </script>
+
+    <div>
+        <table id="AbonelikTable" class="row-border stripe hover table-bordered">
+            <thead>
+                <tr>
+                    <th>KayıtTarihi</th>
+                    <th>Kayıt Süresi</th>
+                    <th>Üye ID</th>
+                    <th>Dergi ID</th>
+                    <th>İptal</th>
+                </tr>
+            </thead>
+
+            @foreach (var x in Model)
+            {
+                <tr>
+                    <td>@x.KayıtTarihi</td>
+                    <td>@x.KayıtSuresi</td>
+                    <td>@x.UyeID</td>
+                    <td>@x.DergiID</td>
+                    <td><a href="/Abonelik/Iptal/@x.KayıtID" class="btn btn-danger">Sil</a></td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+
+    <br />
+    <a href="/Abonelik/Ekle/" class="btn btn-success">Yeni Abonelik Ekle</a>
+
+</div>
+
+
