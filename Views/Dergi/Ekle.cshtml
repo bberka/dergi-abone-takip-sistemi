@@ -1,32 +1,39 @@
 ﻿@model DergiAboneProje.Models.Dergiler
 @{
-    ViewData["Title"] = "Ekle";
+    ViewData["Title"] = "Dergi Ekle";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
 }
 <div class="eklediv">
 
     <form class="form-group" method="post">
-        <h2>Dergi Ekle</h2>
+        <h2 class="my-header">Dergi Ekle</h2>
+        <br />
         <div class="txtbox">
             <h4>Dergi Ad</h4>
             @Html.TextBoxFor(x => x.DergiAD, new { @class = "form-control" })
         </div>
         <br />
         <div class="txtbox">
-            <h4>Kategori ID</h4>
-            @Html.TextBoxFor(x => x.KategoriID, new { @class = "form-control" })
+            <h4>Kategori Adı</h4>
+            @Html.DropDownListFor(x => x.Kategoriler.KategoriID, (List<SelectListItem>)ViewBag.dgr, new { @class = "form-control"})
         </div>
 
         <br />
 
-        <button class="btn btn-info">Dergi Ekle</button>
-        @*<script>
-            function checkblack() {
-                if (document.getElementById('ekle').value == "") {
-                    alert('please');
-                }
-            }
-        </script>*@
+        <button class="btn btn-info" onclick="BlankCheck();" type="submit">Dergi Ekle</button>
+
     </form>
 </div>
+
+<script>
+    var BlankCheck = function () {
+        var DergiAD = $('#DergiAD').val();
+
+        if (DergiAD == "" || DergiAD == undefined) {
+            swal("Uyarı", "Dergi adı boş bırakılamaz!", "error")
+            return false;
+        }
+    }
+
+</script>

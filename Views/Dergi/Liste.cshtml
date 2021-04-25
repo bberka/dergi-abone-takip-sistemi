@@ -2,15 +2,9 @@
 @model List<Dergiler>
 
 @{
-    ViewData["Title"] = "Liste";
+    ViewData["Title"] = "Dergi Liste";ViewData["Title"] = "Dergi Liste";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
-
-
-
-
-
 
 <div>
 
@@ -20,7 +14,7 @@
         });
     </script>
 
-    <h2>Dergiler</h2>
+    <h2 class="my-header">Dergiler</h2>
     <br />
 
     <table id="DergiTable" class="row-border stripe hover table-bordered">
@@ -28,10 +22,11 @@
             <tr>
                 <th>Dergi ID</th>
                 <th>Dergi Adı</th>
-                <th>Tarih</th>
-                <th>Kategori ID</th>
+                <th>Kategori Adı</th>
+                <th>Dergi Kayıt Tarih</th>
                 <th>Düzenle</th>
                 <th>Sil</th>
+                <th>Detaylar</th>
             </tr>
         </thead>
         <tbody>
@@ -40,10 +35,11 @@
             <tr>
                 <td>@x.DergiID</td>
                 <td>@x.DergiAD</td>
-                <td>@x.DergiTARIH</td>
-                <td>@x.KategoriID</td>
-                <td><a href="/Dergi/DergiDuzenle/@x.DergiID" class="btn btn-success">Düzenle</a></td>
-                <td><a href="/Dergi/Sil/@x.DergiID" class="btn btn-danger">Sil</a></td>           
+                <td>@x.Kategoriler.KategoriAD</td>
+                <td>@x.DergiTARIH.ToShortDateString()</td>
+                <td><a href="/Dergi/Duzenle/@x.DergiID" class="btn btn-success">Düzenle</a></td>
+                <td><a href="/Dergi/Sil/@x.DergiID" class="btn btn-danger">Sil</a></td>
+                <td><a href="/Dergi/Detay/@x.DergiID" class="btn btn-warning">Detaylar</a></td>
             </tr>
             }
         <tbody>

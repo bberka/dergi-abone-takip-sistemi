@@ -3,25 +3,31 @@
 
 @{
     ViewData["Title"] = "Giriş Yap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
+
+<link href="~/css/login.css" rel="stylesheet" />
+
+
+<div class="container logindiv">
+    <br />
+    <h2>@ViewData["Title"]</h2>
+    <div class="eklediv">
         <section>
-            <form id="account" method="post">
-               
+            <form id="account" method="post" class="form-group">
+
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    @*<label asp-for="Input.Email"></label>*@
+                    <input asp-for="Input.Email" class="form-control" placeholder="Email" autofocus="" />
+                    @*<span asp-validation-for="Input.Email" class="text-danger"></span>*@
                 </div>
                 <div class="form-group">
-                    <label asp-for="Input.Password">Şifre</label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    @*<label asp-for="Input.Password">Şifre</label>*@
+                    <input asp-for="Input.Password" class="form-control" placeholder="Şifre" />
+                   @* <span asp-validation-for="Input.Password" class="text-danger"></span>*@
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
@@ -32,22 +38,21 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Giriş Yap </button>
+                    <button type="submit" class="btn btn-primary border-0 btn-outline-info" style="width:100%; background-color:rgb(0, 150, 136)">Giriş Yap </button>
                 </div>
                 @*<div class="form-group">
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                </div>*@
+                        <p>
+                            <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                        </p>
+                        <p>
+                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                        </p>
+                    </div>*@
             </form>
         </section>
     </div>
-    
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }

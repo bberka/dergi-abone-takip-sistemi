@@ -26,7 +26,7 @@ namespace DAboneTakip.Migrations.DergiDb
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("DergiID")
+                    b.Property<int?>("DergiID")
                         .HasColumnType("int");
 
                     b.Property<int>("KayıtSuresi")
@@ -35,7 +35,7 @@ namespace DAboneTakip.Migrations.DergiDb
                     b.Property<DateTime>("KayıtTarihi")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UyeID")
+                    b.Property<int?>("UyeID")
                         .HasColumnType("int");
 
                     b.HasKey("KayıtID");
@@ -61,15 +61,12 @@ namespace DAboneTakip.Migrations.DergiDb
                     b.Property<DateTime>("DergiTARIH")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("KategoriID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("KategorilerKategoriID")
+                    b.Property<int?>("KategoriID")
                         .HasColumnType("int");
 
                     b.HasKey("DergiID");
 
-                    b.HasIndex("KategorilerKategoriID");
+                    b.HasIndex("KategoriID");
 
                     b.ToTable("Dergilers");
                 });
@@ -120,15 +117,11 @@ namespace DAboneTakip.Migrations.DergiDb
                 {
                     b.HasOne("DergiAboneProje.Models.Dergiler", "Dergi")
                         .WithMany()
-                        .HasForeignKey("DergiID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DergiID");
 
                     b.HasOne("DergiAboneProje.Models.Uyeler", "Uye")
                         .WithMany()
-                        .HasForeignKey("UyeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UyeID");
 
                     b.Navigation("Dergi");
 
@@ -139,7 +132,7 @@ namespace DAboneTakip.Migrations.DergiDb
                 {
                     b.HasOne("DergiAboneProje.Models.Kategoriler", "Kategoriler")
                         .WithMany("Dergilers")
-                        .HasForeignKey("KategorilerKategoriID");
+                        .HasForeignKey("KategoriID");
 
                     b.Navigation("Kategoriler");
                 });

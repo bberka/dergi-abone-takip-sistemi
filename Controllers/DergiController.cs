@@ -1,44 +1,53 @@
 ﻿using DergiAboneProje.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace DergiAboneProje.Controllers
 {
+    [Authorize]
     public class DergiController : Controller
     {
         DergiDbContext c = new DergiDbContext();
         public IActionResult Liste()
         {
-            var degerler = c.Dergilers.ToList();
+            var degerler = c.Dergilers.Include(x => x.Kategoriler).ToList();
             return View(degerler);
         }
-        [HttpGet]
+        [HttpGet]   
         public IActionResult Ekle()
         {
+            List<SelectListItem> degerler = (from x in c.Kategorilers.ToList()
+                                             select new SelectListItem
+                                             {
+                                                 Text = x.KategoriAD,
+                                                 Value = x.KategoriID.ToString()
+                                             }).ToList();
+            ViewBag.dgr = degerler;
             return View();
         }
         [HttpPost]
         public IActionResult Ekle(Dergiler d)
         {
-           if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    c.Dergilers.Add(d);
-                    c.SaveChanges();
-
-                    return RedirectToAction("Liste");
-                }
-                catch
-                {
-                    return View();
-                }
+                var p = c.Kategorilers.Where(x => x.KategoriID == d.Kategoriler.KategoriID).FirstOrDefault();                
+                d.Kategoriler = p;                
+                c.Dergilers.Add(d);
+                c.SaveChanges();
+                return RedirectToAction("Liste");
             }
-            return View();
-            
+            catch
+            {
+                
+            }
+            return NoContent();
         }
         public IActionResult Sil(int id)
         {
@@ -51,8 +60,48 @@ namespace DergiAboneProje.Controllers
             }
             catch
             {
-                return View();
+                
             }
+            return NoContent();
+        }
+        [HttpGet]
+        public IActionResult Duzenle(int id)
+        {
+            List<SelectListItem> degerler = (from x in c.Kategorilers.ToList()
+                                             select new SelectListItem
+                                             {
+                                                 Text = x.KategoriAD,
+                                                 Value = x.KategoriID.ToString()
+                                             }).ToList();
+            ViewBag.dgr = degerler;
+            ViewBag.drgtrh = c.Dergilers.Select(x => x.DergiTARIH);
+            var drg = c.Dergilers.Find(id);
+            return View("Duzenle", drg);
+        }
+        [HttpPost]
+        public IActionResult Duzenle(Dergiler d)
+        {
+            try
+            {
+                var p = c.Kategorilers.Where(x => x.KategoriID == d.Kategoriler.KategoriID).FirstOrDefault();
+                d.Kategoriler = p;
+                c.Dergilers.Update(d);
+                c.SaveChanges();
+                return RedirectToAction("Liste");
+            }
+            catch
+            {
+
+            }
+            return NoContent();
+        }
+        public IActionResult Detay(int id)
+        {
+            var degerler = c.Aboneliklers.Where(x => x.DergiID == id).ToList();
+            var drgad = c.Dergilers.Where(x => x.DergiID == id).Select(y => y.DergiAD).FirstOrDefault();
+            ViewBag.drgad = drgad;
+            ViewBag.drgid = id;
+            return View(degerler);
         }
     }
     

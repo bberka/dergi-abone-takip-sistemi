@@ -1,14 +1,14 @@
 ﻿@using DergiAboneProje.Models
 @model List<Abonelikler>
 @{
-    ViewData["Title"] = "AboneOlanlar";
+    ViewData["Title"] = "Abonelik Liste";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 
 <div>
 
-    <h2>Abonelikler</h2>
+    <h2 class="my-header">Abonelikler</h2>
     <br />
     <script>
         $(document).ready(function () {
@@ -20,10 +20,13 @@
         <table id="AbonelikTable" class="row-border stripe hover table-bordered">
             <thead>
                 <tr>
+                    <th>Abonelik ID</th>
                     <th>KayıtTarihi</th>
-                    <th>Kayıt Süresi</th>
+                    <th>Kayıt Süresi (ay)</th>
                     <th>Üye ID</th>
+                    <th>Üye Adı</th>
                     <th>Dergi ID</th>
+                    <th>Dergi Adı</th>
                     <th>İptal</th>
                 </tr>
             </thead>
@@ -31,11 +34,14 @@
             @foreach (var x in Model)
             {
                 <tr>
-                    <td>@x.KayıtTarihi</td>
+                    <td>@x.KayıtID</td>
+                    <td>@x.KayıtTarihi.ToShortDateString()</td>
                     <td>@x.KayıtSuresi</td>
                     <td>@x.UyeID</td>
+                    <td>@x.Uye.UyeAD</td>
                     <td>@x.DergiID</td>
-                    <td><a href="/Abonelik/Iptal/@x.KayıtID" class="btn btn-danger">Sil</a></td>
+                    <td>@x.Dergi.DergiAD</td>
+                    <td><a href="/Abonelik/Iptal/@x.KayıtID" class="btn btn-danger">İptal</a></td>
                 </tr>
             }
 

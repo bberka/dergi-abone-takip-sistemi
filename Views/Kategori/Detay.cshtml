@@ -1,0 +1,57 @@
+﻿@using DergiAboneProje.Models
+@model List<Dergiler>
+@{
+    ViewData["Title"] = "Kategori Detay";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div>
+
+    <script>
+        $(document).ready(function () {
+            $('#DergiTable').DataTable();
+        });
+    </script>
+
+    <h2 class="my-header">@ViewBag.kategoriad Kategorisindeki Dergiler || Kategori ID: @ViewBag.ktgid</h2>
+    <br />
+    
+    <table id="DergiTable" class="row-border stripe hover table-bordered">
+        <thead>
+            <tr>
+                <th>Dergi ID</th>
+                <th>Dergi Adı</th>
+                @*<th>Kategori ID</th>*@
+                <th>Dergi Kayıt Tarih</th>
+                <th>Düzenle</th>
+                <th>Sil</th>
+                <th>Detaylar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model)
+            {   
+            <tr>
+                <td>@x.DergiID</td>
+                <td>@x.DergiAD</td>
+                @*<td>@x.KategoriID</td>*@
+                <td>@x.DergiTARIH.ToShortDateString()</td>
+                <td><a href="/Dergi/Duzenle/@x.DergiID" class="btn btn-success">Düzenle</a></td>
+                <td><a href="/Dergi/Sil/@x.DergiID" class="btn btn-danger">Sil</a></td>
+                <td><a href="/Dergi/Detay/@x.DergiID" class="btn btn-warning">Detaylar</a></td>
+            </tr>
+            }
+        <tbody>
+
+    </table>
+    
+    
+
+</div>
+
+
+
+
+
+

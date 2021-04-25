@@ -1,7 +1,7 @@
 ﻿@using DergiAboneProje.Models
 @model List<Uyeler>
 @{
-    ViewData["Title"] = "Aboneler";
+    ViewData["Title"] = "Üye Liste";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -15,17 +15,17 @@
             $('#AboneTable').DataTable();
         });
     </script>
-    <h2>Üyeler</h2>
+    <h2 class="my-header">Üyeler</h2>
     <br />
 
     <table id="AboneTable" class="row-border stripe hover table-bordered">
         <thead>
             <tr>
                 <th>Üye ID</th>
-                <th>Üye Adı</th>
+                <th>Üye Adı Soyadı</th>
                 <th>Email</th>
                 <th>Tel No</th>
-                <th>Kayıt Tarihi</th>
+                <th>Doğum Tarihi</th>
                 <th>Düzenle</th>
                 <th>Sil</th>
             </tr>
@@ -38,7 +38,7 @@
                     <td>@x.UyeAD</td>
                     <td>@x.Email</td>
                     <td>@x.TelNo</td>
-                    <td>@x.Tarih</td>
+                    <td>@x.Tarih.ToShortDateString()</td>
                     <td><a href="/Aboneler/Duzenle/@x.UyeID" class="btn btn-success">Düzenle</a></td>
                     <td><a href="/Abone/Sil/@x.UyeID" class="btn btn-danger">Sil</a></td>                    
                 </tr>

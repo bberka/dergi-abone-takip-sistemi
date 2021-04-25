@@ -1,20 +1,21 @@
 ﻿@model DergiAboneProje.Models.Abonelikler
 @{
-    ViewData["Title"] = "Ekle";
+    ViewData["Title"] = "Abonelik Ekle";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
 }
+
 <div class="eklediv">
     <form class="form-group" method="post">
-        <h2>Yeni Abonelik</h2>
+        <h2 class="my-header">Yeni Abonelik</h2>
+        <br />
         <div class="txtbox">
-            <h4>Kayıt Tarihi</h4>
-            @Html.TextBoxFor(x => x.KayıtTarihi, new { @class = "form-control" })
+            <h4>Kayıt Tarihi : @DateTime.Now.ToShortDateString()</h4>
         </div>
         <br />
         <div class="txtbox">
             <h4>Kayıt Süresi (ay)</h4>
-            @Html.TextBoxFor(x => x.KayıtSuresi, new { @class = "form-control" })
+            @Html.TextBoxFor(x => x.KayıtSuresi, new { @class = "form-control", onkeypress = "validate(event)", @type = "text", @maxlength = "2" })
         </div>
         <br />
         <div class="txtbox">
@@ -27,13 +28,50 @@
             @Html.TextBoxFor(x => x.DergiID, new { @class = "form-control" })
         </div>
         <br />
-        <button class="btn btn-info">Kategori Ekle</button>
-        @*<script>
-            function checkblack() {
-                if (document.getElementById('ekle').value == "") {
-                    alert('please');
-                }
-            }
-        </script>*@
+        <button class="btn btn-info" onclick="BlankCheck();" type="submit">Abonelik Ekle</button>
+
+        
     </form>
 </div>
+
+<script>
+    function validate(evt) {
+        var theEvent = evt || window.event;
+
+        // Handle paste
+        if (theEvent.type === 'paste') {
+            key = event.clipboardData.getData('text/plain');
+        } else {
+            // Handle key press
+            var key = theEvent.keyCode || theEvent.which;
+            key = String.fromCharCode(key);
+        }
+        var regex = /[0-9]|\./;
+        if (!regex.test(key)) {
+            theEvent.returnValue = false;
+            if (theEvent.preventDefault) theEvent.preventDefault();
+        }
+    }
+
+    var BlankCheck = function () {
+        var KayıtSuresi = $('#KayıtSuresi').val();
+        var UyeID = $('#UyeID').val();
+        var DergiID = $('#DergiID').val();
+       
+        var bos = "Şu alanlar boş bırakılamaz;\n";
+        if (KayıtSuresi == "" || KayıtSuresi == undefined) {
+            bos += "-KayıtSuresi\n"
+        }
+        if (UyeID == "" || UyeID == undefined) {
+            bos += "-Üye ID\n"
+        }
+        if (DergiID == "" || DergiID == undefined) {
+            bos += "-Dergi ID\n"
+        }        
+        else {
+            return true;
+        }
+        swal("Uyarı", bos, "error")
+        return false;
+    }
+</script>

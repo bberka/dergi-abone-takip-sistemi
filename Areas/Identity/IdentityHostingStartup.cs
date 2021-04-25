@@ -24,6 +24,7 @@ namespace DAboneTakip.Areas.Identity
                 {
                     options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = false;
                     options.Password.RequiredUniqueChars = 0;
                     options.Password.RequiredLength = 4;
                     options.Password.RequireNonAlphanumeric = false;

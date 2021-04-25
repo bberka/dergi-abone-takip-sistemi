@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAboneTakip.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -41,6 +41,10 @@ namespace DAboneTakip.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public IActionResult Example()
+        {
+            return View();
         }
     }
 }

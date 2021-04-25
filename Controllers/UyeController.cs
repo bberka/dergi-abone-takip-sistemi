@@ -4,9 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Authorization;
 namespace DergiAboneProje.Controllers
 {
+    [Authorize]
     public class UyeController : Controller
     {
         DergiDbContext c = new DergiDbContext();
@@ -26,8 +27,9 @@ namespace DergiAboneProje.Controllers
             }
             catch
             {
-                return View();
+                
             }
+            return NoContent();
         }
         [HttpGet]
         public IActionResult Ekle()
@@ -47,11 +49,11 @@ namespace DergiAboneProje.Controllers
                 }
                 catch
                 {
-                    return View();
+                    
                 }
             }
-            return View();
-            
+            return NoContent();
+
         }
     }
 }

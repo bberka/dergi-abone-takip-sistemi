@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="~/css/w3.css">
     <title>Dergi Abone Takip Proje</title>
+    
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <link href="~/css/site.css" rel="stylesheet" />
     <!-- Fontawesome -->
@@ -17,23 +18,39 @@
     <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
     <!-- Sweeralert -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
 
 <body>
     <!-- Sidebar -->
-    <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:10%">
-        <h3 class="w3-bar-item">Dergi Abone Takip Proje</h3>
-        <a href="/Home/Index/" class="w3-bar-item w3-button w3-hover-teal" style="text-decoration: none; font-size:20px"><i class="fas fa-home maric"></i> Anasayfa</a>
-        <a href="/Uye/Liste/" class="w3-bar-item w3-button w3-hover-teal" style="text-decoration: none; font-size:20px"><i class="fas fa-user-friends maric"></i> Üyeler</a>
-        <a href="/Abonelik/Liste/" class="w3-bar-item w3-button w3-hover-teal" style="text-decoration: none; font-size:20px"><i class="fas fa-list maric"></i> Abonelikler</a>
-        <a href="/Dergi/Liste/" class="w3-bar-item w3-button w3-hover-teal" style="text-decoration: none; font-size:20px"><i class="fas fa-book-open maric"></i> Dergiler</a>
-        <a href="/Kategori/Liste/" class="w3-bar-item w3-button w3-hover-teal" style="text-decoration: none; font-size:20px"><i class="fas fa-th-list maric"></i> Kategoriler</a>
+    <div class="w3-sidebar w3-light-grey w3-bar-block my-div" >
+        @*<h6 class="w3-bar-item">Dergi Abone Takip Proje</h6>*@
+        <a href="/Home/Index/" class="w3-bar-item w3-button w3-hover-teal my-button" style="text-decoration: none;">
+        <i class="fas fa-home maric my-icon" ></i>
+        <label class="my-label">Anasayfa</label>
+        </a>
+        <a href="/Uye/Liste/" class="w3-bar-item w3-button w3-hover-teal my-button" style="text-decoration: none;">
+        <i class="fas fa-user-friends maric my-icon"></i>
+        <label class="my-label">Üyeler</label>
+        </a>
+        <a href="/Abonelik/Liste/" class="w3-bar-item w3-button w3-hover-teal my-button" style="text-decoration: none;">
+        <i class="fas fa-list maric my-icon" ></i>
+        <label class="my-label">Abonelikler</label>
+        </a>
+        <a href="/Dergi/Liste/" class="w3-bar-item w3-button w3-hover-teal my-button" style="text-decoration: none; ">
+        <i class="fas fa-book-open maric my-icon" ></i>
+        <label class="my-label">Dergiler</label>
+        </a>
+        <a href="/Kategori/Liste/" class="w3-bar-item w3-button w3-hover-teal my-button" style="text-decoration: none;">
+        <i class="fas fa-th-list maric my-icon" ></i>
+        <label class="my-label">Kategoriler</label>
+        </a>
         <partial name="_LoginPartial.cshtml" />
     </div>
 
     <!-- Page Content -->
 
-    <div style="margin-left:10%">
+    <div class="render-div">
 
         <div class="geneldiv">
             @RenderBody()

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAboneTakip.Migrations.DergiDb
 {
-    public partial class DergiDbMg1 : Migration
+    public partial class initalcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,15 +44,14 @@ namespace DAboneTakip.Migrations.DergiDb
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DergiAD = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DergiTARIH = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    KategoriID = table.Column<int>(type: "int", nullable: false),
-                    KategorilerKategoriID = table.Column<int>(type: "int", nullable: true)
+                    KategoriID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Dergilers", x => x.DergiID);
                     table.ForeignKey(
-                        name: "FK_Dergilers_Kategorilers_KategorilerKategoriID",
-                        column: x => x.KategorilerKategoriID,
+                        name: "FK_Dergilers_Kategorilers_KategoriID",
+                        column: x => x.KategoriID,
                         principalTable: "Kategorilers",
                         principalColumn: "KategoriID",
                         onDelete: ReferentialAction.Restrict);
@@ -66,8 +65,8 @@ namespace DAboneTakip.Migrations.DergiDb
                         .Annotation("SqlServer:Identity", "1, 1"),
                     KayıtTarihi = table.Column<DateTime>(type: "datetime2", nullable: false),
                     KayıtSuresi = table.Column<int>(type: "int", nullable: false),
-                    UyeID = table.Column<int>(type: "int", nullable: false),
-                    DergiID = table.Column<int>(type: "int", nullable: false)
+                    UyeID = table.Column<int>(type: "int", nullable: true),
+                    DergiID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -77,13 +76,13 @@ namespace DAboneTakip.Migrations.DergiDb
                         column: x => x.DergiID,
                         principalTable: "Dergilers",
                         principalColumn: "DergiID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Aboneliklers_Uyelers_UyeID",
                         column: x => x.UyeID,
                         principalTable: "Uyelers",
                         principalColumn: "UyeID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -97,9 +96,9 @@ namespace DAboneTakip.Migrations.DergiDb
                 column: "UyeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Dergilers_KategorilerKategoriID",
+                name: "IX_Dergilers_KategoriID",
                 table: "Dergilers",
-                column: "KategorilerKategoriID");
+                column: "KategoriID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -1,0 +1,46 @@
+﻿@using DergiAboneProje.Models
+@model List<Abonelikler>
+@{
+    ViewData["Title"] = "Dergi Detay";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div>
+
+    <h2 class="my-header">@ViewBag.drgad Dergisine Abonelikler || Dergi ID: @ViewBag.drgid</h2>
+    <br />
+    <script>
+        $(document).ready(function () {
+            $('#AbonelikTable').DataTable();
+        });
+    </script>
+
+    <div>
+        <table id="AbonelikTable" class="row-border stripe hover table-bordered">
+            <thead>
+                <tr>
+                    <th>Abonelik ID</th>
+                    <th>KayıtTarihi</th>
+                    <th>Kayıt Süresi(ay)</th>
+                    <th>Üye ID</th>
+                    @*<th>Dergi ID</th>*@
+                    <th>İptal</th>
+                </tr>
+            </thead>
+            
+            @foreach (var x in Model)
+            {
+                <tr>
+                    <td>@x.KayıtID</td>
+                    <td>@x.KayıtTarihi.ToShortDateString()</td>
+                    <td>@x.KayıtSuresi</td>
+                    <td>@x.UyeID</td>
+                   @* <td>@x.DergiID</td>*@
+                    <td><a href="/Abonelik/Iptal/@x.KayıtID" class="btn btn-danger">İptal</a></td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+</div>

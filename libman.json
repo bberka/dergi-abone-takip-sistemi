@@ -3,16 +3,40 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "twitter-bootstrap@4.6.0",
-      "destination": "wwwroot/lib/twitter-bootstrap/"
-    },
-    {
       "library": "sweetalert@2.1.2",
       "destination": "wwwroot/lib/sweetalert/"
     },
     {
       "library": "datatable@2.0.1",
       "destination": "wwwroot/lib/datatable/"
+    },
+    {
+      "library": "bootstrap-datetimepicker@4.17.47",
+      "destination": "wwwroot/bootstrap-datetimepicker/",
+      "files": [
+        "js/bootstrap-datetimepicker.min.js",
+        "css/bootstrap-datetimepicker.min.css"
+      ]
+    },
+    {
+      "library": "twitter-bootstrap@4.6.0",
+      "destination": "wwwroot/twitter-bootstrap/"
+    },
+    {
+      "library": "bootstrap-datepicker@1.9.0",
+      "destination": "wwwroot/lib/bootstrap-datepicker/",
+      "files": [
+        "js/bootstrap-datepicker.min.js",
+        "css/bootstrap-datepicker.min.css"
+      ]
+    },
+    {
+      "library": "air-datepicker@2.2.3",
+      "destination": "wwwroot/lib/air-datepicker/",
+      "files": [
+        "js/datepicker.min.js",
+        "css/datepicker.min.css"
+      ]
     }
   ]
 }

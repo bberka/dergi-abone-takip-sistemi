@@ -18,6 +18,7 @@ using Microsoft.Extensions.Logging;
 namespace DAboneTakip.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
+    
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<AuthDbUser> _signInManager;
@@ -62,15 +63,18 @@ namespace DAboneTakip.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
         }
-
+        
         public async Task OnGetAsync(string returnUrl = null)
         {
+           
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)

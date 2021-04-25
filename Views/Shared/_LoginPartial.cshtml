@@ -9,11 +9,16 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a id="manage" class="w3-bar-item w3-button w3-hover-teal" style="text-decoration: none; font-size:20px" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="fas fa-user maric"></i> Profil@*Hello @UserManager.GetUserName(User)!*@</a>
+        <a id="manage" class="w3-bar-item w3-button w3-hover-teal  my-button" style="text-decoration: none" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+        <i class="fas fa-user maric my-icon"></i>
+        <label class="my-label"> Profil</label>@*Hello @UserManager.GetUserName(User)!*@
+        </a>
     </li>
     <li class="nav-item">
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" type="submit" class="w3-bar-item w3-button w3-hover-teal" style="text-decoration: none; font-size:20px"><i class="fas fa-sign-out-alt maric"></i> Çıkış Yap</button>
+            <button id="logout" type="submit" class="w3-bar-item w3-button w3-hover-teal my-label  my-button" style="text-decoration: none;">
+            <i class="fas fa-sign-out-alt maric my-icon" ></i>Çıkış Yap
+            </button>
             
         </form>
     </li>

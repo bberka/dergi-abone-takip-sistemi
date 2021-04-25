@@ -1,0 +1,38 @@
+﻿@model DergiAboneProje.Models.Dergiler
+@{
+    ViewData["Title"] = "Dergi Duzenle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h2 class="my-header">Dergi Düzenle</h2>
+<br />
+@using (Html.BeginForm("Duzenle", "Dergi", FormMethod.Post))
+{
+<div class="eklediv">
+    <h4>Dergi ID : @Model.DergiID</h4>
+    @Html.TextBoxFor(x => x.DergiID, new { @class = "form-control", @readonly = "readonly", style = "display: none;" })
+    <br />
+    <h4>Dergi Kayıt Tarihi: @Model.DergiTARIH.ToShortDateString()</h4>
+    @*@Html.TextBoxFor(x => x.DergiTARIH, new { @class = "form-control", @readonly = "readonly" })*@
+    <br />
+    <h4>Dergi Adı</h4>
+    @Html.TextBoxFor(x => x.DergiAD, new { @class = "form-control" })
+    <br />
+    <h4>Kategori Adı</h4>
+    @Html.DropDownListFor(x => x.Kategoriler.KategoriID, (List<SelectListItem>)ViewBag.dgr, new { @class = "form-control" })
+    <br />
+    <button class="btn btn-info" onclick="BlankCheck();" type="submit">Düzenlemeyi Kaydet</button>
+</div>
+}
+<script>
+    var BlankCheck = function () {
+        var DergiAD = $('#DergiAD').val();
+
+        if (DergiAD == "" || DergiAD == undefined) {
+            swal("Uyarı", "Dergi adı boş bırakılamaz!", "error")
+            return false;
+        }
+    }
+
+</script>

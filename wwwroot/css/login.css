@@ -1,159 +1,53 @@
-﻿@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+﻿@import "bourbon";
 
-html, body {
-    background: #50a3a2;
-    background: -webkit-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
-    background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    height: 100%; /*Allow spacing based on window height*/
-    margin: 0;
-    min-height: 240px;
+body {
+    background: #eee !important;
 }
 
-/*The form part*/
-.content {
-    /*A box that the form resides in - centered vertically and horizontally based on the window. The max-width and % width combo allow it to resize for small devices*/
-    background: #FFF;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: block;
-    left: 50%;
-    max-width: 400px;   
-    position: absolute;
-    top: 50%;
-    -ms-transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    width: 90%;
+.wrapper {
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+
+.form-signin {
+    max-width: 380px;
+    padding: 15px 35px 45px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.1);
+    .form-signin-heading, .checkbox
+
+{
+    margin-bottom: 30px;
+}
+
+.checkbox {
+    font-weight: normal;
+}
+
+.form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    @include box-sizing(border-box);
+    &:focus
+
+{
     z-index: 2;
 }
 
-form {
-    display: block;
-    margin: auto;
-    padding: 27px 0;
-    width: 85%;
 }
 
-/*Text-inputs*/
-.mat-in {
-    position: relative;
-    margin-bottom: 32px;
+input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
-input {
-    border: none;
-    border-bottom: 1px solid #9E9E9E;
-    display: block;
-    font-size: 16px;
-    padding: 8px 0px;
-    -webkit-transition: 0.2s border-bottom;
-    transition: 0.2s border-bottom;
-    width: 100%;
+input[type="password"] {
+    margin-bottom: 20px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
-
-    input:focus, input:invalid {
-        box-shadow: none;
-        outline: none;
-    }
-
-    input:focus {
-        border-bottom: 1px solid #2196f3;
-    }
-
-/*Labels*/
-label {
-    color: #9E9E9E;
-    font-size: 16px;
-    pointer-events: none;
-    position: absolute;
-    top: 10px;
-    -webkit-transition: 0.2s ease all;
-    transition: 0.2s ease all;
-}
-
-input:focus ~ label, input:valid ~ label {
-    color: #2196f3;
-    font-size: 12px;
-    top: -16px;
-}
-
-/*Bar that appears when an input is selected*/
-.bar:before, .bar:after {
-    background: #2196f3;
-    bottom: 1px;
-    content: '';
-    height: 2px;
-    position: absolute;
-    -webkit-transition: 0.2s ease all;
-    transition: 0.2s ease all;
-    width: 0;
-}
-
-.bar:before {
-    left: 50%;
-}
-
-.bar:after {
-    right: 50%;
-}
-
-input:focus ~ .bar:before, input:focus ~ .bar:after {
-    width: 50%;
-}
-
-/*Submit Button*/
-#login {
-    background: #2196f3;
-    border: none;
-    border-radius: 2px;
-    color: #FFF;
-    cursor: pointer;
-    font-size: 16px;
-    opacity: 0.999;
-    padding: 8px 0;
-    position: relative;
-    -webkit-transition: 0.2s ease background;
-    transition: .2s ease background;
-    width: 100%;
-}
-
-    #login:hover {
-        background: #1976d2;
-    }
-
-    #login:before, #login:after {
-        border-radius: 2px;
-        content: '';
-        height: 0;
-        left: 0;
-        opacity: 0;
-        position: absolute;
-        width: 100%;
-        -webkit-transition: 0.2s ease all;
-        transition: .2s ease all;
-        z-index: -1;
-    }
-
-    #login:before {
-        top: 50%;
-    }
-
-    #login:after {
-        bottom: 50%;
-    }
-
-    #login:active:before, #login:active:after {
-        background: #0d47a1;
-        height: 50%;
-        opacity: 1;
-    }
-
-/*Error Messages*/
-.error {
-    color: #F44336;
-    margin: 16px auto 0;
-    text-align: center;
-    width: 90%;
 }

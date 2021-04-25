@@ -1,14 +1,17 @@
 ﻿using DergiAboneProje.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Authorization;
 namespace DergiAboneProje.Controllers
 {
+    [Authorize]
     public class KategoriController : Controller
     {
+
         DergiDbContext c = new DergiDbContext();
         
         
@@ -27,6 +30,7 @@ namespace DergiAboneProje.Controllers
         [HttpPost]
         public IActionResult Ekle(Kategoriler k)
         {
+           
             if (ModelState.IsValid)
             {
                 try
@@ -37,11 +41,11 @@ namespace DergiAboneProje.Controllers
                 }
                 catch
                 {
-                    return View();
+                    
                 }
                 
             }
-            return View();
+            return NoContent();
 
         }
         public IActionResult Sil(int id)
@@ -57,10 +61,39 @@ namespace DergiAboneProje.Controllers
                 }
                catch
                 {
-                    return View();
+                    
                 }
             }
-            return View();
+            return NoContent();
+        }
+        public IActionResult Detay(int id)
+        {
+            var degerler = c.Dergilers.Where(x => x.KategoriID == id).ToList();
+            var ktgad = c.Kategorilers.Where(x => x.KategoriID == id).Select(y => y.KategoriAD).FirstOrDefault();
+            ViewBag.kategoriad = ktgad;
+            ViewBag.ktgid = id;
+            return View(degerler);
+        }
+        [HttpGet]
+        public IActionResult Duzenle(int id)
+        {
+            var ktg = c.Kategorilers.Find(id);
+            return View("Duzenle",ktg);
+        }
+        [HttpPost]
+        public IActionResult Duzenle(Kategoriler k)
+        {
+            try
+            {
+                c.Kategorilers.Update(k);
+                c.SaveChanges();
+                return RedirectToAction("Liste");
+            }
+            catch
+            {
+                
+            }
+            return NoContent();
         }
     }
 }
