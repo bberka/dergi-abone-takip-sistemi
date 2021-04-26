@@ -1,13 +1,12 @@
 ﻿@model DergiAboneProje.Models.Abonelikler
 @{
-    ViewData["Title"] = "Abonelik Ekle";
+    ViewData["Title"] = "Yeni Abonelik";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
 }
 
 <div class="eklediv">
-    <form class="form-group" method="post">
-        <h2 class="my-header">Yeni Abonelik</h2>
+    <form class="form-group" method="post">       
         <br />
         <div class="txtbox">
             <h4>Kayıt Tarihi : @DateTime.Now.ToShortDateString()</h4>
@@ -15,7 +14,7 @@
         <br />
         <div class="txtbox">
             <h4>Kayıt Süresi (ay)</h4>
-            @Html.TextBoxFor(x => x.KayıtSuresi, new { @class = "form-control", onkeypress = "validate(event)", @type = "text", @maxlength = "2" })
+            @Html.TextBoxFor(x => x.KayıtSuresi, new { @class = "form-control", onkeypress = "validate(event)", @type = "number", @maxlength = "2" })
         </div>
         <br />
         <div class="txtbox">
@@ -28,7 +27,7 @@
             @Html.TextBoxFor(x => x.DergiID, new { @class = "form-control" })
         </div>
         <br />
-        <button class="btn btn-info" onclick="BlankCheck();" type="submit">Abonelik Ekle</button>
+        <button class="btn btn-success" onclick="BlankCheck();" type="submit">Abonelik Ekle</button>
 
         
     </form>

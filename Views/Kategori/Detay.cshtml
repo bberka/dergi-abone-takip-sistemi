@@ -1,7 +1,7 @@
 ﻿@using DergiAboneProje.Models
 @model List<Dergiler>
 @{
-    ViewData["Title"] = "Kategori Detay";
+    ViewData["Title"] = @ViewBag.kategoriad + " Kategorisindeki Dergiler || Kategori ID: " + @ViewBag.ktgid;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -10,11 +10,14 @@
 
     <script>
         $(document).ready(function () {
-            $('#DergiTable').DataTable();
+            $('#DergiTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+            });
         });
     </script>
 
-    <h2 class="my-header">@ViewBag.kategoriad Kategorisindeki Dergiler || Kategori ID: @ViewBag.ktgid</h2>
     <br />
     
     <table id="DergiTable" class="row-border stripe hover table-bordered">

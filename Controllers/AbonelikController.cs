@@ -28,7 +28,7 @@ namespace DergiAboneProje.Controllers
                 var abn = c.Aboneliklers.Find(id);
                 c.Aboneliklers.Remove(abn);
                 c.SaveChanges();
-               
+                return RedirectToAction("Liste");
             }
             catch
             {
@@ -50,7 +50,7 @@ namespace DergiAboneProje.Controllers
                 {
                     c.Aboneliklers.Add(b);
                     c.SaveChanges();
-                    
+                    return RedirectToAction("Liste");
                 }
                 catch
                 {
@@ -60,6 +60,15 @@ namespace DergiAboneProje.Controllers
             return NoContent();
 
 
+        }
+        public IActionResult Pasif()
+        {
+            var degerler = c.Aboneliklers
+                .Include(x => x.Uye)
+                .Include(x => x.Dergi)
+                .ToList();
+            return View(degerler);
+            
         }
     }
 }

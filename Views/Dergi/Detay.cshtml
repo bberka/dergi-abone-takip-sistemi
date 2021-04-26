@@ -1,17 +1,19 @@
 ﻿@using DergiAboneProje.Models
 @model List<Abonelikler>
 @{
-    ViewData["Title"] = "Dergi Detay";
+    ViewData["Title"] = @ViewBag.drgad + " Dergisine Abonelikler || Dergi ID: " + @ViewBag.drgid;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div>
-
-    <h2 class="my-header">@ViewBag.drgad Dergisine Abonelikler || Dergi ID: @ViewBag.drgid</h2>
     <br />
     <script>
         $(document).ready(function () {
-            $('#AbonelikTable').DataTable();
+            $('#AbonelikTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+            });
         });
     </script>
 

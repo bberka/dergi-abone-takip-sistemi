@@ -1,7 +1,7 @@
 ﻿@using DergiAboneProje.Models
 @model List<Uyeler>
 @{
-    ViewData["Title"] = "Üye Liste";
+    ViewData["Title"] = "Üyeler";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -12,10 +12,13 @@
 <div>
     <script>
         $(document).ready(function () {
-            $('#AboneTable').DataTable();
+            $('#AboneTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+            });
         });
     </script>
-    <h2 class="my-header">Üyeler</h2>
     <br />
 
     <table id="AboneTable" class="row-border stripe hover table-bordered">
@@ -28,6 +31,7 @@
                 <th>Doğum Tarihi</th>
                 <th>Düzenle</th>
                 <th>Sil</th>
+                <th>Detaylar</th>
             </tr>
         </thead>
         <tbody>
@@ -39,8 +43,9 @@
                     <td>@x.Email</td>
                     <td>@x.TelNo</td>
                     <td>@x.Tarih.ToShortDateString()</td>
-                    <td><a href="/Aboneler/Duzenle/@x.UyeID" class="btn btn-success">Düzenle</a></td>
-                    <td><a href="/Abone/Sil/@x.UyeID" class="btn btn-danger">Sil</a></td>                    
+                    <td><a href="/Uye/Duzenle/@x.UyeID" class="btn btn-success">Düzenle</a></td>
+                    <td><a href="/Uye/Sil/@x.UyeID" class="btn btn-danger">Sil</a></td>   
+                    <td><a href="/Uye/Detay/@x.UyeID" class="btn btn-warning">Detaylar</a></td>
                 </tr>
             }
         </tbody>

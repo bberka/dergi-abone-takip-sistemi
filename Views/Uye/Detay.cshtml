@@ -1,7 +1,7 @@
 ﻿@using DergiAboneProje.Models
 @model List<Abonelikler>
 @{
-    ViewData["Title"] = "Aktif Abonelikler";
+    ViewData["Title"] = ViewBag.uyead + " Adlı Üyenin Aktif Abonelik Listesi || Üye ID: " + ViewBag.uyeid;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -26,8 +26,6 @@
                     <th>Abonelik ID</th>
                     <th>Kayıt Tarihi</th>
                     <th>Kalan Gün</th>
-                    <th>Üye ID</th>
-                    <th>Üye Adı</th>
                     <th>Dergi ID</th>
                     <th>Dergi Adı</th>
                     <th>Düzenle</th>
@@ -45,8 +43,6 @@
                     <td>@x.KayıtID</td>
                     <td>@x.KayıtTarihi.ToShortDateString()</td>
                     <td>@((x.KayıtTarihi.AddDays(x.KayıtSuresi* 30) - DateTime.Now).Days)</td>
-                    <td>@x.UyeID</td>
-                    <td>@x.Uye.UyeAD</td>
                     <td>@x.DergiID</td>
                     <td>@x.Dergi.DergiAD</td>
                     <td><a href="/Abonelik/Duzenle/@x.KayıtID" class="btn btn-success">Düzenle</a></td>
@@ -56,14 +52,7 @@
 
         </table>
     </div>
-
-
-    <br />
-    <a href="/Abonelik/Ekle/" class="btn btn-success">Yeni Abonelik Ekle</a>
-    &nbsp;&nbsp;
-    <a href="/Abonelik/Pasif/" class="btn btn-warning">Bitmiş Abonelikleri Listele</a>
-
-
+    <a href="/Uye/Pasif/@ViewBag.uyeid" class="btn btn-warning">Bitmiş Abonelikleri Listele</a>
 </div>
 
 

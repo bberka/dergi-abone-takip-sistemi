@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+
 namespace DergiAboneProje.Controllers
 {
     [Authorize]
@@ -20,8 +22,8 @@ namespace DergiAboneProje.Controllers
         {
             try
             {
-                var abn = c.Uyelers.Find(id);
-                c.Uyelers.Remove(abn);
+                var a = c.Uyelers.Find(id);
+                c.Uyelers.Remove(a);
                 c.SaveChanges();
                 return RedirectToAction("Liste");
             }
@@ -29,6 +31,7 @@ namespace DergiAboneProje.Controllers
             {
                 
             }
+            
             return NoContent();
         }
         [HttpGet]
@@ -39,21 +42,82 @@ namespace DergiAboneProje.Controllers
         [HttpPost]
         public IActionResult Ekle(Uyeler b)
         {
+
+
             if (ModelState.IsValid)
             {
-                try
+                if (b.TelNo.ToString().Length > 9)
                 {
-                    c.Uyelers.Add(b);
-                    c.SaveChanges();
-                    return RedirectToAction("Liste");
+                    try
+                    {
+                        c.Uyelers.Add(b);
+                        c.SaveChanges();
+                        return RedirectToAction("Liste");
+                    }
+                    catch
+                    {
+
+                    }
                 }
-                catch
-                {
-                    
-                }
+
             }
             return NoContent();
 
+        }
+        [HttpGet]
+        public IActionResult Duzenle(int id)
+        {
+            try
+            {
+                var uye = c.Uyelers.Find(id);
+                return View("Duzenle", uye);
+            }
+            catch
+            {
+
+            }
+            return NoContent();
+        }
+        [HttpPost]
+        public IActionResult Duzenle(Uyeler b)
+        {
+           
+           
+                if (b.TelNo.ToString().Length > 9)
+                {
+                    try
+                    {
+                        c.Uyelers.Update(b);
+                        c.SaveChanges();
+                        return RedirectToAction("Liste");
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                  
+            return NoContent();
+        }
+        public IActionResult Detay(int id)
+        {
+            var degerler = c.Aboneliklers.Where(x => x.UyeID == id)
+                .Include(x => x.Dergi)
+                .ToList();
+            var uyead = c.Uyelers.Where(x => x.UyeID == id).Select(y => y.UyeAD).FirstOrDefault();
+            ViewBag.uyead = uyead;
+            ViewBag.uyeid = id;
+            return View(degerler);
+        }
+        public IActionResult Pasif(int id)
+        {
+            var degerler = c.Aboneliklers.Where(x => x.UyeID == id)
+                .Include(x => x.Dergi)
+                .ToList();
+            var uyead = c.Uyelers.Where(x => x.UyeID == id).Select(y => y.UyeAD).FirstOrDefault();
+            ViewBag.uyead = uyead;
+            ViewBag.uyeid = id;
+            return View(degerler);
         }
     }
 }

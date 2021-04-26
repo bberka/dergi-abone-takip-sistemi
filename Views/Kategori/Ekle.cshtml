@@ -8,16 +8,16 @@
 
 
     <form class="form-group" method="post">
-        <h2 class="my-header">Kategori Ekle</h2>
+     
         <br />        
         <h4>Kategori Adı</h4>
         <div class="txtbox">
-            @Html.TextBoxFor(x => x.KategoriAD, new { @class = "form-control", type="text"})
+            @Html.TextBoxFor(x => x.KategoriAD, new { @class = "form-control",@id="TxtKtgAd", type="text", @maxlength = "30" })
         </div>
 
         <br />
 
-        <button class="btn btn-info" onclick="BlankCheck();" type="submit">Kategori Ekle</button>
+        <button class="btn btn-success" onclick="BlankCheck();" type="submit">Kategori Ekle</button>
 
     </form>
 </div>
@@ -31,5 +31,14 @@
             return false;
         }
     }
+    $(document).ready(function () {
+        $("#TxtKtgAd").keydown(function (event) {
+            var inputValue = event.which;
+            // sadece karakter yazdırır ve boşluk
+            if (!(inputValue >= 65 && inputValue <= 92) && (inputValue != 8 && inputValue != 32 && inputValue != 191 && inputValue != 220 && inputValue != 222 && inputValue != 186 && inputValue != 221 && inputValue != 219)) {
+                event.preventDefault();
 
+            }
+        });
+    });
 </script>

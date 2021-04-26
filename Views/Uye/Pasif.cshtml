@@ -1,7 +1,7 @@
 ﻿@using DergiAboneProje.Models
 @model List<Abonelikler>
 @{
-    ViewData["Title"] = "Aktif Abonelikler";
+    ViewData["Title"] = ViewBag.uyead + " Adlı Üyenin Pasif Abonelik Listesi || Üye ID: " + ViewBag.uyeid;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -25,45 +25,30 @@
                 <tr>
                     <th>Abonelik ID</th>
                     <th>Kayıt Tarihi</th>
-                    <th>Kalan Gün</th>
-                    <th>Üye ID</th>
-                    <th>Üye Adı</th>
+                    <th>Gün Önce Bitti</th>
                     <th>Dergi ID</th>
                     <th>Dergi Adı</th>
-                    <th>Düzenle</th>
-                    <th>İptal</th>
                 </tr>
             </thead>
 
             @foreach (var x in Model)
             {
-                if ((x.KayıtTarihi.AddDays(x.KayıtSuresi * 30) - DateTime.Now).Days < 0)
+                if ((x.KayıtTarihi.AddDays(x.KayıtSuresi * 30) - DateTime.Now).Days >= 0)
                 {
                     continue;
                 }
                 <tr>
                     <td>@x.KayıtID</td>
                     <td>@x.KayıtTarihi.ToShortDateString()</td>
-                    <td>@((x.KayıtTarihi.AddDays(x.KayıtSuresi* 30) - DateTime.Now).Days)</td>
-                    <td>@x.UyeID</td>
-                    <td>@x.Uye.UyeAD</td>
+                    <td>@(Math.Abs((x.KayıtTarihi.AddDays(x.KayıtSuresi* 30) - DateTime.Now).Days))</td>
                     <td>@x.DergiID</td>
                     <td>@x.Dergi.DergiAD</td>
-                    <td><a href="/Abonelik/Duzenle/@x.KayıtID" class="btn btn-success">Düzenle</a></td>
-                    <td><a href="/Abonelik/Iptal/@x.KayıtID" class="btn btn-danger">İptal</a></td>
                 </tr>
             }
 
         </table>
     </div>
-
-
-    <br />
-    <a href="/Abonelik/Ekle/" class="btn btn-success">Yeni Abonelik Ekle</a>
-    &nbsp;&nbsp;
-    <a href="/Abonelik/Pasif/" class="btn btn-warning">Bitmiş Abonelikleri Listele</a>
-
-
+    <a href="/Uye/Detay/@ViewBag.uyeid" class="btn btn-info">Aktif Abonelikleri Listele</a>
 </div>
 
 

@@ -169,7 +169,6 @@ C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Kate
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Kategori\Liste.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Uye\Ekle.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Uye\Liste.cshtml.g.cs
-C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Home\TestView.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\ForgotPasswordConfirmation.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Logout.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Manage\ChangePassword.cshtml.g.cs
@@ -180,7 +179,6 @@ C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Areas\Iden
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\RegisterConfirmation.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Kategori\Detay.cshtml.g.cs
-C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Home\Example.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Areas\Identity\Pages\Account\Manage\_Layout.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
 C:\Users\berka\source\repos\DAboneTakip\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
@@ -196,3 +194,7 @@ C:\Users\berka\source\repos\DAboneTakip\bin\Debug\netcoreapp3.1\runtimes\win\lib
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Kategori\Duzenle.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Dergi\Duzenle.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Dergi\Detay.cshtml.g.cs
+C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Uye\Duzenle.cshtml.g.cs
+C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Uye\Detay.cshtml.g.cs
+C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Abonelik\Pasif.cshtml.g.cs
+C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Uye\Pasif.cshtml.g.cs

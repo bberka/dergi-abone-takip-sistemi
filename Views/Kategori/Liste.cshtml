@@ -1,18 +1,22 @@
 ﻿@using DergiAboneProje.Models
 @model List<Kategoriler>
 @{
-    ViewData["Title"] = "Kategori Liste";
+    ViewData["Title"] = "Kategoriler";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 
 <div>
    
-    <h2 class="my-header">Kategoriler</h2>
+    
     <br />
     <script>
         $(document).ready(function () {
-            $('#KategoriTable').DataTable();
+            $('#KategoriTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+            });
         });
     </script>
 

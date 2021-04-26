@@ -1,6 +1,7 @@
-﻿@model DergiAboneProje.Models.Uyeler
+﻿
+@model DergiAboneProje.Models.Uyeler
 @{
-    ViewData["Title"] = "Üye Ekle";
+    ViewData["Title"] = "Üye Düzenle";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
 }
@@ -11,7 +12,8 @@
 
 
     <form class="form-group" method="post">
-       
+        <h4>Üye ID: @Model.UyeID</h4>
+        @Html.TextBoxFor(x => x.UyeID, new { @class = "form-control", @readonly = "readonly", style = "display: none;" })
         <br />
         <div class="txtbox">
             <h4>Üye Adı</h4>
@@ -29,14 +31,14 @@
         </div>
         <br />
         <h4>Doğum Tarihi(Gün/Ay/Yıl)</h4>
-        <input asp-for="Tarih" type="text" class="form-control" value="@DateTime.Now.ToString("MM/dd/yyyy")" maxlength="10" id="TarihSec" />
+        <input asp-for="Tarih" type="text" class="form-control" asp-format="{0:m/dd/yyyy}" value="@Model.Tarih.ToShortDateString()" maxlength="10" id="TarihSec" />
 
         <br />
-        <button class="btn btn-success" onclick="BlankCheck();" type="submit">Üye Ekle</button>
+        <button class="btn btn-info" onclick="BlankCheck();" type="submit">Düzenlemeyi Kaydet</button>
 
     </form>
 
-</div>
+    </div>
 <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.tr.min.js"></script>
 <script type="text/javascript" src="js/moment/tr.js"></script>
@@ -44,7 +46,7 @@
 
 
     $('#TarihSec').datepicker({
-        format: 'mm/dd/yyyy',
+        format: 'm/dd/yyyy',
         autoclose: true,
         language: "tr",
         weekStart: 1
@@ -54,21 +56,23 @@
         var Email = $('#TxtEmail').val();
         var TelNo = $('#TxtTelNo').val();
         //var Tarih = $('#TarihSec').val();
+        
         if (UyeAD == "" || UyeAD === null || UyeAD == undefined) {
             swal("Uyarı", "Lütfen tüm alanları doğru şekilde doldurunuz.", "error")
         }
-        else if (Email == "" || Email == null || Email == undefined) {
+        if (Email == "" || Email == null || Email == undefined) {
             swal("Uyarı", "Lütfen tüm alanları doğru şekilde doldurunuz.", "error")
         }
-        else if (TelNo == "" || TelNo == null || TelNo == undefined || TelNo.length < 9) {
+        if (TelNo == "" || TelNo == null || TelNo == undefined || TelNo.length < 9) {
             swal("Uyarı", "Lütfen tüm alanları doğru şekilde doldurunuz.", "error")
         }
-        //if (Tarih == "" || TelNo == null || Tarih == undefined) {
-        //     swal("Uyarı", "Lütfen tüm alanları doğru şekilde doldurunuz.", "error")
+        //if (TarihSec2 == "" || TarihSec2 == null || TarihSec2 == undefined) {
+        //    bos += "-Doğum Tarihi\n"
         //}
-        else  return true;
-        
-       
+        else {
+            return true;
+        }
+        swal("Uyarı", bos, "error")
         return false;
     }
 
@@ -109,5 +113,6 @@
         });
     });
 </script>
+
 
 
