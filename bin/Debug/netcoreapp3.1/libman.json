@@ -37,6 +37,10 @@
         "js/bootstrap-datepicker.min.js",
         "locales/bootstrap-datepicker.tr.min.js"
       ]
+    },
+    {
+      "library": "chosen@1.8.7",
+      "destination": "wwwroot/lib/chosen/"
     }
   ]
 }

@@ -12,7 +12,7 @@ namespace DergiAboneProje.Models
         [Key]
         public int KategoriID { get; set; }
 
-        [Required(ErrorMessage ="Bu alan boş bırakılamaz")]
+        [Required]
         public string KategoriAD { get; set; }
         
 

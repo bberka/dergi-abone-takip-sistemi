@@ -6,71 +6,90 @@
 }
 
 <div class="eklediv">
-    <form class="form-group" method="post">       
-        <br />
+    <form class="form-group" method="post">
+       
+        
         <div class="txtbox">
             <h4>Kayıt Tarihi : @DateTime.Now.ToShortDateString()</h4>
         </div>
         <br />
         <div class="txtbox">
             <h4>Kayıt Süresi (ay)</h4>
-            @Html.TextBoxFor(x => x.KayıtSuresi, new { @class = "form-control", onkeypress = "validate(event)", @type = "number", @maxlength = "2" })
+            @*<input disabled asp-for="KayıtSuresi" class="form-control" onkeypress="this." type="number" max=""/>*@
+            @(Html.TextBoxFor(x => x.KayıtSuresi, new { @class = "form-control", @type = "number",@min="1", @max = "24", @id = "txt_KAYIT" }))
         </div>
         <br />
-        <div class="txtbox">
-            <h4>Uye ID</h4>
+        <h4>Abone</h4>
+        @*<div class="txtbox">
             @Html.TextBoxFor(x => x.UyeID, new { @class = "form-control" })
+        </div>*@
+        <div>
+            <select class="form-control chosen-select" asp-for="UyeID" id="txt_UYEID">
+                <option selected disabled style="display:none" value="-1">Üye Seçiniz...</option>
+                @foreach (var item in (List<SelectListItem>)ViewBag.uID)
+                {
+                    <option value="@item.Value">@( "("+ item.Value + ")" + item.Text)</option>
+                }
+            </select>
+            <span asp-validation-for="UyeID" class="text-danger"></span>
         </div>
         <br />
-        <div class="txtbox">
-            <h4>Dergi ID</h4>
-            @Html.TextBoxFor(x => x.DergiID, new { @class = "form-control" })
+        <h4>Dergi</h4>
+        <div>
+            <select class="form-control chosen-select" asp-for="DergiID" id="txt_DERGIID">
+                <option selected disabled style="display:none" value="-1">Dergi Seçiniz...</option>
+                @foreach (var item in (List<SelectListItem>)ViewBag.dID)
+                {
+                    <option value="@item.Value">@( "("+ item.Value + ")" + item.Text)</option>
+                }
+            </select>
         </div>
         <br />
         <button class="btn btn-success" onclick="BlankCheck();" type="submit">Abonelik Ekle</button>
 
-        
+
     </form>
 </div>
 
 <script>
-    function validate(evt) {
-        var theEvent = evt || window.event;
+    $("#txt_UYEID").chosen({
+        no_results_text: "Eşleşme bulunamadı!"
+    });
+    $("#txt_DERGIID").chosen({
+        no_results_text: "Eşleşme bulunamadı!"
+    });
+    $("[type='number']").keypress(function (evt) {
+        evt.preventDefault();
+    });
+    //function validate(evt) {
+    //    var theEvent = evt || window.event;
 
-        // Handle paste
-        if (theEvent.type === 'paste') {
-            key = event.clipboardData.getData('text/plain');
-        } else {
-            // Handle key press
-            var key = theEvent.keyCode || theEvent.which;
-            key = String.fromCharCode(key);
-        }
-        var regex = /[0-9]|\./;
-        if (!regex.test(key)) {
-            theEvent.returnValue = false;
-            if (theEvent.preventDefault) theEvent.preventDefault();
-        }
-    }
+    //    // Handle paste
+    //    if (theEvent.type === 'paste') {
+    //        key = event.clipboardData.getData('text/plain');
+    //    } else {
+    //        // Handle key press
+    //        var key = theEvent.keyCode || theEvent.which;
+    //        key = String.fromCharCode(key);
+    //    }
+    //    var regex = /[0-9]|\./;
+    //    if (!regex.test(key)) {
+    //        theEvent.returnValue = false;
+    //        if (theEvent.preventDefault) theEvent.preventDefault();
+    //    }
+    //}
 
     var BlankCheck = function () {
-        var KayıtSuresi = $('#KayıtSuresi').val();
-        var UyeID = $('#UyeID').val();
-        var DergiID = $('#DergiID').val();
-       
-        var bos = "Şu alanlar boş bırakılamaz;\n";
-        if (KayıtSuresi == "" || KayıtSuresi == undefined) {
-            bos += "-KayıtSuresi\n"
+        var KayıtSuresi = $('#txt_KAYIT').val();
+        var UyeID = $('#txt_UYEID').val();
+        var DergiID = $('#txt_DERGIID').val();
+
+        if (KayıtSuresi == "" || DergiID == null || UyeID == null) {
+            swal("Uyarı", "Lütfen tüm boşlukları doldurunuz.", "error")
+            return false;
+
         }
-        if (UyeID == "" || UyeID == undefined) {
-            bos += "-Üye ID\n"
-        }
-        if (DergiID == "" || DergiID == undefined) {
-            bos += "-Dergi ID\n"
-        }        
-        else {
-            return true;
-        }
-        swal("Uyarı", bos, "error")
-        return false;
+        return true;
     }
+    
 </script>

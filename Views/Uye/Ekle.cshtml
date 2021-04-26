@@ -11,8 +11,7 @@
 
 
     <form class="form-group" method="post">
-       
-        <br />
+
         <div class="txtbox">
             <h4>Üye Adı</h4>
             @Html.TextBoxFor(x => x.UyeAD, new { @class = "form-control", @id = "TxtUyeAd", @maxlength = "50" })
@@ -28,7 +27,7 @@
             @Html.TextBoxFor(x => x.TelNo, new { @class = "form-control", @id = "TxtTelNo", @maxlength = "10" })
         </div>
         <br />
-        <h4>Doğum Tarihi(Gün/Ay/Yıl)</h4>
+        <h4>Doğum Tarihi(Ay/Gün/Yıl)</h4>
         <input asp-for="Tarih" type="text" class="form-control" value="@DateTime.Now.ToString("MM/dd/yyyy")" maxlength="10" id="TarihSec" />
 
         <br />
@@ -54,22 +53,15 @@
         var Email = $('#TxtEmail').val();
         var TelNo = $('#TxtTelNo').val();
         //var Tarih = $('#TarihSec').val();
-        if (UyeAD == "" || UyeAD === null || UyeAD == undefined) {
+        if (UyeAD == "" || Email == "" || TelNo.length < 9) {
             swal("Uyarı", "Lütfen tüm alanları doğru şekilde doldurunuz.", "error")
-        }
-        else if (Email == "" || Email == null || Email == undefined) {
-            swal("Uyarı", "Lütfen tüm alanları doğru şekilde doldurunuz.", "error")
-        }
-        else if (TelNo == "" || TelNo == null || TelNo == undefined || TelNo.length < 9) {
-            swal("Uyarı", "Lütfen tüm alanları doğru şekilde doldurunuz.", "error")
+            return false;
         }
         //if (Tarih == "" || TelNo == null || Tarih == undefined) {
         //     swal("Uyarı", "Lütfen tüm alanları doğru şekilde doldurunuz.", "error")
         //}
-        else  return true;
+        return true;
         
-       
-        return false;
     }
 
     function validate(evt) {

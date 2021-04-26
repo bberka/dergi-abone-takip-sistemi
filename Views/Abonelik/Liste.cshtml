@@ -1,5 +1,6 @@
 ﻿@using DergiAboneProje.Models
 @model List<Abonelikler>
+
 @{
     ViewData["Title"] = "Aktif Abonelikler";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -8,7 +9,7 @@
 
 <div>
 
-    <br />
+    
     <script>
         $(document).ready(function () {
             $('#AbonelikTable').DataTable({
@@ -23,8 +24,8 @@
         <table id="AbonelikTable" class="row-border stripe hover table-bordered">
             <thead>
                 <tr>
-                    <th>Abonelik ID</th>
-                    <th>Kayıt Tarihi</th>
+                    <th>ID</th>
+                    <th>Kayıt Tarihi(Ay/Gün/Yıl)</th>
                     <th>Kalan Gün</th>
                     <th>Üye ID</th>
                     <th>Üye Adı</th>
@@ -37,14 +38,15 @@
 
             @foreach (var x in Model)
             {
-                if ((x.KayıtTarihi.AddDays(x.KayıtSuresi * 30) - DateTime.Now).Days < 0)
+                
+                if ((x.KayıtTarihi.AddDays(x.KayıtSuresi ) - DateTime.Now).Days <= 0)
                 {
                     continue;
                 }
                 <tr>
                     <td>@x.KayıtID</td>
                     <td>@x.KayıtTarihi.ToShortDateString()</td>
-                    <td>@((x.KayıtTarihi.AddDays(x.KayıtSuresi* 30) - DateTime.Now).Days)</td>
+                    <td>@((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days)</td>
                     <td>@x.UyeID</td>
                     <td>@x.Uye.UyeAD</td>
                     <td>@x.DergiID</td>
@@ -61,7 +63,7 @@
     <br />
     <a href="/Abonelik/Ekle/" class="btn btn-success">Yeni Abonelik Ekle</a>
     &nbsp;&nbsp;
-    <a href="/Abonelik/Pasif/" class="btn btn-warning">Bitmiş Abonelikleri Listele</a>
+    <a href="/Abonelik/Pasif/" class="btn btn-warning">Pasif Abonelikleri Listele</a>
 
 
 </div>

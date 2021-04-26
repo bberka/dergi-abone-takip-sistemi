@@ -198,3 +198,4 @@ C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Uye\
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Uye\Detay.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Abonelik\Pasif.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Uye\Pasif.cshtml.g.cs
+C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Abonelik\Duzenle.cshtml.g.cs

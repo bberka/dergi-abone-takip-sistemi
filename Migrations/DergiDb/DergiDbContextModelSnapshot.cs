@@ -27,6 +27,7 @@ namespace DAboneTakip.Migrations.DergiDb
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("DergiID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("KayıtSuresi")
@@ -36,6 +37,7 @@ namespace DAboneTakip.Migrations.DergiDb
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UyeID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("KayıtID");
@@ -62,6 +64,7 @@ namespace DAboneTakip.Migrations.DergiDb
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("KategoriID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("DergiID");
@@ -117,11 +120,15 @@ namespace DAboneTakip.Migrations.DergiDb
                 {
                     b.HasOne("DergiAboneProje.Models.Dergiler", "Dergi")
                         .WithMany()
-                        .HasForeignKey("DergiID");
+                        .HasForeignKey("DergiID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DergiAboneProje.Models.Uyeler", "Uye")
                         .WithMany()
-                        .HasForeignKey("UyeID");
+                        .HasForeignKey("UyeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Dergi");
 
@@ -132,7 +139,9 @@ namespace DAboneTakip.Migrations.DergiDb
                 {
                     b.HasOne("DergiAboneProje.Models.Kategoriler", "Kategoriler")
                         .WithMany("Dergilers")
-                        .HasForeignKey("KategoriID");
+                        .HasForeignKey("KategoriID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Kategoriler");
                 });

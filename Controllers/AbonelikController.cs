@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DergiAboneProje.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DergiAboneProje.Controllers
 {
@@ -21,12 +22,14 @@ namespace DergiAboneProje.Controllers
                 .ToList();
             return View(degerler);           
         }
+       
         public IActionResult Iptal(int id)
         {
             try
             {
                 var abn = c.Aboneliklers.Find(id);
-                c.Aboneliklers.Remove(abn);
+                abn.KayıtSuresi =  abn.KayıtSuresi - (abn.KayıtTarihi.AddDays(abn.KayıtSuresi) - DateTime.Now).Days;
+                c.Aboneliklers.Update(abn);
                 c.SaveChanges();
                 return RedirectToAction("Liste");
             }
@@ -39,11 +42,27 @@ namespace DergiAboneProje.Controllers
         [HttpGet]
         public IActionResult Ekle()
         {
+            List<SelectListItem> _uyeID = (from x in c.Uyelers.ToList()
+                                             select new SelectListItem
+                                             {
+                                                 Text = x.UyeAD,
+                                                 Value = x.UyeID.ToString()
+                                             }).ToList();
+            ViewBag.uID = _uyeID;
+            List<SelectListItem> _dergiID = (from x in c.Dergilers.ToList()
+                                             select new SelectListItem
+                                             {
+                                                 Text = x.DergiAD,
+                                                 Value = x.DergiID.ToString()
+                                             }).ToList();
+            ViewBag.dID = _dergiID;
             return View();
         }
         [HttpPost]
         public IActionResult Ekle(Abonelikler b)
         {
+            b.KayıtSuresi *= 30;
+      
             if (ModelState.IsValid)
             {
                 try
@@ -69,6 +88,48 @@ namespace DergiAboneProje.Controllers
                 .ToList();
             return View(degerler);
             
+        }
+        [HttpGet]
+        public IActionResult Duzenle(int id)
+        {
+            List<SelectListItem> _uyeID = (from x in c.Uyelers.ToList()
+                                           select new SelectListItem
+                                           {
+                                               Text = x.UyeAD,
+                                               Value = x.UyeID.ToString()
+                                           }).ToList();
+            ViewBag.uID = _uyeID;
+            List<SelectListItem> _dergiID = (from x in c.Dergilers.ToList()
+                                             select new SelectListItem
+                                             {
+                                                 Text = x.DergiAD,
+                                                 Value = x.DergiID.ToString()
+                                             }).ToList();
+            ViewBag.dID = _dergiID;
+            ViewBag.kTarihi = c.Aboneliklers.Select(x => x.KayıtTarihi);
+            var abone = c.Aboneliklers.Find(id);
+            abone.KayıtSuresi /= 30;
+            return View("Duzenle", abone);
+        }
+        [HttpPost]
+        public IActionResult Duzenle(Abonelikler d)
+        {
+            try
+            {
+                //var p = c.Kategorilers
+                //    .Where(x => x.KategoriID == d.Kategoriler.KategoriID)
+                //    .FirstOrDefault();
+                //d.Kategoriler = p;
+                d.KayıtSuresi *= 30;
+                c.Aboneliklers.Update(d);
+                c.SaveChanges();
+                return RedirectToAction("Liste");
+            }
+            catch
+            {
+
+            }
+            return NoContent();
         }
     }
 }

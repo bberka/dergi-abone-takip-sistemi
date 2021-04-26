@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+
 namespace DergiAboneProje.Controllers
 {
     [Authorize]
@@ -13,12 +15,14 @@ namespace DergiAboneProje.Controllers
     {
 
         DergiDbContext c = new DergiDbContext();
-        
-        
+
+
         public IActionResult Liste()
         {
+            var degerler = c.Kategorilers
+                .Include(x => x.Dergilers)
+                .ToList();
             
-            var degerler = c.Kategorilers.ToList();
             return View(degerler);
         }
         
@@ -50,6 +54,7 @@ namespace DergiAboneProje.Controllers
         }
         public IActionResult Sil(int id)
         {
+            
             if (ModelState.IsValid)
             {
                 try

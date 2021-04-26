@@ -11,16 +11,20 @@ namespace DergiAboneProje.Models
     {
         [Key]
         public int KayıtID { get; set; }
+
         [Required]
         [Display(Name = "Date")]
         public DateTime KayıtTarihi { get; set; } = DateTime.Now;
+
         [Required]
         public int KayıtSuresi { get; set; }
 
+        [Required]
         public int? UyeID { get; set; }
         [ForeignKey("UyeID")]
         public virtual Uyeler Uye { get; set; }
-
+        
+        [Required]
         public int? DergiID { get; set; }
         [ForeignKey("DergiID")]
         public virtual Dergiler Dergi { get; set; }

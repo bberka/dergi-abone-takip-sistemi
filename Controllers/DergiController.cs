@@ -17,7 +17,9 @@ namespace DergiAboneProje.Controllers
         DergiDbContext c = new DergiDbContext();
         public IActionResult Liste()
         {
-            var degerler = c.Dergilers.Include(x => x.Kategoriler).ToList();
+            var degerler = c.Dergilers
+                .Include(x => x.Kategoriler)
+                .ToList();
             return View(degerler);
         }
         [HttpGet]   
@@ -37,8 +39,8 @@ namespace DergiAboneProje.Controllers
         {
             try
             {
-                var p = c.Kategorilers.Where(x => x.KategoriID == d.Kategoriler.KategoriID).FirstOrDefault();                
-                d.Kategoriler = p;                
+                //var p = c.Kategorilers.Where(x => x.KategoriID == d.Kategoriler.KategoriID).FirstOrDefault();                
+                //d.Kategoriler = p;                
                 c.Dergilers.Add(d);
                 c.SaveChanges();
                 return RedirectToAction("Liste");
@@ -83,8 +85,10 @@ namespace DergiAboneProje.Controllers
         {
             try
             {
-                var p = c.Kategorilers.Where(x => x.KategoriID == d.Kategoriler.KategoriID).FirstOrDefault();
-                d.Kategoriler = p;
+                //var p = c.Kategorilers
+                //    .Where(x => x.KategoriID == d.Kategoriler.KategoriID)
+                //    .FirstOrDefault();
+                //d.Kategoriler = p;
                 c.Dergilers.Update(d);
                 c.SaveChanges();
                 return RedirectToAction("Liste");
@@ -97,8 +101,13 @@ namespace DergiAboneProje.Controllers
         }
         public IActionResult Detay(int id)
         {
-            var degerler = c.Aboneliklers.Where(x => x.DergiID == id).ToList();
-            var drgad = c.Dergilers.Where(x => x.DergiID == id).Select(y => y.DergiAD).FirstOrDefault();
+            var degerler = c.Aboneliklers
+                .Where(x => x.DergiID == id)
+                .ToList();
+            var drgad = c.Dergilers
+                .Where(x => x.DergiID == id)
+                .Select(y => y.DergiAD)
+                .FirstOrDefault();
             ViewBag.drgad = drgad;
             ViewBag.drgid = id;
             return View(degerler);

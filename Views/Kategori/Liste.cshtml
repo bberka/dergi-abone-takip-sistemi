@@ -1,5 +1,7 @@
 ﻿@using DergiAboneProje.Models
 @model List<Kategoriler>
+@using DergiAboneProje.Controllers
+
 @{
     ViewData["Title"] = "Kategoriler";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -7,9 +9,7 @@
 
 
 <div>
-   
-    
-    <br />
+
     <script>
         $(document).ready(function () {
             $('#KategoriTable').DataTable({
@@ -24,30 +24,32 @@
         <table id="KategoriTable" class="row-border stripe hover table-bordered">
             <thead>
                 <tr>
-                    <th>Kategori ID</th>
+                    <th>ID</th>
                     <th>Kategori Adı</th>
+                    <th>Dergi Sayısı</th>
                     <th>Düzenle</th>
                     <th>Sil</th>
                     <th>Detaylar</th>
                 </tr>
             </thead>
-           
-                @foreach (var x in Model)
-                {
-                    <tr>
-                        <td>@x.KategoriID</td>
-                        <td>@x.KategoriAD</td>
-                        <td><a href="/Kategori/Duzenle/@x.KategoriID" class="btn btn-success">Düzenle</a></td>                        
-                        <td><a href="/Kategori/Sil/@x.KategoriID" class="btn btn-danger">Sil</a></td>                        
-                        <td><a href="/Kategori/Detay/@x.KategoriID" class="btn btn-warning">Detaylar</a></td>                        
-                    </tr>
-                }
-            
+
+            @foreach (var x in Model)
+            {
+
+                <tr>
+                    <td>@x.KategoriID</td>
+                    <td>@x.KategoriAD</td>
+                    <td>@x.Dergilers.Where(x => x.KategoriID == x.KategoriID).Count()</td>
+                    <td><a href="/Kategori/Duzenle/@x.KategoriID" class="btn btn-success">Düzenle</a></td>
+                    <td><a href="/Kategori/Sil/@x.KategoriID" class="btn btn-danger">Sil</a></td>
+                    <td><a href="/Kategori/Detay/@x.KategoriID" class="btn btn-warning">Detaylar</a></td>
+                </tr>
+            }
+
         </table>
     </div>
-   
-
-   <br />
+  
+    <br />
     <a href="/Kategori/Ekle/" class="btn btn-success">Yeni Kategori Ekle</a>
 
 </div>

@@ -5,19 +5,17 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
-<br />
 @using (Html.BeginForm("Duzenle", "Kategori", FormMethod.Post))
 {
-    <div class="eklediv">
-        <h4>Kategori ID: @Model.KategoriID</h4>
-        @Html.TextBoxFor(x => x.KategoriID, new { @class = "form-control", @readonly = "readonly", style = "display: none;" })
-        <br />
-        <h4>Kategori Adı</h4>
-        @Html.TextBoxFor(x => x.KategoriAD, new { @class = "form-control" })
-        <br />
-        <button class="btn btn-info" onclick="BlankCheck();" type="submit">Düzenlemeyi Kaydet</button>
-        </div>
+<div class="eklediv">
+    <h4>Kategori ID: @Model.KategoriID</h4>
+    <input asp-for="KategoriID" class="form-control" type="text" maxlength="30" readonly="readonly" style="display:none"/>
+    <br />
+    <h4>Kategori Adı</h4>
+    <input asp-for="KategoriAD" class="form-control" type="text" maxlength="30" />
+    <br />
+    <button class="btn btn-info" onclick="BlankCheck();" type="submit">Düzenlemeyi Kaydet</button>
+</div>
         }
 
 
@@ -31,5 +29,14 @@
             return false;
         }
     }
+    $(document).ready(function () {
+        $("#KategoriAD").keydown(function (event) {
+            var inputValue = event.which;
+            // sadece karakter yazdırır ve boşluk
+            if (!(inputValue >= 65 && inputValue <= 92) && (inputValue != 8 && inputValue != 32 && inputValue != 191 && inputValue != 220 && inputValue != 222 && inputValue != 186 && inputValue != 221 && inputValue != 219)) {
+                event.preventDefault();
 
+            }
+        });
+    });
 </script>

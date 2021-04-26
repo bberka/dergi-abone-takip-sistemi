@@ -6,7 +6,7 @@
 
 
 
-<br />
+
 @using (Html.BeginForm("Duzenle", "Dergi", FormMethod.Post))
 {
 <div class="eklediv">
@@ -20,12 +20,22 @@
     @Html.TextBoxFor(x => x.DergiAD, new { @class = "form-control" })
     <br />
     <h4>Kategori Adı</h4>
-    @Html.DropDownListFor(x => x.Kategoriler.KategoriID, (List<SelectListItem>)ViewBag.dgr, new { @class = "form-control" })
+    <div>
+        <select class="form-control chosen-select" asp-for="KategoriID">
+            @foreach (var item in (List<SelectListItem>)ViewBag.dgr)
+            {
+                <option value="@item.Value">@( "("+ item.Value + ")" + item.Text)</option>
+            }
+        </select>
+    </div>
     <br />
     <button class="btn btn-info" onclick="BlankCheck();" type="submit">Düzenlemeyi Kaydet</button>
 </div>
 }
 <script>
+    $("#KategoriID").chosen({
+        no_results_text: "Eşleşme bulunamadı!"
+    })
     var BlankCheck = function () {
         var DergiAD = $('#DergiAD').val();
 

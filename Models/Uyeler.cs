@@ -15,6 +15,7 @@ namespace DergiAboneProje.Models
         public string UyeAD { get; set; }
         [Required]
         public string Email { get; set; }
+        [Required]
         public long TelNo { get; set; }
         public DateTime Tarih { get; set; }
        

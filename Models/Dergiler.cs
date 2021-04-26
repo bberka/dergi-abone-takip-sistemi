@@ -16,7 +16,7 @@ namespace DergiAboneProje.Models
         [Display(Name = "Date")]
         public DateTime DergiTARIH { get; set; } = DateTime.Now;
 
-
+        [Required]
         public int? KategoriID { get; set; }
         [ForeignKey("KategoriID")]
         public virtual Kategoriler Kategoriler { get; set; }
