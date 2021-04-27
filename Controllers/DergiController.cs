@@ -19,12 +19,14 @@ namespace DergiAboneProje.Controllers
         {
             var degerler = c.Dergilers
                 .Include(x => x.Kategoriler)
+                .Include(x => x.Uyeler)
                 .ToList();
             return View(degerler);
         }
         [HttpGet]   
         public IActionResult Ekle()
         {
+            
             List<SelectListItem> degerler = (from x in c.Kategorilers.ToList()
                                              select new SelectListItem
                                              {
@@ -103,6 +105,7 @@ namespace DergiAboneProje.Controllers
         {
             var degerler = c.Aboneliklers
                 .Where(x => x.DergiID == id)
+                .Include(x => x.Uye)
                 .ToList();
             var drgad = c.Dergilers
                 .Where(x => x.DergiID == id)

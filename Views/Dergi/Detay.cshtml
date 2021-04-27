@@ -1,48 +1,120 @@
 ﻿@using DergiAboneProje.Models
 @model List<Abonelikler>
 @{
-    ViewData["Title"] = @ViewBag.drgad + " Dergisine Abonelikler || Dergi ID: " + @ViewBag.drgid;
+    ViewData["Title"] = @ViewBag.drgad + " Dergisi Abonelikler || Dergi ID: " + @ViewBag.drgid;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div>
+    <link href="~/css/tableactive.css" rel="stylesheet" />
 
-    <script>
-        $(document).ready(function () {
-            $('#AbonelikTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
-                }
-            });
-        });
-    </script>
 
-    <div>
-        <table id="AbonelikTable" class="row-border stripe hover table-bordered">
+
+    <div class="w3-bar" id="tabDIV">
+        <a class="btn zbtn zactive" style="font-size:20px" onclick="openTable('AktifT')">Aktif Abonelikleri Listele</a>
+        <a class="btn zbtn" style="font-size:20px" onclick="openTable('PasifT')">Pasif Abonelikleri Listele</a>
+    </div>
+    <br />
+
+    <div id="AktifT" class="table">
+        @*<h3>Aktif Abonelikler</h3>*@
+        <table id="AktifTable" class="row-border stripe hover table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>KayıtTarihi(Ay/Gün/Yıl)</th>
-                    <th>Kayıt Süresi(ay)</th>
+                    <th>Kalan Gün</th>
                     <th>Üye ID</th>
-                    @*<th>Dergi ID</th>*@
+                    <th>Üye Adı</th>
                     <th>İptal</th>
                 </tr>
             </thead>
-            
+
             @foreach (var x in Model)
             {
+                if ((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days <= 0)
+                {
+                    continue;
+                }
                 <tr>
                     <td>@x.KayıtID</td>
                     <td>@x.KayıtTarihi.ToShortDateString()</td>
-                    <td>@x.KayıtSuresi</td>
+                    <td>@((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days)</td>
                     <td>@x.UyeID</td>
-                   @* <td>@x.DergiID</td>*@
+                    <td>@x.Uye.UyeAD</td>
                     <td><a href="/Abonelik/Iptal/@x.KayıtID" class="btn btn-danger">İptal</a></td>
                 </tr>
             }
 
         </table>
     </div>
+    
+    <div id="PasifT" class="table" style="display:none">
+        @*<h3>Pasif Abonelikler</h3>*@
+        <table id="PasifTable" class="row-border stripe hover table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>KayıtTarihi(Ay/Gün/Yıl)</th>
+                    <th>Gün Önce Bitti</th>
+                    <th>Üye ID</th>
+                    <th>Üye Adı</th>
+                    <th>Kaydı Sil</th>
+                </tr>
+            </thead>
 
+            @foreach (var x in Model)
+            {
+                if ((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days > 0)
+                {
+                    continue;
+                }
+                <tr>
+                    <td>@x.KayıtID</td>
+                    <td>@x.KayıtTarihi.ToShortDateString()</td>
+                    <td>@(Math.Abs((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days))</td>
+                    <td>@x.UyeID</td>
+                    <td>@x.Uye.UyeAD</td>
+                    <td><a href="/Abonelik/Sil/@x.KayıtID" class="btn btn-danger">Kaydı Sil</a></td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    <script>
+        var header = document.getElementById("tabDIV");
+        var btns = header.getElementsByClassName("zbtn");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function () {
+                var current = document.getElementsByClassName("zactive");
+                current[0].className = current[0].className.replace(" zactive", "");
+                this.className += " zactive";
+            });
+        }
+
+        $(document).ready(function () {
+            $('#AktifTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+            });
+        });
+        $(document).ready(function () {
+            $('#PasifTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+            });
+        });
+        function openTable(tableName) {
+            var i;
+            var x = document.getElementsByClassName("table");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            document.getElementById(tableName).style.display = "block";
+        }
+
+
+    </script>
 </div>

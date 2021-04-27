@@ -7,6 +7,8 @@ using DergiAboneProje.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.IO;
 
 namespace DergiAboneProje.Controllers
 {
@@ -22,7 +24,22 @@ namespace DergiAboneProje.Controllers
                 .ToList();
             return View(degerler);           
         }
-       
+        
+       public IActionResult Sil(int id)
+        {
+            try
+            {
+                var abn = c.Aboneliklers.Find(id);
+                c.Aboneliklers.Remove(abn);
+                c.SaveChanges();
+                return RedirectToAction("Liste");
+            }
+            catch
+            {
+
+            }
+            return NoContent();
+        }
         public IActionResult Iptal(int id)
         {
             try
@@ -80,15 +97,7 @@ namespace DergiAboneProje.Controllers
 
 
         }
-        public IActionResult Pasif()
-        {
-            var degerler = c.Aboneliklers
-                .Include(x => x.Uye)
-                .Include(x => x.Dergi)
-                .ToList();
-            return View(degerler);
-            
-        }
+      
         [HttpGet]
         public IActionResult Duzenle(int id)
         {

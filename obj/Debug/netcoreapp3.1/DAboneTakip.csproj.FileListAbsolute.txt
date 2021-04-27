@@ -162,7 +162,6 @@ C:\Users\berka\source\repos\DAboneTakip\bin\Debug\netcoreapp3.1\System.IdentityM
 C:\Users\berka\source\repos\DAboneTakip\bin\Debug\netcoreapp3.1\libman.json
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_AdminLayout.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Abonelik\Ekle.cshtml.g.cs
-C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Abonelik\Liste.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Dergi\Ekle.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Dergi\Liste.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Kategori\Ekle.cshtml.g.cs
@@ -196,6 +195,5 @@ C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Derg
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Dergi\Detay.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Uye\Duzenle.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Uye\Detay.cshtml.g.cs
-C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Abonelik\Pasif.cshtml.g.cs
-C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Uye\Pasif.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Abonelik\Duzenle.cshtml.g.cs
+C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Abonelik\Liste.cshtml.g.cs

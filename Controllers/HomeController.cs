@@ -25,6 +25,7 @@ namespace DAboneTakip.Controllers
 
         public IActionResult Index()
         {
+
             var list_abone = c.Aboneliklers.ToList();
             var list_dergi = c.Dergilers.ToList();
             var list_kategori = c.Kategorilers.ToList();
@@ -39,7 +40,8 @@ namespace DAboneTakip.Controllers
             int bitecek_abone = 0;
             foreach (var x in c.Aboneliklers)
             {
-                if ((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days <= 0)
+                var a = (x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days;
+                if (a <= 0)
                 {
                     continue;
                 }
@@ -49,7 +51,8 @@ namespace DAboneTakip.Controllers
 
             foreach(var x in c.Aboneliklers)
             {
-                if ((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days > 30)
+                var a = (x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days;
+                if (a <= 0 || a >= 30)
                 {
                     continue;
                 }

@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="~/css/w3.css">
     <title>Dergi Abone Takip Proje</title>
-
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <link href="~/css/site.css" rel="stylesheet" />
     <!-- Fontawesome -->
@@ -21,31 +20,34 @@
     <!-- Arama Dropdownlist -->
     <link href="~/lib/chosen/chosen.css" rel="stylesheet" />
     <script src="~/lib/chosen/chosen.jquery.js"></script>
+
+    <style>
+    </style>
 </head>
 
 <body>
     <!-- Sidebar -->
-    <div class="w3-sidebar w3-light-grey w3-bar-block my-div" >
-        @*<h6 class="w3-bar-item">Dergi Abone Takip Proje</h6>*@
+    <div class="w3-sidebar w3-light-grey w3-bar-block my-div">
+        
         <a href="/Home/Index/" class="w3-bar-item w3-button w3-hover-teal my-button" style="text-decoration: none;">
-        <i class="fas fa-home maric my-icon" ></i>
-        <label class="my-label">Anasayfa</label>
+            <i class="fas fa-home maric my-icon"></i>
+            <label class="my-label">Anasayfa</label>
         </a>
         <a href="/Uye/Liste/" class="w3-bar-item w3-button w3-hover-teal my-button" style="text-decoration: none;">
-        <i class="fas fa-user-friends maric my-icon"></i>
-        <label class="my-label">Üyeler</label>
+            <i class="fas fa-user-friends maric my-icon"></i>
+            <label class="my-label">Üyeler</label>
         </a>
         <a href="/Abonelik/Liste/" class="w3-bar-item w3-button w3-hover-teal my-button" style="text-decoration: none;">
-        <i class="fas fa-list maric my-icon" ></i>
-        <label class="my-label">Abonelikler</label>
+            <i class="fas fa-list maric my-icon"></i>
+            <label class="my-label">Abonelikler</label>
         </a>
         <a href="/Dergi/Liste/" class="w3-bar-item w3-button w3-hover-teal my-button" style="text-decoration: none; ">
-        <i class="fas fa-book-open maric my-icon" ></i>
-        <label class="my-label">Dergiler</label>
+            <i class="fas fa-book-open maric my-icon"></i>
+            <label class="my-label">Dergiler</label>
         </a>
         <a href="/Kategori/Liste/" class="w3-bar-item w3-button w3-hover-teal my-button" style="text-decoration: none;">
-        <i class="fas fa-th-list maric my-icon" ></i>
-        <label class="my-label">Kategoriler</label>
+            <i class="fas fa-th-list maric my-icon"></i>
+            <label class="my-label">Kategoriler</label>
         </a>
         <partial name="_LoginPartial.cshtml" />
     </div>
@@ -55,11 +57,13 @@
     <div class="render-div">
         <header class="card-header">
             <h3>@ViewData["Title"]</h3>
-        </header>        
+        </header>
         <div class="geneldiv">
             @RenderBody()
         </div>
     </div>
     @RenderSection("Scripts", required: false)
+
+
 </body>
 </html>

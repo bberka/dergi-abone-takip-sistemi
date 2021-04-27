@@ -21,5 +21,7 @@ namespace DergiAboneProje.Models
         [ForeignKey("KategoriID")]
         public virtual Kategoriler Kategoriler { get; set; }
 
+        public virtual Uyeler Uyeler { get; set; }
+
     }
 }

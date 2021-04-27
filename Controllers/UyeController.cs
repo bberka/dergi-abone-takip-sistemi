@@ -34,6 +34,21 @@ namespace DergiAboneProje.Controllers
             
             return NoContent();
         }
+        //public IActionResult AbonelikSil(int id)
+        //{
+        //    try
+        //    {
+        //        var abn = c.Aboneliklers.Find(id);
+        //        c.Aboneliklers.Remove(abn);
+        //        c.SaveChanges();
+        //        return RedirectToAction("Liste");
+        //    }
+        //    catch
+        //    {
+
+        //    }
+        //    return NoContent();
+        //}
         [HttpGet]
         public IActionResult Ekle()
         {
@@ -109,15 +124,6 @@ namespace DergiAboneProje.Controllers
             ViewBag.uyeid = id;
             return View(degerler);
         }
-        public IActionResult Pasif(int id)
-        {
-            var degerler = c.Aboneliklers.Where(x => x.UyeID == id)
-                .Include(x => x.Dergi)
-                .ToList();
-            var uyead = c.Uyelers.Where(x => x.UyeID == id).Select(y => y.UyeAD).FirstOrDefault();
-            ViewBag.uyead = uyead;
-            ViewBag.uyeid = id;
-            return View(degerler);
-        }
+
     }
 }

@@ -2,26 +2,20 @@
 @model List<Abonelikler>
 
 @{
-    ViewData["Title"] = "Aktif Abonelikler";
+    ViewData["Title"] = "Abonelikler";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
+<link href="~/css/tableactive.css" rel="stylesheet" />
 <div>
 
-    
-    <script>
-        $(document).ready(function () {
-            $('#AbonelikTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
-                }
-            });
-        });
-    </script>
-
-    <div>
-        <table id="AbonelikTable" class="row-border stripe hover table-bordered">
+    <div class="w3-bar" id="tabDIV">
+        <a class="btn zbtn zactive" style="font-size:20px" onclick="openTable('AktifT')">Aktif Abonelikleri Listele</a>
+        <a class="btn zbtn" style="font-size:20px" onclick="openTable('PasifT')">Pasif Abonelikleri Listele</a>
+    </div>
+    <br />
+    <div id="AktifT" class="table">
+        <table id="AktifTable" class="row-border stripe hover table-bordered">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -38,8 +32,8 @@
 
             @foreach (var x in Model)
             {
-                
-                if ((x.KayıtTarihi.AddDays(x.KayıtSuresi ) - DateTime.Now).Days <= 0)
+
+                if ((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days <= 0)
                 {
                     continue;
                 }
@@ -58,13 +52,81 @@
 
         </table>
     </div>
+    <div id="PasifT" class="table"  style="display:none"> 
+        <table id="PasifTable" class="row-border stripe hover table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Kayıt Tarihi(Ay/Gün/Yıl)</th>
+                    <th>Gün Önce Bitti</th>
+                    <th>Üye ID</th>
+                    <th>Üye Adı</th>
+                    <th>Dergi ID</th>
+                    <th>Dergi Adı</th>
+                    <th>Kaydı Sil</th>
+                </tr>
+            </thead>
 
+            @foreach (var x in Model)
+            {
+                if ((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days > 0)
+                {
+                    continue;
+                }
+                <tr id="ptb">
+                    <td>@x.KayıtID</td>
+                    <td>@x.KayıtTarihi.ToShortDateString()</td>
+                    <td>@((DateTime.Now - x.KayıtTarihi.AddDays(x.KayıtSuresi)).Days)</td>
+                    <td>@x.UyeID</td>
+                    <td>@x.Uye.UyeAD</td>
+                    <td>@x.DergiID</td>
+                    <td>@x.Dergi.DergiAD</td>
+                    <td><a href="/Abonelik/Sil/@x.KayıtID" class="btn btn-danger">Kaydı Sil</a></td>
+                </tr>
+            }
 
+        </table>
+    </div>
     <br />
     <a href="/Abonelik/Ekle/" class="btn btn-success">Yeni Abonelik Ekle</a>
-    &nbsp;&nbsp;
-    <a href="/Abonelik/Pasif/" class="btn btn-warning">Pasif Abonelikleri Listele</a>
+    
+   
 
+
+    <script>
+
+        var header = document.getElementById("tabDIV");
+        var btns = header.getElementsByClassName("zbtn");
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function () {
+                var current = document.getElementsByClassName("zactive");
+                current[0].className = current[0].className.replace(" zactive", "");
+                this.className += " zactive";
+            });
+        }
+        function openTable(tableName) {
+            var i;
+            var x = document.getElementsByClassName("table");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            document.getElementById(tableName).style.display = "block";
+        }
+        $(document).ready(function () {
+            $('#AktifTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+            });
+        });
+        $(document).ready(function () {
+            $('#PasifTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+            });
+        });
+    </script>
 
 </div>
 

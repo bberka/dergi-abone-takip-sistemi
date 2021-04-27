@@ -1,0 +1,10 @@
+﻿.zbtn {
+    outline: none;
+    border: none;
+}
+    /* Style the active class, and buttons on mouse-over */
+    .zactive, .zbtn:hover {
+        background-color: #666 !important;
+        color: white !important;
+        cursor: pointer;
+    }
