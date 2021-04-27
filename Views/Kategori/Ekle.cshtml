@@ -7,35 +7,45 @@
 <div class="eklediv">
 
 
-    <form class="form-group" method="post">
+    <form class="form-group" method="post" id="myForm">
         <h4>Kategori Adı</h4>
         <input asp-for="KategoriAD" class="form-control" type="text" maxlength="30"/>
-
-
-        <br />
-
-        <button class="btn btn-success" onclick="BlankCheck();" type="submit">Kategori Ekle</button>
-
     </form>
+    <br />
+    <button class="btn btn-success" onclick="SubmitCheck();">Kategori Ekle</button>
 </div>
 
 <script>
-    var BlankCheck = function () {
+    //sweetalert ile veri girilmişmi kontrol edilir girildiyse küçük bi uyarı ardından formu submit eder
+    function SubmitCheck() {
         var KategoriAD = $('#KategoriAD').val();
 
         if (KategoriAD == "" || KategoriAD == undefined) {
-            swal("Uyarı","Kategori Adı boş bırakılamaz!","error")
+            swal("Uyarı", "Kategori Adı boş bırakılamaz!", "error");
             return false;
+        }
+        else {
+            document.getElementById("myForm").submit();
+            swal({
+                title: "Kategori Ekleme Başarılı!",
+                icon: "success",
+                button: "Tamam",
+            }).then(value => {
+                window.location.href = "/Kategori/Liste/";            
+            });
+            return true;
         }
     }
     $(document).ready(function () {
         $("#KategoriAD").keydown(function (event) {
             var inputValue = event.which;
-            // sadece karakter yazdırır ve boşluk
-            if (!(inputValue >= 65 && inputValue <= 92) && (inputValue != 8 && inputValue != 32 && inputValue != 191 && inputValue != 220 && inputValue != 222 && inputValue != 186 && inputValue != 221 && inputValue != 219)) {
+            // sayı girişi engellenmesi
+            if (!(inputValue >= 65 && inputValue <= 92) && (inputValue != 8 && inputValue != 32 && inputValue != 191 && inputValue != 220 && inputValue != 222 && inputValue != 186 && inputValue != 221 && inputValue != 219 && inputValue != 9)) {
                 event.preventDefault();
-
+        
             }
         });
     });
+
+    
 </script>

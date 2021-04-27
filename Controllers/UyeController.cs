@@ -15,6 +15,7 @@ namespace DergiAboneProje.Controllers
         DergiDbContext c = new DergiDbContext();
         public IActionResult Liste()
         {
+            
             var degerler = c.Uyelers.ToList();
             return View(degerler);
         }
@@ -34,21 +35,7 @@ namespace DergiAboneProje.Controllers
             
             return NoContent();
         }
-        //public IActionResult AbonelikSil(int id)
-        //{
-        //    try
-        //    {
-        //        var abn = c.Aboneliklers.Find(id);
-        //        c.Aboneliklers.Remove(abn);
-        //        c.SaveChanges();
-        //        return RedirectToAction("Liste");
-        //    }
-        //    catch
-        //    {
 
-        //    }
-        //    return NoContent();
-        //}
         [HttpGet]
         public IActionResult Ekle()
         {
@@ -116,6 +103,9 @@ namespace DergiAboneProje.Controllers
         }
         public IActionResult Detay(int id)
         {
+            TempData.Clear();
+            TempData["UyeKey"] = id;
+
             var degerler = c.Aboneliklers.Where(x => x.UyeID == id)
                 .Include(x => x.Dergi)
                 .ToList();

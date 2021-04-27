@@ -8,15 +8,7 @@
 
 <div>
 
-    <script>
-        $(document).ready(function () {
-            $('#DergiTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
-                }
-            });
-        });
-    </script>
+    
 
     
     <table id="DergiTable" class="row-border stripe hover table-bordered">
@@ -24,7 +16,6 @@
             <tr>
                 <th>ID</th>
                 <th>Dergi Adı</th>
-                @*<th>Kategori ID</th>*@
                 <th>Dergi Kayıt Tarih(Ay/Gün/Yıl)</th>
                 <th>Düzenle</th>
                 <th>Sil</th>
@@ -37,7 +28,6 @@
             <tr>
                 <td>@x.DergiID</td>
                 <td>@x.DergiAD</td>
-                @*<td>@x.KategoriID</td>*@
                 <td>@x.DergiTARIH.ToShortDateString()</td>
                 <td><a href="/Dergi/Duzenle/@x.DergiID" class="btn btn-success">Düzenle</a></td>
                 <td><a href="/Dergi/Sil/@x.DergiID" class="btn btn-danger">Sil</a></td>
@@ -48,7 +38,15 @@
 
     </table>
     
-    
+    <script>
+        $(document).ready(function () {
+            $('#DergiTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+            });
+        });
+    </script>
 
 </div>
 

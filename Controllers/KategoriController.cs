@@ -41,7 +41,7 @@ namespace DergiAboneProje.Controllers
                 {
                     c.Kategorilers.Add(k);
                     c.SaveChanges();
-                    return RedirectToAction("Liste");
+                    //return RedirectToAction("Liste"); //JS ile listeye yönlendiriliyor
                 }
                 catch
                 {
@@ -92,7 +92,7 @@ namespace DergiAboneProje.Controllers
             {
                 c.Kategorilers.Update(k);
                 c.SaveChanges();
-                return RedirectToAction("Liste");
+               //return RedirectToAction("Liste"); //JS ile yönlendiriliyor
             }
             catch
             {

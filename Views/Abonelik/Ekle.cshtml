@@ -7,22 +7,17 @@
 
 <div class="eklediv">
     <form class="form-group" method="post">
-       
-        
         <div class="txtbox">
             <h4>Kayıt Tarihi : @DateTime.Now.ToShortDateString()</h4>
         </div>
         <br />
         <div class="txtbox">
             <h4>Kayıt Süresi (ay)</h4>
-            @*<input disabled asp-for="KayıtSuresi" class="form-control" onkeypress="this." type="number" max=""/>*@
             @(Html.TextBoxFor(x => x.KayıtSuresi, new { @class = "form-control", @type = "number",@min="1", @max = "24", @id = "txt_KAYIT" }))
         </div>
         <br />
         <h4>Abone</h4>
-        @*<div class="txtbox">
-            @Html.TextBoxFor(x => x.UyeID, new { @class = "form-control" })
-        </div>*@
+
         <div>
             <select class="form-control chosen-select" asp-for="UyeID" id="txt_UYEID">
                 <option selected disabled style="display:none" value="-1">Üye Seçiniz...</option>
@@ -61,24 +56,6 @@
     $("[type='number']").keypress(function (evt) {
         evt.preventDefault();
     });
-    //function validate(evt) {
-    //    var theEvent = evt || window.event;
-
-    //    // Handle paste
-    //    if (theEvent.type === 'paste') {
-    //        key = event.clipboardData.getData('text/plain');
-    //    } else {
-    //        // Handle key press
-    //        var key = theEvent.keyCode || theEvent.which;
-    //        key = String.fromCharCode(key);
-    //    }
-    //    var regex = /[0-9]|\./;
-    //    if (!regex.test(key)) {
-    //        theEvent.returnValue = false;
-    //        if (theEvent.preventDefault) theEvent.preventDefault();
-    //    }
-    //}
-
     var BlankCheck = function () {
         var KayıtSuresi = $('#txt_KAYIT').val();
         var UyeID = $('#txt_UYEID').val();

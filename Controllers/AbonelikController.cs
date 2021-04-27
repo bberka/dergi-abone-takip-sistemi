@@ -18,6 +18,7 @@ namespace DergiAboneProje.Controllers
         DergiDbContext c = new DergiDbContext();
         public IActionResult Liste()
         {
+            TempData.Clear();
             var degerler = c.Aboneliklers
                 .Include(x => x.Uye)
                 .Include(x => x.Dergi)
@@ -32,6 +33,14 @@ namespace DergiAboneProje.Controllers
                 var abn = c.Aboneliklers.Find(id);
                 c.Aboneliklers.Remove(abn);
                 c.SaveChanges();
+                if (TempData.ContainsKey("UyeKey"))
+                {
+                    return RedirectToAction("Detay", "Uye",new { id =TempData["UyeKey"]});
+                }
+                else if (TempData.ContainsKey("DergiKey"))
+                {
+                    return RedirectToAction("Detay", "Dergi", new { id = TempData["DergiKey"] });
+                }
                 return RedirectToAction("Liste");
             }
             catch
@@ -48,6 +57,14 @@ namespace DergiAboneProje.Controllers
                 abn.KayıtSuresi =  abn.KayıtSuresi - (abn.KayıtTarihi.AddDays(abn.KayıtSuresi) - DateTime.Now).Days;
                 c.Aboneliklers.Update(abn);
                 c.SaveChanges();
+                if (TempData.ContainsKey("UyeKey"))
+                {
+                    return RedirectToAction("Detay", "Uye", new { id = TempData["UyeKey"] });
+                }
+                else if (TempData.ContainsKey("DergiKey"))
+                {
+                    return RedirectToAction("Detay", "Dergi", new { id = TempData["DergiKey"] });
+                }
                 return RedirectToAction("Liste");
             }
             catch
@@ -125,10 +142,6 @@ namespace DergiAboneProje.Controllers
         {
             try
             {
-                //var p = c.Kategorilers
-                //    .Where(x => x.KategoriID == d.Kategoriler.KategoriID)
-                //    .FirstOrDefault();
-                //d.Kategoriler = p;
                 d.KayıtSuresi *= 30;
                 c.Aboneliklers.Update(d);
                 c.SaveChanges();

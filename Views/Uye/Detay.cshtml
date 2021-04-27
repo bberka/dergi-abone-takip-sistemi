@@ -67,14 +67,14 @@
                 {
                     continue;
                 }
-        <tr>
-            <td>@x.KayıtID</td>
-            <td>@x.KayıtTarihi.ToShortDateString()</td>
-            <td>@(Math.Abs((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days))</td>
-            <td>@x.DergiID</td>
-            <td>@x.Dergi.DergiAD</td>
-            <td><a href="/Abonelik/Sil/@x.KayıtID" class="btn btn-danger">Kaydı Sil</a></td>
-        </tr>
+                <tr>
+                    <td>@x.KayıtID</td>
+                    <td>@x.KayıtTarihi.ToShortDateString()</td>
+                    <td>@(Math.Abs((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days))</td>
+                    <td>@x.DergiID</td>
+                    <td>@x.Dergi.DergiAD</td>
+                    <td><a href="/Abonelik/Sil/@x.KayıtID" class="btn btn-danger">Kaydı Sil</a></td>
+                </tr>
             }
 
         </table>

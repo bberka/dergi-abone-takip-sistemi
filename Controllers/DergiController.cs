@@ -40,9 +40,7 @@ namespace DergiAboneProje.Controllers
         public IActionResult Ekle(Dergiler d)
         {
             try
-            {
-                //var p = c.Kategorilers.Where(x => x.KategoriID == d.Kategoriler.KategoriID).FirstOrDefault();                
-                //d.Kategoriler = p;                
+            {             
                 c.Dergilers.Add(d);
                 c.SaveChanges();
                 return RedirectToAction("Liste");
@@ -87,10 +85,6 @@ namespace DergiAboneProje.Controllers
         {
             try
             {
-                //var p = c.Kategorilers
-                //    .Where(x => x.KategoriID == d.Kategoriler.KategoriID)
-                //    .FirstOrDefault();
-                //d.Kategoriler = p;
                 c.Dergilers.Update(d);
                 c.SaveChanges();
                 return RedirectToAction("Liste");
@@ -103,6 +97,9 @@ namespace DergiAboneProje.Controllers
         }
         public IActionResult Detay(int id)
         {
+            TempData.Clear();
+            TempData["DergiKey"] = id;
+
             var degerler = c.Aboneliklers
                 .Where(x => x.DergiID == id)
                 .Include(x => x.Uye)

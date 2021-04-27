@@ -97,7 +97,7 @@
         $("#TxtTelNo").keydown(function (event) {
             var inputValue = event.which;
             // sadece sayı ve boşluk
-            if (!(inputValue > 47 && inputValue < 58) && !(inputValue >= 96 && inputValue <= 105) && inputValue != 8) {
+            if (!(inputValue > 47 && inputValue < 58) && !(inputValue >= 96 && inputValue <= 105) && inputValue != 8 && inputValue != 9) {
                 event.preventDefault();
             }
         });
@@ -106,7 +106,7 @@
         $("#TxtUyeAd").keydown(function (event) {
             var inputValue = event.which;
             // sadece karakter yazdırır ve boşluk
-            if (!(inputValue >= 65 && inputValue <= 92) && (inputValue != 8 && inputValue != 32 && inputValue != 191 && inputValue != 220 && inputValue != 222 && inputValue != 186 && inputValue != 221 && inputValue != 219)) {
+            if (!(inputValue >= 65 && inputValue <= 92) && (inputValue != 8 && inputValue != 32 && inputValue != 191 && inputValue != 220 && inputValue != 222 && inputValue != 186 && inputValue != 221 && inputValue != 219 && inputValue != 9)) {
                 event.preventDefault();
 
             }
