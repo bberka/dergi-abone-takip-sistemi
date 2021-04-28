@@ -25,6 +25,7 @@
                     <th>Kalan Gün</th>
                     <th>Üye ID</th>
                     <th>Üye Adı</th>
+                    <th>Düzenle</th>
                     <th>İptal</th>
                 </tr>
             </thead>
@@ -35,14 +36,15 @@
                 {
                     continue;
                 }
-                <tr>
-                    <td>@x.KayıtID</td>
-                    <td>@x.KayıtTarihi.ToShortDateString()</td>
-                    <td>@((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days)</td>
-                    <td>@x.UyeID</td>
-                    <td>@x.Uye.UyeAD</td>
-                    <td><a href="/Abonelik/Iptal/@x.KayıtID" class="btn btn-danger">İptal</a></td>
-                </tr>
+        <tr>
+            <td>@x.KayıtID</td>
+            <td>@x.KayıtTarihi.ToShortDateString()</td>
+            <td>@((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days)</td>
+            <td>@x.UyeID</td>
+            <td>@x.Uye.UyeAD</td>
+            <td><a href="/Abonelik/Duzenle/@x.KayıtID" class="btn btn-success">Düzenle</a></td>
+            <td><a href="#" onclick="Confirm2(@x.KayıtID)" class="btn btn-danger">İptal</a></td>
+        </tr>
             }
 
         </table>
@@ -73,13 +75,59 @@
                     <td>@(Math.Abs((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days))</td>
                     <td>@x.UyeID</td>
                     <td>@x.Uye.UyeAD</td>
-                    <td><a href="/Abonelik/Sil/@x.KayıtID" class="btn btn-danger">Kaydı Sil</a></td>
+                    <td><a href="#" onclick="Confirm(@x.KayıtID)" class="btn btn-danger">Kaydı Sil</a></td>
                 </tr>
             }
 
         </table>
     </div>
     <script>
+        function Confirm(id) {
+            swal({
+                title: "Silmek istediğinize emin misiniz ? (ID: " + id + ")",
+                icon: "warning",
+                buttons: {
+                    cancel: "Hayır",
+                    true: "Evet",
+                },
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "/Abonelik/Sil/" + id;
+                        swal({
+                            title: "Abonelik silme işlemi başarılı!",
+                            icon: "success",
+                            buttons: "Tamam",
+                        }).then(value => {
+                            window.location.href = "/Dergi/Detay/" + @ViewBag.drgid;
+                        });
+                    }
+
+                });
+        }
+        function Confirm2(id) {
+            swal({
+                title: "İptal etmek istediğinize emin misiniz ? (ID: " + id + ")",
+                icon: "warning",
+                buttons: {
+                    cancel: "Hayır",
+                    true: "Evet",
+                },
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "/Abonelik/Iptal/" + id;
+                        swal({
+                            title: "Abonelik iptal işlemi başarılı!",
+                            icon: "success",
+                            buttons: "Tamam",
+                        }).then(value => {
+                            window.location.href = "/Dergi/Detay/" + @ViewBag.drgid;
+                        });
+                    }
+
+                });
+        }
         var header = document.getElementById("tabDIV");
         var btns = header.getElementsByClassName("zbtn");
         for (var i = 0; i < btns.length; i++) {

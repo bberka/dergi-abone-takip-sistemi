@@ -10,10 +10,10 @@
 <div class="eklediv">
 
 
-    <form class="form-group" method="post">
+    <form class="form-group" method="post" id="myForm">
 
         <div class="txtbox">
-            <h4>Üye Adı</h4>
+            <h4>Adı Soyadı</h4>
             @Html.TextBoxFor(x => x.UyeAD, new { @class = "form-control", @id = "TxtUyeAd", @maxlength = "50" })
         </div>
         <br />
@@ -30,12 +30,12 @@
         <h4>Doğum Tarihi(Ay/Gün/Yıl)</h4>
         <input asp-for="Tarih" type="text" class="form-control" value="@DateTime.Now.ToString("MM/dd/yyyy")" maxlength="10" id="TarihSec" />
 
-        <br />
-        <button class="btn btn-success" onclick="BlankCheck();" type="submit">Üye Ekle</button>
-
     </form>
 
+    <br />
+    <button class="btn btn-success" onclick="BlankCheck()" >Üye Ekle</button>
 </div>
+
 <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.tr.min.js"></script>
 <script type="text/javascript" src="js/moment/tr.js"></script>
@@ -57,10 +57,17 @@
             swal("Uyarı", "Lütfen tüm alanları doğru şekilde doldurunuz.", "error")
             return false;
         }
-        //if (Tarih == "" || TelNo == null || Tarih == undefined) {
-        //     swal("Uyarı", "Lütfen tüm alanları doğru şekilde doldurunuz.", "error")
-        //}
-        return true;
+        else {
+            document.getElementById("myForm").submit();
+            swal({
+                title: "Üye ekleme başarılı!",
+                icon: "success",
+                button: "Tamam",
+            }).then(value => {
+                window.location.href = "/Uye/Liste/";
+            });
+            return true;
+        }
         
     }
 

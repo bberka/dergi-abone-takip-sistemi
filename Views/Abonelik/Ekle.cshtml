@@ -6,14 +6,14 @@
 }
 
 <div class="eklediv">
-    <form class="form-group" method="post">
+    <form class="form-group" method="post" id="myForm">
         <div class="txtbox">
             <h4>Kayıt Tarihi : @DateTime.Now.ToShortDateString()</h4>
         </div>
         <br />
         <div class="txtbox">
             <h4>Kayıt Süresi (ay)</h4>
-            @(Html.TextBoxFor(x => x.KayıtSuresi, new { @class = "form-control", @type = "number",@min="1", @max = "24", @id = "txt_KAYIT" }))
+            @(Html.TextBoxFor(x => x.KayıtSuresi, new { @class = "form-control", @type = "number",@min="1", @max = "24", @id = "txt_KAYIT"}))
         </div>
         <br />
         <h4>Abone</h4>
@@ -39,11 +39,12 @@
                 }
             </select>
         </div>
-        <br />
-        <button class="btn btn-success" onclick="BlankCheck();" type="submit">Abonelik Ekle</button>
-
 
     </form>
+    <br />
+    <button class="btn btn-success" onclick="BlankCheck()" >Abonelik Ekle</button>
+
+
 </div>
 
 <script>
@@ -66,7 +67,17 @@
             return false;
 
         }
-        return true;
+        else {
+            document.getElementById("myForm").submit();
+            swal({
+                title: "Abonelik ekleme başarılı!",
+                icon: "success",
+                button: "Tamam",
+            }).then(value => {
+                window.location.href = "/Abonelik/Liste/";
+            });
+            return true;
+        }
     }
     
 </script>

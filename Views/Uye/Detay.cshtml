@@ -41,7 +41,7 @@
                     <td>@x.DergiID</td>
                     <td>@x.Dergi.DergiAD</td>
                     <td><a href="/Abonelik/Duzenle/@x.KayıtID" class="btn btn-success">Düzenle</a></td>
-                    <td><a href="/Abonelik/Iptal/@x.KayıtID" class="btn btn-danger">İptal</a></td>
+                    <td><a href="#" class="btn btn-danger" onclick="Confirm2(@x.KayıtID)">İptal</a></td>
                 </tr>
             }
 
@@ -73,7 +73,7 @@
                     <td>@(Math.Abs((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days))</td>
                     <td>@x.DergiID</td>
                     <td>@x.Dergi.DergiAD</td>
-                    <td><a href="/Abonelik/Sil/@x.KayıtID" class="btn btn-danger">Kaydı Sil</a></td>
+                    <td><a href="#" class="btn btn-danger" onclick="Confirm(@x.KayıtID)">Kaydı Sil</a></td>
                 </tr>
             }
 
@@ -82,6 +82,53 @@
 
 
     <script>
+        function Confirm(id) {
+            swal({
+                title: "Silmek istediğinize emin misiniz ? (ID: " + id + ")",
+                icon: "warning",
+                buttons: {
+                    cancel: "Hayır",
+                    true: "Evet",
+                },
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "/Abonelik/Sil/" + id;
+                        swal({
+                            title: "Abonelik silme işlemi başarılı!",
+                            icon: "success",
+                            buttons: "Tamam",
+                        }).then(value => {
+                            window.location.href = "/Uye/Detay/" + @ViewBag.uyeid;
+                        });
+                    }
+
+                });
+        }
+        function Confirm2(id) {
+            swal({
+                title: "İptal etmek istediğinize emin misiniz ? (ID: " + id + ")",
+                icon: "warning",
+                buttons: {
+                    cancel: "Hayır",
+                    true: "Evet",
+                },
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "/Abonelik/Iptal/" + id;
+                        swal({
+                            title: "Abonelik iptal işlemi başarılı!",
+                            icon: "success",
+                            buttons: "Tamam",
+                        }).then(value => {
+                            window.location.href = "/Uye/Detay/" + @ViewBag.uyeid;
+                        });
+                    }
+
+                });
+        }
+
         var header = document.getElementById("tabDIV");
         var btns = header.getElementsByClassName("zbtn");
         for (var i = 0; i < btns.length; i++) {

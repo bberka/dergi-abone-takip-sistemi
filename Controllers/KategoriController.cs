@@ -62,7 +62,7 @@ namespace DergiAboneProje.Controllers
                     var ktg = c.Kategorilers.Find(id);
                     c.Kategorilers.Remove(ktg);
                     c.SaveChanges();
-                    return RedirectToAction("Liste");
+                    //return RedirectToAction("Liste");
                 }
                catch
                 {
@@ -73,6 +73,9 @@ namespace DergiAboneProje.Controllers
         }
         public IActionResult Detay(int id)
         {
+            TempData.Clear();
+            TempData["KtgKey"] = id;
+
             var degerler = c.Dergilers.Where(x => x.KategoriID == id).ToList();
             var ktgad = c.Kategorilers.Where(x => x.KategoriID == id).Select(y => y.KategoriAD).FirstOrDefault();
             ViewBag.kategoriad = ktgad;

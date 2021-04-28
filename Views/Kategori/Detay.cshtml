@@ -30,7 +30,7 @@
                 <td>@x.DergiAD</td>
                 <td>@x.DergiTARIH.ToShortDateString()</td>
                 <td><a href="/Dergi/Duzenle/@x.DergiID" class="btn btn-success">Düzenle</a></td>
-                <td><a href="/Dergi/Sil/@x.DergiID" class="btn btn-danger">Sil</a></td>
+                <td><a href="#" onclick="Confirm(@x.DergiID)" class="btn btn-danger">Sil</a></td>
                 <td><a href="/Dergi/Detay/@x.DergiID" class="btn btn-warning">Detaylar</a></td>
             </tr>
             }
@@ -39,6 +39,29 @@
     </table>
     
     <script>
+        function Confirm(id) {
+            swal({
+                title: "Silmek istediğinize emin misiniz ? (ID: " + id + ")",
+                icon: "warning",
+                buttons: {
+                    cancel: "Hayır",
+                    true: "Evet",
+                },
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "/Dergi/Sil/" + id;
+                        swal({
+                            title: "Dergi silme işlemi başarılı!",
+                            icon: "success",
+                            buttons: "Tamam",
+                        }).then(value => {
+                            window.location.href = "/Kategori/Detay/" + @ViewBag.ktgid;
+                        });
+                    }
+
+                });
+        }
         $(document).ready(function () {
             $('#DergiTable').DataTable({
                 "language": {

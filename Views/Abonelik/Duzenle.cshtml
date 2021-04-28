@@ -1,12 +1,12 @@
 ﻿@model DergiAboneProje.Models.Abonelikler
 @{
-    ViewData["Title"] = "Abonelik DÜzenle";
+    ViewData["Title"] = "Abonelik Düzenle";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
 }
 
 <div class="eklediv">
-    <form class="form-group" method="post">
+    <form class="form-group" method="post" id="myForm">
 
 
         <h4>Kayıt ID : @Model.KayıtID</h4>
@@ -42,11 +42,12 @@
                 }
             </select>
         </div>
-        <br />
-        <button class="btn btn-info" onclick="BlankCheck();" type="submit">Düzenlemeyi Kaydet</button>
-
 
     </form>
+    <br />
+    <button class="btn btn-info" onclick="BlankCheck()">Düzenlemeyi Kaydet</button>
+
+
 </div>
 
 <script>
@@ -70,7 +71,38 @@
             return false;
 
         }
-        return true;
+        else {
+            document.getElementById("myForm").submit();
+            swal({
+                title: "Abonelik düzenleme başarılı!",
+                icon: "success",
+                button: "Tamam",
+            }).then(value => {
+                
+                @if (TempData.ContainsKey("DergiKey"))
+                {
+
+                    <text>
+                    window.location.href = "/Dergi/Detay/" + @TempData["DergiKey"];
+                   </text>
+
+                }
+                else if (TempData.ContainsKey("UyeKey"))
+                {
+                    <text>
+                     window.location.href = "/Uye/Detay/"+ @TempData["UyeKey"];
+                    </text>
+                }
+                else
+                {
+                    <text>
+                     window.location.href = "/Abonelik/Liste/";
+                    </text>
+
+                }
+            });
+            return true;
+        }
     }
 
 </script>

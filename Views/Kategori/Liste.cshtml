@@ -10,15 +10,6 @@
 
 <div>
 
-    <script>
-        $(document).ready(function () {
-            $('#KategoriTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
-                }
-            });
-        });
-    </script>
 
     <div>
         <table id="KategoriTable" class="row-border stripe hover table-bordered">
@@ -41,17 +32,51 @@
                     <td>@x.KategoriAD</td>
                     <td>@x.Dergilers.Where(x => x.KategoriID == x.KategoriID).Count()</td>
                     <td><a href="/Kategori/Duzenle/@x.KategoriID" class="btn btn-success">Düzenle</a></td>
-                    <td><a href="/Kategori/Sil/@x.KategoriID" class="btn btn-danger">Sil</a></td>
+                    <td><a href="#" onclick="Confirm(@x.KategoriID)" class="btn btn-danger ksilbtn">Sil</a></td>
                     <td><a href="/Kategori/Detay/@x.KategoriID" class="btn btn-warning">Detaylar</a></td>
                 </tr>
             }
-
+            @*href="/Kategori/Sil/@x.KategoriID"*@
         </table>
     </div>
-  
+
     <br />
     <a href="/Kategori/Ekle/" class="btn btn-success">Yeni Kategori Ekle</a>
 
+    <script>
+        function Confirm(id) {
+            swal({
+                title: "Silmek istediğinize emin misiniz ? (ID: " + id + ")",
+                icon: "warning",
+                buttons: {
+                    cancel: "Hayır",
+                    true: "Evet",
+                },
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "/Kategori/Sil/" + id; 
+                        swal({
+                            title: "Kategori silme işlemi başarılı!",
+                            icon: "success",
+                            buttons: "Tamam",
+                        }).then(value => {
+                            window.location.href = "/Kategori/Liste/";
+                        });
+                    }
+                    
+                });
+        }
+
+        $(document).ready(function () {
+            $('#KategoriTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+            });
+        });
+
+    </script>
 </div>
 
 

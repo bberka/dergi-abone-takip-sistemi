@@ -43,7 +43,7 @@ namespace DergiAboneProje.Controllers
             {             
                 c.Dergilers.Add(d);
                 c.SaveChanges();
-                return RedirectToAction("Liste");
+                //return RedirectToAction("Liste");
             }
             catch
             {
@@ -58,7 +58,7 @@ namespace DergiAboneProje.Controllers
                 var drg = c.Dergilers.Find(id);
                 c.Dergilers.Remove(drg);
                 c.SaveChanges();
-                return RedirectToAction("Liste");
+                //return RedirectToAction("Liste");
             }
             catch
             {
@@ -87,7 +87,7 @@ namespace DergiAboneProje.Controllers
             {
                 c.Dergilers.Update(d);
                 c.SaveChanges();
-                return RedirectToAction("Liste");
+                //return RedirectToAction("Liste");
             }
             catch
             {

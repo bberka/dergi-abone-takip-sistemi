@@ -6,7 +6,7 @@
 }
 <div class="eklediv">
 
-    <form class="form-group" method="post">
+    <form class="form-group" method="post" id="myForm">
 
         <h4>Dergi Ad</h4>
         <div class="txtbox">
@@ -16,7 +16,7 @@
         <h4>Kategori Adı</h4>
         @*@Html.DropDownListFor(x => x.Kategoriler.KategoriID, (List<SelectListItem>)ViewBag.dgr, new { @class = "form-control"})*@
         <div>
-            <select class="form-control chosen-select" asp-for="KategoriID" >
+            <select class="form-control chosen-select" asp-for="KategoriID">
                 <option selected disabled style="display:none">Kategori Seçiniz...</option>
                 @foreach (var item in (List<SelectListItem>)ViewBag.dgr)
                 {
@@ -25,9 +25,8 @@
             </select>
         </div>
         <br />
-        <button class="btn btn-success" onclick="BlankCheck();" type="submit">Dergi Ekle</button>
-
     </form>
+    <button class="btn btn-success" onclick="BlankCheck()">Dergi Ekle</button>
 </div>
 
 
@@ -43,6 +42,17 @@
         if (DergiAD == "" || DergiAD == null || ktgID == null) {
             swal("Uyarı", "Lütfen tüm boşlukları doldurunuz.", "error")
             return false;
+        }
+        else {
+            document.getElementById("myForm").submit();
+            swal({
+                title: "Dergi Ekleme Başarılı!",
+                icon: "success",
+                button: "Tamam",
+            }).then(value => {
+                window.location.href = "/Dergi/Liste/";
+            });
+            return true;
         }
        
     }

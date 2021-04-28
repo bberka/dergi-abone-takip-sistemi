@@ -24,13 +24,13 @@
         var KategoriAD = $('#KategoriAD').val();
 
         if (KategoriAD == "" || KategoriAD == undefined) {
-            swal("Uyarı", "Kategori Adı boş bırakılamaz!", "error")
+            swal("Uyarı", "Kategori adı boş bırakılamaz!", "error")
             return false;
         }
         else {
             document.getElementById("myForm").submit();
             swal({
-                title: "Kategori Düzenleme Başarılı!",
+                title: "Kategori düzenleme başarılı!",
                 icon: "success",
                 button: "Tamam",
             }).then(value => {

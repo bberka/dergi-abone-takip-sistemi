@@ -26,7 +26,7 @@ namespace DergiAboneProje.Controllers
                 var a = c.Uyelers.Find(id);
                 c.Uyelers.Remove(a);
                 c.SaveChanges();
-                return RedirectToAction("Liste");
+                //return RedirectToAction("Liste");
             }
             catch
             {
@@ -54,7 +54,7 @@ namespace DergiAboneProje.Controllers
                     {
                         c.Uyelers.Add(b);
                         c.SaveChanges();
-                        return RedirectToAction("Liste");
+                        //return RedirectToAction("Liste");
                     }
                     catch
                     {
@@ -91,7 +91,7 @@ namespace DergiAboneProje.Controllers
                     {
                         c.Uyelers.Update(b);
                         c.SaveChanges();
-                        return RedirectToAction("Liste");
+                        //return RedirectToAction("Liste");
                     }
                     catch
                     {

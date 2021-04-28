@@ -33,15 +33,15 @@ namespace DergiAboneProje.Controllers
                 var abn = c.Aboneliklers.Find(id);
                 c.Aboneliklers.Remove(abn);
                 c.SaveChanges();
-                if (TempData.ContainsKey("UyeKey"))
-                {
-                    return RedirectToAction("Detay", "Uye",new { id =TempData["UyeKey"]});
-                }
-                else if (TempData.ContainsKey("DergiKey"))
-                {
-                    return RedirectToAction("Detay", "Dergi", new { id = TempData["DergiKey"] });
-                }
-                return RedirectToAction("Liste");
+                //if (TempData.ContainsKey("UyeKey"))
+                //{
+                //    return RedirectToAction("Detay", "Uye",new { id =TempData["UyeKey"]});
+                //}
+                //else if (TempData.ContainsKey("DergiKey"))
+                //{
+                //    return RedirectToAction("Detay", "Dergi", new { id = TempData["DergiKey"] });
+                //}
+                //return RedirectToAction("Liste");
             }
             catch
             {
@@ -57,15 +57,15 @@ namespace DergiAboneProje.Controllers
                 abn.KayıtSuresi =  abn.KayıtSuresi - (abn.KayıtTarihi.AddDays(abn.KayıtSuresi) - DateTime.Now).Days;
                 c.Aboneliklers.Update(abn);
                 c.SaveChanges();
-                if (TempData.ContainsKey("UyeKey"))
-                {
-                    return RedirectToAction("Detay", "Uye", new { id = TempData["UyeKey"] });
-                }
-                else if (TempData.ContainsKey("DergiKey"))
-                {
-                    return RedirectToAction("Detay", "Dergi", new { id = TempData["DergiKey"] });
-                }
-                return RedirectToAction("Liste");
+                //if (TempData.ContainsKey("UyeKey"))
+                //{
+                //    return RedirectToAction("Detay", "Uye", new { id = TempData["UyeKey"] });
+                //}
+                //else if (TempData.ContainsKey("DergiKey"))
+                //{
+                //    return RedirectToAction("Detay", "Dergi", new { id = TempData["DergiKey"] });
+                //}
+                //return RedirectToAction("Liste");
             }
             catch
             {
@@ -103,7 +103,7 @@ namespace DergiAboneProje.Controllers
                 {
                     c.Aboneliklers.Add(b);
                     c.SaveChanges();
-                    return RedirectToAction("Liste");
+                    //return RedirectToAction("Liste");
                 }
                 catch
                 {
@@ -145,7 +145,7 @@ namespace DergiAboneProje.Controllers
                 d.KayıtSuresi *= 30;
                 c.Aboneliklers.Update(d);
                 c.SaveChanges();
-                return RedirectToAction("Liste");
+                //return RedirectToAction("Liste");
             }
             catch
             {

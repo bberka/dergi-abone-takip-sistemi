@@ -10,22 +10,14 @@
 
 
 <div>
-    <script>
-        $(document).ready(function () {
-            $('#AboneTable').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
-                }
-            });
-        });
-    </script>
+
 
 
     <table id="AboneTable" class="row-border stripe hover table-bordered">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Üye Adı Soyadı</th>
+                <th>Adı Soyadı</th>
                 <th>Email</th>
                 <th>Tel No</th>
                 <th>Doğum Tarihi(Ay/Gün/Yıl)</th>
@@ -44,7 +36,7 @@
                     <td>@x.TelNo</td>
                     <td>@x.Tarih.ToShortDateString()</td>
                     <td><a href="/Uye/Duzenle/@x.UyeID" class="btn btn-success">Düzenle</a></td>
-                    <td><a href="/Uye/Sil/@x.UyeID" class="btn btn-danger">Sil</a></td>   
+                    <td><a href="#" onclick="Confirm(@x.UyeID)" class="btn btn-danger">Sil</a></td>
                     <td><a href="/Uye/Detay/@x.UyeID" class="btn btn-warning">Detaylar</a></td>
                 </tr>
             }
@@ -52,7 +44,39 @@
     </table>
     <br />
     <a href="/Uye/Ekle/" class="btn btn-success">Yeni Üye Ekle</a>
+    <script>
+        function Confirm(id) {
+            swal({
+                title: "Silmek istediğinize emin misiniz ? (ID: " + id + ")",
+                icon: "warning",
+                buttons: {
+                    cancel: "Hayır",
+                    true: "Evet",
+                },
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "/Uye/Sil/" + id;
+                        swal({
+                            title: "Üye silme işlemi başarılı!",
+                            icon: "success",
+                            buttons: "Tamam",
+                        }).then(value => {
+                            window.location.href = "/Uye/Liste/";
+                        });
+                    }
 
+                });
+        }
+
+        $(document).ready(function () {
+            $('#AboneTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+            });
+        });
+    </script>
 </div>
 
 
