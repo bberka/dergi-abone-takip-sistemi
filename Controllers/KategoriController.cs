@@ -37,16 +37,21 @@ namespace DergiAboneProje.Controllers
            
             if (ModelState.IsValid)
             {
-                try
+                if (c.Kategorilers.Where(x => x.KategoriAD == k.KategoriAD).Count() == 0)
                 {
-                    c.Kategorilers.Add(k);
-                    c.SaveChanges();
-                    //return RedirectToAction("Liste"); //JS ile listeye yönlendiriliyor
+                    try
+                    {
+                        c.Kategorilers.Add(k);
+                        c.SaveChanges();
+
+                        //return RedirectToAction("Liste"); //JS ile listeye yönlendiriliyor
+                    }
+                    catch
+                    {
+
+                    }
                 }
-                catch
-                {
-                    
-                }
+                
                 
             }
             return NoContent();
@@ -91,16 +96,22 @@ namespace DergiAboneProje.Controllers
         [HttpPost]
         public IActionResult Duzenle(Kategoriler k)
         {
-            try
+            if (c.Kategorilers.Where(x => x.KategoriAD == k.KategoriAD).Count() == 0)
             {
-                c.Kategorilers.Update(k);
-                c.SaveChanges();
-               //return RedirectToAction("Liste"); //JS ile yönlendiriliyor
+                try
+                {
+
+                    c.Kategorilers.Update(k);
+                    c.SaveChanges();
+
+                    //return RedirectToAction("Liste"); //JS ile yönlendiriliyor
+                }
+                catch
+                {
+
+                }
             }
-            catch
-            {
-                
-            }
+            
             return NoContent();
         }
     }

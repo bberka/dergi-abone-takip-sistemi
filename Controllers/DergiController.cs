@@ -39,16 +39,20 @@ namespace DergiAboneProje.Controllers
         [HttpPost]
         public IActionResult Ekle(Dergiler d)
         {
-            try
-            {             
-                c.Dergilers.Add(d);
-                c.SaveChanges();
-                //return RedirectToAction("Liste");
-            }
-            catch
+            if (c.Dergilers.Where(x => x.DergiAD == d.DergiAD).Count() == 0)
             {
-                
+                try
+                {
+                    c.Dergilers.Add(d);
+                    c.SaveChanges();
+                    //return RedirectToAction("Liste");
+                }
+                catch
+                {
+
+                }
             }
+           
             return NoContent();
         }
         public IActionResult Sil(int id)
@@ -83,16 +87,20 @@ namespace DergiAboneProje.Controllers
         [HttpPost]
         public IActionResult Duzenle(Dergiler d)
         {
-            try
+            if (c.Dergilers.Where(x => x.DergiAD == d.DergiAD).Count() == 0)
             {
-                c.Dergilers.Update(d);
-                c.SaveChanges();
-                //return RedirectToAction("Liste");
-            }
-            catch
-            {
+                try
+                {
+                    c.Dergilers.Update(d);
+                    c.SaveChanges();
+                    //return RedirectToAction("Liste");
+                }
+                catch
+                {
 
+                }
             }
+            
             return NoContent();
         }
         public IActionResult Detay(int id)

@@ -50,16 +50,20 @@ namespace DergiAboneProje.Controllers
             {
                 if (b.TelNo.ToString().Length > 9)
                 {
-                    try
+                    if (c.Uyelers.Where(x => x.TelNo == b.TelNo).Count() == 0)
                     {
-                        c.Uyelers.Add(b);
-                        c.SaveChanges();
-                        //return RedirectToAction("Liste");
-                    }
-                    catch
-                    {
+                        try
+                        {
+                            c.Uyelers.Add(b);
+                            c.SaveChanges();
+                            //return RedirectToAction("Liste");
+                        }
+                        catch
+                        {
 
+                        }
                     }
+                    
                 }
 
             }
@@ -87,8 +91,11 @@ namespace DergiAboneProje.Controllers
            
                 if (b.TelNo.ToString().Length > 9)
                 {
+                    if (c.Uyelers.Where(x => x.TelNo == b.TelNo).Count() == 0)
+                    {
                     try
                     {
+
                         c.Uyelers.Update(b);
                         c.SaveChanges();
                         //return RedirectToAction("Liste");
@@ -97,6 +104,8 @@ namespace DergiAboneProje.Controllers
                     {
 
                     }
+                }
+                
                 }
                   
             return NoContent();

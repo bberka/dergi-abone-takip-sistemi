@@ -96,19 +96,27 @@ namespace DergiAboneProje.Controllers
         public IActionResult Ekle(Abonelikler b)
         {
             b.KayıtSuresi *= 30;
-      
+            
             if (ModelState.IsValid)
             {
-                try
+                
+                //&& x => (x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days > 0
+                var temp = c.Aboneliklers.Where(x => x.UyeID == b.UyeID && x.DergiID == b.DergiID && x.KayıtTarihi.AddDays(x.KayıtSuresi-2).Date >= DateTime.Now.Date);
+                
+                if (temp.Count() == 0)
                 {
-                    c.Aboneliklers.Add(b);
-                    c.SaveChanges();
-                    //return RedirectToAction("Liste");
+                    try
+                    {
+                        c.Aboneliklers.Add(b);
+                        c.SaveChanges();
+                        //return RedirectToAction("Liste");
+                    }
+                    catch
+                    {
+
+                    }
                 }
-                catch
-                {
-                    
-                }
+                
             }
             return NoContent();
 
@@ -138,19 +146,25 @@ namespace DergiAboneProje.Controllers
             return View("Duzenle", abone);
         }
         [HttpPost]
-        public IActionResult Duzenle(Abonelikler d)
+        public IActionResult Duzenle(Abonelikler b)
         {
-            try
+            var temp = c.Aboneliklers.Where(x => x.UyeID == b.UyeID && x.DergiID == b.DergiID && x.KayıtTarihi.AddDays(x.KayıtSuresi - 2).Date >= DateTime.Now.Date);
+           
+            if (temp.Count() == 0)
             {
-                d.KayıtSuresi *= 30;
-                c.Aboneliklers.Update(d);
-                c.SaveChanges();
-                //return RedirectToAction("Liste");
-            }
-            catch
-            {
+                try
+                {
+                    b.KayıtSuresi *= 30;
+                    c.Aboneliklers.Update(b);
+                    c.SaveChanges();
+                    //return RedirectToAction("Liste");
+                }
+                catch
+                {
 
+                }
             }
+            
             return NoContent();
         }
     }
