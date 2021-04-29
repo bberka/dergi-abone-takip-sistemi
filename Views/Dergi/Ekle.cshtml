@@ -11,28 +11,32 @@
             <div class="form-group">
                 <label asp-for="DergiAD"></label>
                 <input asp-for="DergiAD" class="form-control" />
-                <span asp-validation-for="DergiAD" class="text-danger"></span>
+                @*<span asp-validation-for="DergiAD" class="text-danger"></span>*@
             </div>
             <br />
             <div class="form-group">
                 <label asp-for="KategoriID">Kategori Adı</label>
+                
                 <select class="form-control chosen-select" asp-for="KategoriID">
-                    <option selected disabled style="display:none">Kategori Seçiniz...</option>
-                    @foreach (var item in (List<SelectListItem>)ViewBag.dgr)
+                    @*<option selected value="100">Kategori Seçiniz...</option>*@
+                    @foreach (var item in ViewBag.dgr)
                     {
-                        <option value="@item.Value">@( "("+ item.Value + ")" + item.Text)</option>
+                        <option value="@item.Value">@("("+ item.Value + ")" + item.Text)</option>
                     }
                 </select>
-                <span asp-validation-for="KategoriID" class="text-danger"></span>
+                 <span asp-validation-for="KategoriID" class="text-danger"></span>
             </div>
             <button class="btn btn-success" type="submit">Dergi Ekle</button>
         </form>
+        
     </div>
 </div>
+
 <br />
 <div>
     <a asp-action="Liste">Listeye Dön</a>
 </div>
+
     @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
@@ -40,6 +44,7 @@
             $("#KategoriID").chosen({
                 no_results_text: "Eşleşme bulunamadı!"
             });
+
 
         </script>
     }

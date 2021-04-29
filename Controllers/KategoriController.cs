@@ -35,12 +35,16 @@ namespace DergiAboneProje.Controllers
         [HttpPost]
         public IActionResult Ekle(Kategoriler k)
         {
-            
-            bool NameExist = c.Kategorilers.Where(x => x.KategoriAD == k.KategoriAD).Count() != 0;
-            if (NameExist)
+            bool NameLength = k.KategoriAD.Length < 3 || k.KategoriAD.Length > 16;
+            bool NameAlreadyExist = c.Kategorilers.Where(x => x.KategoriAD == k.KategoriAD).Count() != 0;
+            if (NameAlreadyExist)
             {
-                ModelState.AddModelError("CustomError", "Bu kategori adı zaten var.");
+                ModelState.AddModelError("NameAlreadyExist", "Bu kategori adı zaten var.");
                 
+            }
+            else if (NameLength)
+            {
+                ModelState.AddModelError("NameLength", "Kategori adı en az 3 en fazla 16 haneli olabilir.");
             }
             else if (ModelState.IsValid)
             {
@@ -48,7 +52,7 @@ namespace DergiAboneProje.Controllers
                 c.SaveChanges();
                 return RedirectToAction("Liste");
             }
-            return NoContent();
+            return View();
 
         }
 
@@ -86,15 +90,28 @@ namespace DergiAboneProje.Controllers
         public IActionResult Duzenle(int id)
         {
             var ktg = c.Kategorilers.Find(id);
+            ViewBag.ktgID = id;
             return View("Duzenle",ktg);
         }
         [HttpPost]
         public IActionResult Duzenle(Kategoriler k)
         {
-            bool NameExist = c.Kategorilers.Where(x => x.KategoriAD == k.KategoriAD).Count() != 0;
-            if (NameExist)
+            bool NameLength = k.KategoriAD.Length < 3 || k.KategoriAD.Length > 16;
+            bool NameAlreadyExist = c.Kategorilers.Where(x => x.KategoriAD == k.KategoriAD).Count() != 0;
+            bool NameSame = c.Kategorilers.Where(x => x.KategoriID == k.KategoriID && x.KategoriAD == k.KategoriAD).Count() != 0;
+            if (NameSame)
             {
-                ModelState.AddModelError("", "Bu kategori adı zaten var.");
+                ModelState.AddModelError("NameSame", "Düzenleme yapmadınız.");
+                
+            }
+            else if (NameAlreadyExist)
+            {
+                ModelState.AddModelError("NameAlreadyExist", "Bu kategori adı zaten var.");
+                
+            }
+            else if (NameLength)
+            {
+                ModelState.AddModelError("NameLength", "Kategori adı en az 3 en fazla 16 haneli olabilir.");
             }
             else if (ModelState.IsValid)
             {
@@ -111,7 +128,7 @@ namespace DergiAboneProje.Controllers
 
                 }
             }
-            return NoContent();
+            return View();
         }
     }
 }

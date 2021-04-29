@@ -8,30 +8,39 @@
 
 
 
-    <form class="form-group" method="post" id="myForm">
-        <div class="eklediv">
-            <h4>Dergi ID : @Model.DergiID</h4>
-            @Html.TextBoxFor(x => x.DergiID, new { @class = "form-control", @readonly = "readonly", style = "display: none;" })
-            <br />
-            <h4>Dergi Kayıt Tarihi: @Model.DergiTARIH.ToShortDateString()</h4>
-            @*@Html.TextBoxFor(x => x.DergiTARIH, new { @class = "form-control", @readonly = "readonly" })*@
-            <br />
-            <h4>Dergi Adı</h4>
-            @Html.TextBoxFor(x => x.DergiAD, new { @class = "form-control" })
-            <br />
-            <h4>Kategori Adı</h4>
-            <div>
-                <select class="form-control chosen-select" asp-for="KategoriID">
-                    @foreach (var item in (List<SelectListItem>)ViewBag.dgr)
-                    {
-                        <option value="@item.Value">@( "("+ item.Value + ")" + item.Text)</option>
-                    }
-                </select>
-            </div>
+<form class="form-group" method="post" id="myForm">
+    <div class="eklediv">
+        <h4>Dergi ID : @Model.DergiID</h4>
+        @Html.HiddenFor(x => x.DergiID)
+        <br />
+        <h4>Dergi Kayıt Tarihi: @Model.DergiTARIH.ToShortDateString()</h4>
+
+        <br />
+        <h4>Dergi Adı</h4>
+        @Html.TextBoxFor(x => x.DergiAD, new { @class = "form-control" })
+        <br />
+        <h4>Kategori Adı</h4>
+        <div>
+            <label asp-for="KategoriID">Kategori Adı</label>
+            <select class="form-control chosen-select" asp-for="KategoriID">
+                @foreach (var item in (List<SelectListItem>)ViewBag.dgr)
+                {
+                    <option value="@item.Value">@("("+ item.Value + ")" + item.Text)</option>
+                }
+            </select>
+            @*<span asp-validation-for="KategoriID" class="text-danger"></span>*@
         </div>
-    </form>
-    <br />
-    <button class="btn btn-info" onclick="BlankCheck()">Düzenlemeyi Kaydet</button>
+    </div>
+</form>
+<br />
+<button class="btn btn-info" onclick="BlankCheck()">Düzenlemeyi Kaydet</button>
+
+
+<div>
+    <a asp-action="Liste">Listeye Dön</a>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
     $("#KategoriID").chosen({
@@ -65,10 +74,11 @@
                      window.location.href = "/Dergi/Liste/";
                     </text>
                    }
-                
+
             });
             return true;
         }
     }
 
     </script>
+    }

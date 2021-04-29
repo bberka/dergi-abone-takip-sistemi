@@ -27,24 +27,30 @@ namespace DergiAboneProje.Controllers
         public IActionResult Ekle()
         {
             
-            List<SelectListItem> degerler = (from x in c.Kategorilers.ToList()
+            List<SelectListItem>  degerler = (from x in c.Kategorilers.ToList()
                                              select new SelectListItem
                                              {
                                                  Text = x.KategoriAD,
                                                  Value = x.KategoriID.ToString()
                                              }).ToList();
+            
             ViewBag.dgr = degerler;
             return View();
         }
         [HttpPost]
         public IActionResult Ekle(Dergiler d)
         {
-            bool NameExist = c.Dergilers.Where(x => x.DergiAD == d.DergiAD).Count() != 0;
-            if (NameExist)
+            bool KtgIDNotSelected = d.KategoriID == 101;
+            bool NameAlreadyExist = c.Dergilers.Where(x => x.DergiAD == d.DergiAD).Count() != 0;
+            if (NameAlreadyExist)
             {
-                ModelState.AddModelError("","Bu dergi adı zaten mevcut.");
+                ModelState.AddModelError("NameAlreadyExist", "Bu dergi adı zaten mevcut.");
             }
-             else
+            else if (KtgIDNotSelected)
+            {
+                ModelState.AddModelError("KtgIDNotSelected", "Kategori ID seçiniz.");
+            }
+            else if (ModelState.IsValid)
             {
                 try
                 {
@@ -57,7 +63,7 @@ namespace DergiAboneProje.Controllers
 
                 }
             }
-            return NoContent();
+            return View();
         }
         public IActionResult Sil(int id)
         {
@@ -91,21 +97,30 @@ namespace DergiAboneProje.Controllers
         [HttpPost]
         public IActionResult Duzenle(Dergiler d)
         {
-            if (c.Dergilers.Where(x => x.DergiAD == d.DergiAD).Count() == 0)
+            bool NameAlreadyExist = c.Dergilers.Where(x => x.DergiAD == d.DergiAD).Count() != 0;
+            bool NameSame = c.Dergilers.Where(x => x.DergiID == d.DergiID && x.DergiAD == d.DergiAD).Count() != 0;
+            if (NameAlreadyExist)
+            {
+                ModelState.AddModelError("NameAlreadyExist", "Bu dergi adı zaten mevcut.");
+            }
+            else if (NameSame)
+            {
+                ModelState.AddModelError("NameSame", "Düzenleme yapmadınız.");
+            }
+            else if (ModelState.IsValid)
             {
                 try
                 {
                     c.Dergilers.Update(d);
                     c.SaveChanges();
-                    //return RedirectToAction("Liste");
+                    return RedirectToAction("Liste");
                 }
                 catch
                 {
 
                 }
             }
-            
-            return NoContent();
+            return View();
         }
         public IActionResult Detay(int id)
         {

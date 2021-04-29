@@ -20,6 +20,7 @@ namespace DergiAboneProje.Models
         [Required(ErrorMessage = "Kategori adı boş bırakılamaz.")]
         [DataType(DataType.Text)]
         [Display(Name ="Kategori Adı")]
+        [RegularExpression(@"^[a-zA-Z]{1,17}$", ErrorMessage = "Kategori adı sayı içeremez.")]
         public string KategoriAD { get; set; }
         
 

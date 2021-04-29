@@ -42,32 +42,38 @@ namespace DergiAboneProje.Controllers
             return View();
         }
         [HttpPost]
+        
         public IActionResult Ekle(Uyeler b)
         {
-
-
-            if (ModelState.IsValid)
+            bool UyeAlreadyExist = c.Uyelers.Where(x => x.Email == b.Email).Count() != 0;
+            bool BirtDateCheck = Convert.ToDateTime(b.Tarih).AddYears(18) >= DateTime.Now;
+            bool PhoneNumberCheck = b.TelNo.ToString().Length != 10 || !b.TelNo.ToString().All(char.IsDigit) ;
+            if (UyeAlreadyExist)
             {
-                if (b.TelNo.ToString().Length > 9)
-                {
-                    if (c.Uyelers.Where(x => x.TelNo == b.TelNo).Count() == 0)
-                    {
-                        try
-                        {
-                            c.Uyelers.Add(b);
-                            c.SaveChanges();
-                            //return RedirectToAction("Liste");
-                        }
-                        catch
-                        {
-
-                        }
-                    }
-                    
-                }
-
+                ModelState.AddModelError("UyeAlreadyExist", "Bu email adresi zaten kullanılıyor.");
             }
-            return NoContent();
+            else if (BirtDateCheck)
+            {
+                ModelState.AddModelError("BirtDateCheck", "Üye 18 yaşından büyük olmalıdır.");
+            }
+            else if (PhoneNumberCheck)
+            {
+                ModelState.AddModelError("PhoneNumberCheck", "Geçersiz telefon numarası girdiniz.");
+            }
+            else if (ModelState.IsValid)
+            {
+                try
+                {
+                    c.Uyelers.Add(b);
+                    c.SaveChanges();
+                    return RedirectToAction("Liste");
+                }
+                catch
+                {
+
+                }
+            }
+            return View();
 
         }
         [HttpGet]
@@ -82,33 +88,42 @@ namespace DergiAboneProje.Controllers
             {
 
             }
-            return NoContent();
+            return View();
         }
         [HttpPost]
         public IActionResult Duzenle(Uyeler b)
         {
-           
-           
-                if (b.TelNo.ToString().Length > 9)
+
+            bool ChangesMade = c.Uyelers.Where(x => x.Email == b.Email && x.UyeAD == b.UyeAD && x.Tarih == b.Tarih && x.TelNo == b.TelNo).Count() != 0;
+            bool BirtDateCheck = Convert.ToDateTime(b.Tarih).AddYears(18) >= DateTime.Now;
+            bool PhoneNumberCheck = b.TelNo.ToString().Length != 10 || !b.TelNo.ToString().All(char.IsDigit);
+            if (ChangesMade)
+            {
+                ModelState.AddModelError("ChangesMade", "Değişiklik yapmadınız.");
+            }
+            else if (BirtDateCheck)
+            {
+                ModelState.AddModelError("BirtDateCheck", "Üye 18 yaşından büyük olmalıdır.");
+            }
+            else if (PhoneNumberCheck)
+            {
+                ModelState.AddModelError("PhoneNumberCheck", "Geçersiz telefon numarası girdiniz.");
+            }
+            else if (ModelState.IsValid)
+            {
+                try
                 {
-                    if (c.Uyelers.Where(x => x.TelNo == b.TelNo).Count() == 0)
-                    {
-                    try
-                    {
 
-                        c.Uyelers.Update(b);
-                        c.SaveChanges();
-                        //return RedirectToAction("Liste");
-                    }
-                    catch
-                    {
+                    c.Uyelers.Update(b);
+                    c.SaveChanges();
+                    return RedirectToAction("Liste");
+                }
+                catch
+                {
 
-                    }
                 }
-                
-                }
-                  
-            return NoContent();
+            }
+            return View();
         }
         public IActionResult Detay(int id)
         {
