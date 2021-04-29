@@ -16,7 +16,7 @@ namespace DergiAboneProje.Controllers
 
         DergiDbContext c = new DergiDbContext();
 
-
+        
         public IActionResult Liste()
         {
             var degerler = c.Kategorilers
@@ -26,6 +26,7 @@ namespace DergiAboneProje.Controllers
             return View(degerler);
         }
         
+        
         [HttpGet]
         public IActionResult Ekle()
         {
@@ -34,29 +35,23 @@ namespace DergiAboneProje.Controllers
         [HttpPost]
         public IActionResult Ekle(Kategoriler k)
         {
-           
-            if (ModelState.IsValid)
+            
+            bool NameExist = c.Kategorilers.Where(x => x.KategoriAD == k.KategoriAD).Count() != 0;
+            if (NameExist)
             {
-                if (c.Kategorilers.Where(x => x.KategoriAD == k.KategoriAD).Count() == 0)
-                {
-                    try
-                    {
-                        c.Kategorilers.Add(k);
-                        c.SaveChanges();
-
-                        //return RedirectToAction("Liste"); //JS ile listeye yönlendiriliyor
-                    }
-                    catch
-                    {
-
-                    }
-                }
+                ModelState.AddModelError("CustomError", "Bu kategori adı zaten var.");
                 
-                
+            }
+            else if (ModelState.IsValid)
+            {
+                c.Kategorilers.Add(k);  
+                c.SaveChanges();
+                return RedirectToAction("Liste");
             }
             return NoContent();
 
         }
+
         public IActionResult Sil(int id)
         {
             
@@ -96,22 +91,26 @@ namespace DergiAboneProje.Controllers
         [HttpPost]
         public IActionResult Duzenle(Kategoriler k)
         {
-            if (c.Kategorilers.Where(x => x.KategoriAD == k.KategoriAD).Count() == 0)
+            bool NameExist = c.Kategorilers.Where(x => x.KategoriAD == k.KategoriAD).Count() != 0;
+            if (NameExist)
+            {
+                ModelState.AddModelError("", "Bu kategori adı zaten var.");
+            }
+            else if (ModelState.IsValid)
             {
                 try
                 {
 
                     c.Kategorilers.Update(k);
                     c.SaveChanges();
-
-                    //return RedirectToAction("Liste"); //JS ile yönlendiriliyor
+                    return RedirectToAction("Liste");
+                    
                 }
                 catch
                 {
 
                 }
             }
-            
             return NoContent();
         }
     }

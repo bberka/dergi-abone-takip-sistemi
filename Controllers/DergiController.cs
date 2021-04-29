@@ -39,20 +39,24 @@ namespace DergiAboneProje.Controllers
         [HttpPost]
         public IActionResult Ekle(Dergiler d)
         {
-            if (c.Dergilers.Where(x => x.DergiAD == d.DergiAD).Count() == 0)
+            bool NameExist = c.Dergilers.Where(x => x.DergiAD == d.DergiAD).Count() != 0;
+            if (NameExist)
+            {
+                ModelState.AddModelError("","Bu dergi adı zaten mevcut.");
+            }
+             else
             {
                 try
                 {
                     c.Dergilers.Add(d);
                     c.SaveChanges();
-                    //return RedirectToAction("Liste");
+                    return RedirectToAction("Liste");
                 }
                 catch
                 {
 
                 }
             }
-           
             return NoContent();
         }
         public IActionResult Sil(int id)

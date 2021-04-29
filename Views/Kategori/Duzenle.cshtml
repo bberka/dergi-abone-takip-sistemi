@@ -5,40 +5,35 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Duzenle" class="form-group" method="post" id="myForm">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <h5>Kategori ID: @Model.KategoriID</h5>
+            @Html.HiddenFor(x => x.KategoriID)
+            <br />
+            <div class="form-group">
+                <label asp-for="KategoriAD"></label>
+                <input asp-for="KategoriAD" class="form-control" style="width:350px" type="text" maxlength="30" />
+                <span asp-validation-for="KategoriAD" class="text-danger"></span>
+            </div>
 
+            <button class="btn btn-info" type="submit">Düzenlemeyi Kaydet</button>
+        </form>
+    </div>
+</div>
+
+<br />
 <div>
-    <form class="form-group" method="post" id="myForm">
-        <h4>Kategori ID: @Model.KategoriID</h4> @*Kategori ID Labeli*@
-        <input asp-for="KategoriID" class="form-control" type="text" maxlength="30" readonly="readonly" style="display:none"/>  @*Kategori ID textboxı gizli tutuluyor*@
-        <br />
-        <h4>Kategori Adı</h4>
-        <input asp-for="KategoriAD" class="form-control" type="text" maxlength="30" />
-    </form>
-    <br />
-    <button class="btn btn-info" onclick="SubmitCheck();">Düzenlemeyi Kaydet</button>
+    <a asp-action="Liste">Listeye Dön</a>
 </div>
 
 
-<script>
-    function SubmitCheck() {
-        var KategoriAD = $('#KategoriAD').val();
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-        if (KategoriAD == "" || KategoriAD == undefined) {
-            swal("Uyarı", "Kategori adı boş bırakılamaz!", "error")
-            return false;
-        }
-        else {
-            document.getElementById("myForm").submit();
-            swal({
-                title: "Kategori düzenleme başarılı!",
-                icon: "success",
-                button: "Tamam",
-            }).then(value => {
-                window.location.href = "/Kategori/Liste/";            
-            });
-            return true;
-        }
-    }
+    <script>
+        
         $(document).ready(function () {
             $("#KategoriAD").keydown(function (event) {
                 var inputValue = event.which;
@@ -49,4 +44,5 @@
                 }
             });
         });
-</script>
+    </script>
+}

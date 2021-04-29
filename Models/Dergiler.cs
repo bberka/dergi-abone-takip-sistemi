@@ -11,9 +11,11 @@ namespace DergiAboneProje.Models
     {
         [Key]
         public int DergiID { get; set; }
-        [Required]
+        [Display(Name = "Dergi Adı")]
+        [Required(ErrorMessage = "Dergi adı boş bırakılamaz.")]
         public string DergiAD { get; set; }
-        [Display(Name = "Date")]
+        [Display(Name = "Dergi Eklenme Tarihi")]
+        [Required(ErrorMessage = "Dergi tarihi boş bırakılamaz.")]
         public DateTime DergiTARIH { get; set; } = DateTime.Now;
 
         [Required]
