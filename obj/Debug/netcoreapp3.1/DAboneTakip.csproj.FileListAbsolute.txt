@@ -199,3 +199,4 @@ C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Abon
 C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Abonelik\Liste.cshtml.g.cs
 C:\Users\berka\source\repos\DAboneTakip\bin\Debug\netcoreapp3.1\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\berka\source\repos\DAboneTakip\bin\Debug\netcoreapp3.1\ServiceStack.Interfaces.dll
+C:\Users\berka\source\repos\DAboneTakip\obj\Debug\netcoreapp3.1\Razor\Views\Dergi\Edit.cshtml.g.cs

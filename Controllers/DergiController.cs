@@ -26,30 +26,20 @@ namespace DergiAboneProje.Controllers
         [HttpGet]   
         public IActionResult Ekle()
         {
-            
-            List<SelectListItem>  degerler = (from x in c.Kategorilers.ToList()
-                                             select new SelectListItem
-                                             {
-                                                 Text = x.KategoriAD,
-                                                 Value = x.KategoriID.ToString()
-                                             }).ToList();
-            
-            ViewBag.dgr = degerler;
+
+            getKategoriIDsList();
             return View();
         }
         [HttpPost]
         public IActionResult Ekle(Dergiler d)
         {
-            bool KtgIDNotSelected = d.KategoriID == 101;
+            
             bool NameAlreadyExist = c.Dergilers.Where(x => x.DergiAD == d.DergiAD).Count() != 0;
             if (NameAlreadyExist)
             {
                 ModelState.AddModelError("NameAlreadyExist", "Bu dergi adı zaten mevcut.");
             }
-            else if (KtgIDNotSelected)
-            {
-                ModelState.AddModelError("KtgIDNotSelected", "Kategori ID seçiniz.");
-            }
+            
             else if (ModelState.IsValid)
             {
                 try
@@ -63,6 +53,7 @@ namespace DergiAboneProje.Controllers
 
                 }
             }
+            getKategoriIDsList();
             return View();
         }
         public IActionResult Sil(int id)
@@ -80,33 +71,44 @@ namespace DergiAboneProje.Controllers
             }
             return NoContent();
         }
-        [HttpGet]
-        public IActionResult Duzenle(int id)
+       
+        public void getKategoriIDsList()
         {
             List<SelectListItem> degerler = (from x in c.Kategorilers.ToList()
                                              select new SelectListItem
                                              {
-                                                 Text = x.KategoriAD,
+                                                 Text = "("+ x.KategoriID.ToString()+ ") " + x.KategoriAD,
                                                  Value = x.KategoriID.ToString()
                                              }).ToList();
-            ViewBag.dgr = degerler;
-            ViewBag.drgtrh = c.Dergilers.Select(x => x.DergiTARIH);
-            var drg = c.Dergilers.Find(id);
+            //degerler.Insert(0,(new SelectListItem { Text = "Kategori Seçiniz...", Value = "0" }));
+            ViewBag.KategoriID = degerler;
+        }
+        [HttpGet]
+        public IActionResult Duzenle(int id)
+        {
+
+            getKategoriIDsList();
+
+             var drg = c.Dergilers.Find(id);
+            ViewBag.drgid = id;
+            ViewBag.drgtrh = drg.DergiTARIH.ToShortDateString();
             return View("Duzenle", drg);
         }
         [HttpPost]
         public IActionResult Duzenle(Dergiler d)
         {
-            bool NameAlreadyExist = c.Dergilers.Where(x => x.DergiAD == d.DergiAD).Count() != 0;
-            bool NameSame = c.Dergilers.Where(x => x.DergiID == d.DergiID && x.DergiAD == d.DergiAD).Count() != 0;
-            if (NameAlreadyExist)
-            {
-                ModelState.AddModelError("NameAlreadyExist", "Bu dergi adı zaten mevcut.");
-            }
-            else if (NameSame)
+            bool NameAlreadyExist = c.Dergilers.Where(x => x.DergiAD == d.DergiAD && x.DergiID != d.DergiID).Count() != 0;
+            bool NameSame = c.Dergilers.Where(x => x.DergiID == d.DergiID && x.DergiAD == d.DergiAD ).Count() != 0;
+            bool KategoriSame = c.Dergilers.Where(x => x.DergiID == d.DergiID && x.KategoriID == d.KategoriID).Count() != 0;
+            if (NameSame && KategoriSame)
             {
                 ModelState.AddModelError("NameSame", "Düzenleme yapmadınız.");
             }
+            else if (NameAlreadyExist)
+            {
+                ModelState.AddModelError("NameAlreadyExist", "Bu dergi adı zaten mevcut.");
+            }
+            
             else if (ModelState.IsValid)
             {
                 try
@@ -120,9 +122,15 @@ namespace DergiAboneProje.Controllers
 
                 }
             }
-            return View();
+            getKategoriIDsList();
+            
+            var drg = c.Dergilers.Find(d.DergiID);
+            ViewBag.drgid = drg.DergiID;
+            ViewBag.drgtrh = drg.DergiTARIH.ToShortDateString();
+            return View("Duzenle", drg);
         }
-        public IActionResult Detay(int id)
+        
+         public IActionResult Detay(int id)
         {
             TempData.Clear();
             TempData["DergiKey"] = id;

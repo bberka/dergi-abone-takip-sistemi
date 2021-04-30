@@ -7,14 +7,14 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Duzenle" class="form-group" method="post" id="myForm">
+        <form asp-action="Duzenle" class="form-group" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <h5>Kategori ID: @ViewBag.ktgID</h5>
             @Html.HiddenFor(x => x.KategoriID)
             <br />
             <div class="form-group">
                 <label asp-for="KategoriAD"></label>
-                <input asp-for="KategoriAD" class="form-control" style="width:350px" type="text" maxlength="30" />
+                <input asp-for="KategoriAD" class="form-control"  type="text" maxlength="30" />
                 @*<span asp-validation-for="KategoriAD" class="text-danger"></span>*@
             </div>
 
@@ -32,17 +32,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    <script>
-        
-        //$(document).ready(function () {
-        //    $("#KategoriAD").keydown(function (event) {
-        //        var inputValue = event.which;
-        //        // sayı girişi engellenmesi
-        //        if (!(inputValue >= 65 && inputValue <= 92) && (inputValue != 8 && inputValue != 32 && inputValue != 191 && inputValue != 220 && inputValue != 222 && inputValue != 186 && inputValue != 221 && inputValue != 219 && inputValue != 9)) {
-        //            event.preventDefault();
-
-        //        }
-        //    });
-        //});
-    </script>
 }

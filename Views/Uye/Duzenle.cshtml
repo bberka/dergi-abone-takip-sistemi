@@ -14,6 +14,8 @@
         <form asp-action="Duzenle">
             <div asp-validation-summary="All" class="text-danger"></div>
             @Html.HiddenFor(x => x.UyeID)
+            <h5>Üye ID : @ViewBag.UID</h5>
+            <br />
             <div class="form-group">
                 <label asp-for="UyeAD"></label>
                 <input asp-for="UyeAD" class="form-control" maxlength="50" />
@@ -34,7 +36,7 @@
             <br />
             <div class="form-group">
                 <label asp-for="Tarih"></label>
-                <input asp-for="Tarih" value="@Model.Tarih.ToShortDateString()" type="text" class="form-control" maxlength="10" id="TarihSec" />
+                <input asp-for="Tarih" type="text" class="form-control" maxlength="10" id="TarihSec" />
                 @*<span asp-validation-for="DergiAD" class="text-danger"></span>*@
             </div>
             <button class="btn btn-info" type="submit">Düzenlemeyi Kaydet</button>

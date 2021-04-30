@@ -128,6 +128,7 @@ namespace DergiAboneProje.Controllers
 
                 }
             }
+            ViewBag.ktgID = k.KategoriID;
             return View();
         }
     }

@@ -7,78 +7,52 @@
 
 
 
+<div class="row">
+    <div class="col-md-4">
+        <form class="form-group" method="post">
+            <div>
+                <div class="form-group">
+                    <h5>Dergi ID : @ViewBag.drgid</h5>
+                    <h5>Dergi Kayıt Tarihi: @ViewBag.drgtrh</h5>
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <input type="hidden" asp-for="DergiID"/>
+                    <input type="hidden" asp-for="DergiTARIH"/>
+                    
+                </div>
 
-<form class="form-group" method="post" id="myForm">
-    <div class="eklediv">
-        <h4>Dergi ID : @Model.DergiID</h4>
-        @Html.HiddenFor(x => x.DergiID)
-        <br />
-        <h4>Dergi Kayıt Tarihi: @Model.DergiTARIH.ToShortDateString()</h4>
+                <br />
+                <div class="form-group">
+                    <label asp-for="DergiAD"></label>
+                    @Html.TextBoxFor(x => x.DergiAD, new { @class = "form-control" })
+                    @*<span asp-validation-for="DergiAD" class="text-danger"></span>*@
+                </div>
+                <br />
 
-        <br />
-        <h4>Dergi Adı</h4>
-        @Html.TextBoxFor(x => x.DergiAD, new { @class = "form-control" })
-        <br />
-        <h4>Kategori Adı</h4>
-        <div>
-            <label asp-for="KategoriID">Kategori Adı</label>
-            <select class="form-control chosen-select" asp-for="KategoriID">
-                @foreach (var item in (List<SelectListItem>)ViewBag.dgr)
-                {
-                    <option value="@item.Value">@("("+ item.Value + ")" + item.Text)</option>
-                }
-            </select>
-            @*<span asp-validation-for="KategoriID" class="text-danger"></span>*@
-        </div>
+                <div>
+                    <label asp-for="KategoriID">Kategori Adı</label>
+                    <select class="form-control chosen-select" asp-for="KategoriID" asp-items="@ViewBag.KategoriID">                        
+                    </select>
+                    @*<span asp-validation-for="KategoriID" class="text-danger"></span>*@
+                </div>
+            </div>
+            <br />
+            <button class="btn btn-info" type="submit">Düzenlemeyi Kaydet</button>
+        </form>
     </div>
-</form>
-<br />
-<button class="btn btn-info" onclick="BlankCheck()">Düzenlemeyi Kaydet</button>
-
-
-<div>
-    <a asp-action="Liste">Listeye Dön</a>
 </div>
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    <script>
-    $("#KategoriID").chosen({
-        no_results_text: "Eşleşme bulunamadı!"
-    })
-    var BlankCheck = function () {
-        var DergiAD = $('#DergiAD').val();
+<br />
+        <div>
+            <a asp-action="Liste">Listeye Dön</a>
+        </div>
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-        if (DergiAD == "" || DergiAD == undefined) {
-            swal("Uyarı", "Dergi adı boş bırakılamaz!", "error")
-            return false;
+            <script>
+                $("#KategoriID").chosen({
+                    no_results_text: "Eşleşme bulunamadı!"
+                })
+
+
+            </script>
         }
-        else {
-            document.getElementById("myForm").submit();
-            swal({
-                title: "Dergi düzenleme başarılı!",
-                icon: "success",
-                button: "Tamam",
-            }).then(value => {
-                @if (TempData.ContainsKey("KtgKey"))
-                {
-
-                    <text>
-                     window.location.href = "/Kategori/Detay/" + @TempData["KtgKey"];
-                   </text>
-
-                }
-                else
-                 {
-                    <text>
-                     window.location.href = "/Dergi/Liste/";
-                    </text>
-                   }
-
-            });
-            return true;
-        }
-    }
-
-    </script>
-    }

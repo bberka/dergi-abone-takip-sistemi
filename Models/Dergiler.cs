@@ -18,7 +18,7 @@ namespace DergiAboneProje.Models
         [Required(ErrorMessage = "Dergi tarihi boş bırakılamaz.")]
         public DateTime DergiTARIH { get; set; } = DateTime.Now;
 
-        [Required(ErrorMessage = "Kategori id boş bırakılamaz.")]
+        [Required(ErrorMessage = "Kategori seçiniz.")]
         public int? KategoriID { get; set; }
         [ForeignKey("KategoriID")]
         public virtual Kategoriler Kategoriler { get; set; }

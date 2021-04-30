@@ -17,14 +17,10 @@
             <div class="form-group">
                 <label asp-for="KategoriID">Kategori Adı</label>
                 
-                <select class="form-control chosen-select" asp-for="KategoriID">
-                    @*<option selected value="100">Kategori Seçiniz...</option>*@
-                    @foreach (var item in ViewBag.dgr)
-                    {
-                        <option value="@item.Value">@("("+ item.Value + ")" + item.Text)</option>
-                    }
+                <select class="form-control chosen-select" asp-for="KategoriID" asp-items="@ViewBag.KategoriID">       
+                    <option selected disabled value="-1" style="display:none">Kategori Seçiniz... </option>
                 </select>
-                 <span asp-validation-for="KategoriID" class="text-danger"></span>
+                @* <span asp-validation-for="KategoriID" class="text-danger"></span>*@
             </div>
             <button class="btn btn-success" type="submit">Dergi Ekle</button>
         </form>
