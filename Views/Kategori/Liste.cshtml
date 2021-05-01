@@ -43,9 +43,11 @@
     <a href="/Kategori/Ekle/" class="btn btn-success">Yeni Kategori Ekle</a>
 
     <script>
+       
         function Confirm(id) {
             swal({
-                title: "Silmek istediğinize emin misiniz ? (ID: " + id + ")",
+                title: "Silmek istediğinize emin misiniz ?",
+                text: "(ID: " + id + ")",
                 icon: "warning",
                 buttons: {
                     cancel: "Hayır",
@@ -54,16 +56,23 @@
             })
                 .then((willDelete) => {
                     if (willDelete) {
-                        window.location.href = "/Kategori/Sil/" + id; 
-                        swal({
-                            title: "Kategori silme işlemi başarılı!",
-                            icon: "success",
-                            buttons: "Tamam",
-                        }).then(value => {
-                            window.location.href = "/Kategori/Liste/";
-                        });
+                        $.get('/Kategori/CheckDergi', { 'id': id }, function (response) {
+                            if (response.result) {
+                                swal("Uyarı", "Bu kategoriyi, kategoride dergi kaydı varken silemessiniz.", "error");
+                            }
+                            else {
+                                window.location.href = "/Kategori/Sil/" + id;
+                                swal({
+                                    title: "Kategori silme işlemi başarılı!",
+                                    icon: "success",
+                                    buttons: "Tamam",
+                                }).then(value => {
+                                    window.location.href = "/Kategori/Liste/";
+                                });
+                            }
+                        })
                     }
-                    
+
                 });
         }
 

@@ -19,7 +19,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Kayıt Tarihi(Ay/Gün/Yıl)</th>
+                    <th>Kayıt Tarihi(Gün/Ay/Yıl)</th>
                     <th>Kalan Gün</th>
                     <th>Üye ID</th>
                     <th>Üye Adı</th>
@@ -39,7 +39,7 @@
                 }
                 <tr>
                     <td>@x.KayıtID</td>
-                    <td>@x.KayıtTarihi.ToShortDateString()</td>
+                    <td>@x.KayıtTarihi.ToString("dd/MM/yyyy")</td>
                     <td>@((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days)</td>
                     <td>@x.UyeID</td>
                     <td>@x.Uye.UyeAD</td>
@@ -57,7 +57,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Kayıt Tarihi(Ay/Gün/Yıl)</th>
+                    <th>Kayıt Tarihi(Gün/Ay/Yıl)</th>
                     <th>Gün Önce Bitti</th>
                     <th>Üye ID</th>
                     <th>Üye Adı</th>
@@ -75,7 +75,7 @@
                 }
                 <tr id="ptb">
                     <td>@x.KayıtID</td>
-                    <td>@x.KayıtTarihi.ToShortDateString()</td>
+                    <td>@x.KayıtTarihi.ToString("dd/MM/yyyy")</td>
                     <td>@((DateTime.Now - x.KayıtTarihi.AddDays(x.KayıtSuresi)).Days)</td>
                     <td>@x.UyeID</td>
                     <td>@x.Uye.UyeAD</td>

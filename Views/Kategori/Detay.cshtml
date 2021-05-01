@@ -16,7 +16,7 @@
             <tr>
                 <th>ID</th>
                 <th>Dergi Adı</th>
-                <th>Dergi Kayıt Tarih(Ay/Gün/Yıl)</th>
+                <th>Dergi Kayıt Tarih(Gün/Ay/Yıl)</th>
                 <th>Düzenle</th>
                 <th>Sil</th>
                 <th>Detaylar</th>
@@ -28,7 +28,7 @@
             <tr>
                 <td>@x.DergiID</td>
                 <td>@x.DergiAD</td>
-                <td>@x.DergiTARIH.ToShortDateString()</td>
+                <td>@x.DergiTARIH.ToString("dd/MM/yyyy")</td>
                 <td><a href="/Dergi/Duzenle/@x.DergiID" class="btn btn-success">Düzenle</a></td>
                 <td><a href="#" onclick="Confirm(@x.DergiID)" class="btn btn-danger">Sil</a></td>
                 <td><a href="/Dergi/Detay/@x.DergiID" class="btn btn-warning">Detaylar</a></td>

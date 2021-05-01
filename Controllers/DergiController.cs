@@ -7,7 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Reflection;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace DergiAboneProje.Controllers
 {
@@ -17,6 +20,7 @@ namespace DergiAboneProje.Controllers
         DergiDbContext c = new DergiDbContext();
         public IActionResult Liste()
         {
+            
             var degerler = c.Dergilers
                 .Include(x => x.Kategoriler)
                 .Include(x => x.Uyeler)
@@ -56,19 +60,41 @@ namespace DergiAboneProje.Controllers
             getKategoriIDsList();
             return View();
         }
+        public bool _AbonelikExistResult;
+        public JsonResult CheckAbonelik (int id)
+        {
+            bool AbonelikExist = c.Aboneliklers.Where(x => x.DergiID == id).Count() != 0;
+            if (AbonelikExist)
+            {
+                _AbonelikExistResult = true;
+                return Json(new { result = true });
+            }
+            _AbonelikExistResult = false;
+            return Json(new { result = false });
+        }
         public IActionResult Sil(int id)
         {
-            try
+            CheckAbonelik(id);
+            if (_AbonelikExistResult)
             {
-                var drg = c.Dergilers.Find(id);
-                c.Dergilers.Remove(drg);
-                c.SaveChanges();
-                //return RedirectToAction("Liste");
+                return RedirectToAction("Liste");
             }
-            catch
+            else if (ModelState.IsValid)
             {
+                try
+                {
+                    var drg = c.Dergilers.Find(id);
+                    c.Dergilers.Remove(drg);
+                    c.SaveChanges();
+                    TempData.Clear();
+                    //return RedirectToAction("Liste");
+                }
+                catch
+                {
+
+                }
+            }
                 
-            }
             return NoContent();
         }
        
@@ -91,7 +117,7 @@ namespace DergiAboneProje.Controllers
 
              var drg = c.Dergilers.Find(id);
             ViewBag.drgid = id;
-            ViewBag.drgtrh = drg.DergiTARIH.ToShortDateString();
+            ViewBag.drgtrh = drg.DergiTARIH.ToString("dd/MM/yyyy");
             return View("Duzenle", drg);
         }
         [HttpPost]
@@ -126,7 +152,7 @@ namespace DergiAboneProje.Controllers
             
             var drg = c.Dergilers.Find(d.DergiID);
             ViewBag.drgid = drg.DergiID;
-            ViewBag.drgtrh = drg.DergiTARIH.ToShortDateString();
+            ViewBag.drgtrh = drg.DergiTARIH.ToString("dd/MM/yyyy");
             return View("Duzenle", drg);
         }
         

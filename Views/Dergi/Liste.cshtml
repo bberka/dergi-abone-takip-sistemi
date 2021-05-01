@@ -17,7 +17,7 @@
                 <th>ID</th>
                 <th>Dergi Adı</th>
                 <th>Kategori Adı</th>
-                <th>Dergi Kayıt Tarih(Ay/Gün/Yıl)</th>
+                <th>Dergi Kayıt Tarih(Gün/Ay/Yıl)</th>
                 <th>Düzenle</th>
                 <th>Sil</th>
                 <th>Detaylar</th>
@@ -30,7 +30,7 @@
                     <td>@x.DergiID</td>
                     <td>@x.DergiAD</td>
                     <td>@x.Kategoriler.KategoriAD</td>
-                    <td>@x.DergiTARIH.ToShortDateString()</td>
+                    <td>@x.DergiTARIH.ToString("dd/MM/yyyy")</td>
                     <td><a href="/Dergi/Duzenle/@x.DergiID" class="btn btn-success">Düzenle</a></td>
                     <td><a href="#" onclick="Confirm(@x.DergiID)" class="btn btn-danger">Sil</a></td>
                     <td><a href="/Dergi/Detay/@x.DergiID" class="btn btn-warning">Detaylar</a></td>
@@ -39,12 +39,13 @@
         <tbody>
 
     </table>
-    
+
     <a href="/Dergi/Ekle/" class="btn btn-success">Yeni Dergi Ekle</a>
 
 </div>
-
-<script>
+@section Scripts {
+    
+    <script>
     $(document).ready(function () {
         $('#DergiTable').DataTable({
             "language": {
@@ -54,8 +55,10 @@
     });
 
     function Confirm(id) {
+
         swal({
-            title: "Silmek istediğinize emin misiniz ? (ID: " + id + ")",
+            title: "Silmek istediğinize emin misiniz ?",
+            text: "(ID: " + id + ")",
             icon: "warning",
             buttons: {
                 cancel: "Hayır",
@@ -63,20 +66,27 @@
             },
         })
             .then((willDelete) => {
-                if (willDelete) {
-                    window.location.href = "/Dergi/Sil/" + id;
-                    swal({
-                        title: "Dergi silme işlemi başarılı!",
-                        icon: "success",
-                        buttons: "Tamam",
-                    }).then(value => {
-                        window.location.href = "/Dergi/Liste/";
-                    });
+                if (willDelete) {                   
+                $.get('/Dergi/CheckAbonelik',{'id':id},function(response){       
+                    if(response.result) {
+                     swal("Uyarı", "Bu dergiyi, dergiye abonelik kaydı varken silemessiniz.", "error");            
+                     }
+                    else {
+                     window.location.href = "/Dergi/Sil/" + id;
+                     swal({
+                     title: "Dergi silme işlemi başarılı!",
+                     icon: "success",
+                     buttons: "Tamam",
+                     }).then(value => {
+                     window.location.href = "/Dergi/Liste/";
+                     });
+                    }            
+                })
                 }
 
             });
     }
-</script>
+    </script>
 
 
-
+    }

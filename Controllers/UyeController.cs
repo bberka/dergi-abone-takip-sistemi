@@ -19,19 +19,40 @@ namespace DergiAboneProje.Controllers
             var degerler = c.Uyelers.ToList();
             return View(degerler);
         }
+        public bool _AbonelikExistResult;
+        public JsonResult CheckAbonelik(int id)
+        {
+            bool AbonelikExist = c.Aboneliklers.Where(x => x.UyeID == id).Count() != 0;
+            if (AbonelikExist)
+            {
+                _AbonelikExistResult = true;
+                return Json(new { result = true });
+            }
+            _AbonelikExistResult = false;
+            return Json(new { result = false });
+        }
         public IActionResult Sil(int id)
         {
-            try
+            CheckAbonelik(id);
+            if (_AbonelikExistResult)
             {
-                var a = c.Uyelers.Find(id);
-                c.Uyelers.Remove(a);
-                c.SaveChanges();
-                //return RedirectToAction("Liste");
+                return RedirectToAction("Liste");
             }
-            catch
+            else if (ModelState.IsValid)
             {
-                
+                try
+                {
+                    var a = c.Uyelers.Find(id);
+                    c.Uyelers.Remove(a);
+                    c.SaveChanges();
+                    //return RedirectToAction("Liste");
+                }
+                catch
+                {
+
+                }
             }
+            
             
             return NoContent();
         }

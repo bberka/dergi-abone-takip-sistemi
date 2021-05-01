@@ -20,7 +20,7 @@
                 <th>Adı Soyadı</th>
                 <th>Email</th>
                 <th>Tel No</th>
-                <th>Doğum Tarihi(Ay/Gün/Yıl)</th>
+                <th>Doğum Tarihi(Gün/Ay/Yıl)</th>
                 <th>Düzenle</th>
                 <th>Sil</th>
                 <th>Detaylar</th>
@@ -34,7 +34,7 @@
                     <td>@x.UyeAD</td>
                     <td>@x.Email</td>
                     <td>@x.TelNo</td>
-                    <td>@x.Tarih.ToShortDateString()</td>
+                    <td>@x.Tarih.ToString("dd/MM/yyyy")</td>
                     <td><a href="/Uye/Duzenle/@x.UyeID" class="btn btn-success">Düzenle</a></td>
                     <td><a href="#" onclick="Confirm(@x.UyeID)" class="btn btn-danger">Sil</a></td>
                     <td><a href="/Uye/Detay/@x.UyeID" class="btn btn-warning">Detaylar</a></td>
@@ -46,8 +46,10 @@
     <a href="/Uye/Ekle/" class="btn btn-success">Yeni Üye Ekle</a>
     <script>
         function Confirm(id) {
+
             swal({
-                title: "Silmek istediğinize emin misiniz ? (ID: " + id + ")",
+                title: "Silmek istediğinize emin misiniz ?",
+                text: "(ID: " + id + ")",
                 icon: "warning",
                 buttons: {
                     cancel: "Hayır",
@@ -56,18 +58,27 @@
             })
                 .then((willDelete) => {
                     if (willDelete) {
-                        window.location.href = "/Uye/Sil/" + id;
-                        swal({
-                            title: "Üye silme işlemi başarılı!",
-                            icon: "success",
-                            buttons: "Tamam",
-                        }).then(value => {
-                            window.location.href = "/Uye/Liste/";
-                        });
+                        $.get('/Uye/CheckAbonelik', { 'id': id }, function (response) {
+                            if (response.result) {
+                                swal("Uyarı", "Bu üyeyi, abonelik kaydı varken silemessiniz.", "error");
+                            }
+                            else {
+                                window.location.href = "/Uye/Sil/" + id;
+                                swal({
+                                    title: "Dergi silme işlemi başarılı!",
+                                    icon: "success",
+                                    buttons: "Tamam",
+                                }).then(value => {
+                                    window.location.href = "/Uye/Liste/";
+                                });
+                            }
+                        })
                     }
 
                 });
         }
+
+        
 
         $(document).ready(function () {
             $('#AboneTable').DataTable({

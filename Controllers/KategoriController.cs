@@ -51,11 +51,26 @@ namespace DergiAboneProje.Controllers
             return View();
 
         }
-
+        public bool _DergiExist;
+        public JsonResult CheckDergi(int id)
+        {
+            bool DergiExist = c.Dergilers.Where(x => x.KategoriID == id).Count() != 0;
+            if (DergiExist)
+            {
+                _DergiExist = true;
+                return Json(new { result = true });
+            }
+            _DergiExist = false;
+            return Json(new { result = false });
+        }
         public IActionResult Sil(int id)
         {
-            
-            if (ModelState.IsValid)
+            CheckDergi(id);
+            if (_DergiExist)
+            {
+                return RedirectToAction("Liste");
+            }
+            else if (ModelState.IsValid)
             {
                 try
                 {
