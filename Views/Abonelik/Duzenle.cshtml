@@ -5,104 +5,63 @@
 
 }
 
-<div class="eklediv">
-    <form class="form-group" method="post" id="myForm">
-
-
-        <h4>Kayıt ID : @Model.KayıtID</h4>
-        @Html.TextBoxFor(x => x.KayıtID, new { @class = "form-control", @readonly = "readonly", style = "display: none;" })
-        <br />
-        <h4>Kayıt Tarihi : @Model.KayıtTarihi.ToShortDateString()</h4>
-        <br />
-        <div class="txtbox">
-            <h4>Kayıt Süresi (ay)</h4>
-            @*<input disabled asp-for="KayıtSuresi" class="form-control" onkeypress="this." type="number" max=""/>*@
-            @(Html.TextBoxFor(x => x.KayıtSuresi, new { @class = "form-control", @type = "number",@min="1", @max = "24", @id = "txt_KAYIT" }))
-        </div>
-        <br />
-        <h4>Abone</h4>
-        <div>
-            <select class="form-control chosen-select" asp-for="UyeID" id="txt_UYEID">
-                <option selected disabled style="display:none" value="-1">Üye Seçiniz...</option>
-                @foreach (var item in (List<SelectListItem>)ViewBag.uID)
-                {
-                    <option value="@item.Value">@( "("+ item.Value + ")" + item.Text)</option>
-                }
-            </select>
-            <span asp-validation-for="UyeID" class="text-danger"></span>
-        </div>
-        <br />
-        <h4>Dergi</h4>
-        <div>
-            <select class="form-control chosen-select" asp-for="DergiID" id="txt_DERGIID">
-                <option selected disabled style="display:none" value="-1">Dergi Seçiniz...</option>
-                @foreach (var item in (List<SelectListItem>)ViewBag.dID)
-                {
-                    <option value="@item.Value">@( "("+ item.Value + ")" + item.Text)</option>
-                }
-            </select>
-        </div>
-
-    </form>
-    <br />
-    <button class="btn btn-info" onclick="BlankCheck()">Düzenlemeyi Kaydet</button>
-
-
-</div>
-
-<script>
-    $("#txt_UYEID").chosen({
-        no_results_text: "Eşleşme bulunamadı!"
-    });
-    $("#txt_DERGIID").chosen({
-        no_results_text: "Eşleşme bulunamadı!"
-    });
-    $("[type='number']").keypress(function (evt) {
-        evt.preventDefault();
-    });
-
-    var BlankCheck = function () {
-        var KayıtSuresi = $('#txt_KAYIT').val();
-        var UyeID = $('#txt_UYEID').val();
-        var DergiID = $('#txt_DERGIID').val();
-
-        if (KayıtSuresi == "" || DergiID == null || UyeID == null) {
-            swal("Uyarı", "Lütfen tüm boşlukları doldurunuz.", "error")
-            return false;
-
-        }
-        else {
-            document.getElementById("myForm").submit();
-            swal({
-                title: "Abonelik düzenleme başarılı!",
-                icon: "success",
-                button: "Tamam",
-            }).then(value => {
-                
-                @if (TempData.ContainsKey("DergiKey"))
-                {
-
-                    <text>
-                    window.location.href = "/Dergi/Detay/" + @TempData["DergiKey"];
-                   </text>
-
-                }
-                else if (TempData.ContainsKey("UyeKey"))
-                {
-                    <text>
-                     window.location.href = "/Uye/Detay/"+ @TempData["UyeKey"];
-                    </text>
-                }
-                else
-                {
-                    <text>
-                     window.location.href = "/Abonelik/Liste/";
-                    </text>
-
-                }
-            });
-            return true;
-        }
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 
-</script>
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+<div class="row">
+    <div class="col-md-4">
+        <h5>Kayıt ID: @ViewBag.KayıtID</h5>
+        <h5>Kayıt Tarihi: @ViewBag.KayıtTarihi</h5>
+        <form asp-action="Duzenle">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="KayıtID" />
+            <input type="hidden" asp-for="KayıtTarihi" />
+
+            <div class="form-group">
+                <label asp-for="KayıtSuresi" class="control-label"></label>
+                <input asp-for="KayıtSuresi" class="form-control" type="number" min="1" max="24"/>
+              @*  <span asp-validation-for="KayıtSuresi" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="UyeID" class="control-label"></label>
+                <select asp-for="UyeID" class="form-control" asp-items="ViewBag.UyeID" ></select>
+                @*<span asp-validation-for="UyeID" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">    
+                <label asp-for="DergiID" class="control-label"></label>
+                <select asp-for="DergiID" class="form-control" asp-items="ViewBag.DergiID" ></select>
+               @* <span asp-validation-for="DergiID" class="text-danger"></span>*@
+            </div>
+          <button type="submit" class="btn btn-info">Düzenlemeyi Kaydet</button>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Liste">Listeye dön</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $("#UyeID").chosen({
+            no_results_text: "Eşleşme bulunamadı!"
+        });
+        $("#DergiID").chosen({
+            no_results_text: "Eşleşme bulunamadı!"
+        });
+
+
+
+    </script>
+}

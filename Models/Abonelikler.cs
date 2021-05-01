@@ -18,14 +18,17 @@ namespace DergiAboneProje.Models
 
         [Required(ErrorMessage = "Kayıt süresi boş bırakılamaz.")]
         [Display(Name = "Kayıt Süresi(ay)")]
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Kayıt süresi sadece sayı içerebilir.")]
         public int KayıtSuresi { get; set; }
 
-        [Required(ErrorMessage = "Üye ID boş bırakılamaz.")]
+        [Required(ErrorMessage = "Üye seçiniz.")]
+        [Display(Name = "Uye Adı")]
         public int? UyeID { get; set; }
         [ForeignKey("UyeID")]
         public virtual Uyeler Uye { get; set; }
         
-        [Required(ErrorMessage = "Dergi ID boş bırakılamaz.")]
+        [Required(ErrorMessage = "Dergi seçiniz.")]
+        [Display(Name = "Dergi Adı")]
         public int? DergiID { get; set; }
         [ForeignKey("DergiID")]
         public virtual Dergiler Dergi { get; set; }

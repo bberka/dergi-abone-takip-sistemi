@@ -13,6 +13,7 @@ namespace DergiAboneProje.Models
         public int DergiID { get; set; }
         [Display(Name = "Dergi Adı")]
         [Required(ErrorMessage = "Dergi adı boş bırakılamaz.")]
+        [MaxLength(50, ErrorMessage = "Dergi adı en fazla 50 haneli olabilir")]        
         public string DergiAD { get; set; }
         [Display(Name = "Dergi Eklenme Tarihi")]
         [Required(ErrorMessage = "Dergi tarihi boş bırakılamaz.")]

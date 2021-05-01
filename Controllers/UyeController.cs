@@ -97,7 +97,7 @@ namespace DergiAboneProje.Controllers
         {
             ViewBag.UID = b.UyeID;
             
-            bool ChangesMade = c.Uyelers.Where(x => x.Email == b.Email && x.UyeAD == b.UyeAD && x.Tarih == b.Tarih && x.TelNo == b.TelNo).Count() != 0;
+            bool ChangesMade = c.Uyelers.Where(x => x.Email == b.Email &&                                                            x.UyeAD == b.UyeAD && x.Tarih == b.Tarih && x.TelNo == b.TelNo).Count() != 0;
             bool BirtDateCheck = Convert.ToDateTime(b.Tarih).AddYears(18) >= DateTime.Now;
             bool PhoneNumberCheck = b.TelNo.ToString().Length != 10 || !b.TelNo.ToString().All(char.IsDigit);
             bool UyeAlreadyExist = c.Uyelers.Where(x => x.Email == b.Email).Count() != 0; 

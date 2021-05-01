@@ -4,80 +4,59 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
 }
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 
-<div class="eklediv">
-    <form class="form-group" method="post" id="myForm">
-        <div class="txtbox">
-            <h4>Kayıt Tarihi : @DateTime.Now.ToShortDateString()</h4>
-        </div>
-        <br />
-        <div class="txtbox">
-            <h4>Kayıt Süresi (ay)</h4>
-            @(Html.TextBoxFor(x => x.KayıtSuresi, new { @class = "form-control", @type = "number",@min="1", @max = "24", @id = "txt_KAYIT"}))
-        </div>
-        <br />
-        <h4>Abone</h4>
-
-        <div>
-            <select class="form-control chosen-select" asp-for="UyeID" id="txt_UYEID">
-                <option selected disabled style="display:none" value="-1">Üye Seçiniz...</option>
-                @foreach (var item in (List<SelectListItem>)ViewBag.uID)
-                {
-                    <option value="@item.Value">@( "("+ item.Value + ")" + item.Text)</option>
-                }
-            </select>
-            <span asp-validation-for="UyeID" class="text-danger"></span>
-        </div>
-        <br />
-        <h4>Dergi</h4>
-        <div>
-            <select class="form-control chosen-select" asp-for="DergiID" id="txt_DERGIID">
-                <option selected disabled style="display:none" value="-1">Dergi Seçiniz...</option>
-                @foreach (var item in (List<SelectListItem>)ViewBag.dID)
-                {
-                    <option value="@item.Value">@( "("+ item.Value + ")" + item.Text)</option>
-                }
-            </select>
-        </div>
-
-    </form>
-    <br />
-    <button class="btn btn-success" onclick="BlankCheck()" >Abonelik Ekle</button>
-
-
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+<div class="row">
+    <div class="col-md-4">
+        <h5>Kayıt Tarihi : @DateTime.Now.ToShortDateString()</h5>
+        @Html.HiddenFor(x=>x.KayıtTarihi)
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="KayıtSuresi" class="control-label"></label>
+                <input asp-for="KayıtSuresi" class="form-control" max="24" min="1" type="number" />
+                @* <span asp-validation-for="KayıtSuresi" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="UyeID" class="control-label"></label>
+                <select asp-for="UyeID" class="form-control" asp-items="ViewBag.UyeID">
+                    <option selected disabled value="-1" style="display:none">Üye Seçiniz... </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DergiID" class="control-label"></label>
+                <select asp-for="DergiID" class="form-control" asp-items="ViewBag.DergiID">
+                    <option selected disabled value="-1" style="display:none">Dergi Seçiniz... </option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Abone Ekle</button>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Liste">Listeye dön</a>
 </div>
 
-<script>
-    $("#txt_UYEID").chosen({
-        no_results_text: "Eşleşme bulunamadı!"
-    });
-    $("#txt_DERGIID").chosen({
-        no_results_text: "Eşleşme bulunamadı!"
-    });
-    $("[type='number']").keypress(function (evt) {
-        evt.preventDefault();
-    });
-    var BlankCheck = function () {
-        var KayıtSuresi = $('#txt_KAYIT').val();
-        var UyeID = $('#txt_UYEID').val();
-        var DergiID = $('#txt_DERGIID').val();
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $("#UyeID").chosen({
+            no_results_text: "Eşleşme bulunamadı!"
+        });
+        $("#DergiID").chosen({
+            no_results_text: "Eşleşme bulunamadı!"
+        });
+    </script>
 
-        if (KayıtSuresi == "" || DergiID == null || UyeID == null) {
-            swal("Uyarı", "Lütfen tüm boşlukları doldurunuz.", "error")
-            return false;
-
-        }
-        else {
-            document.getElementById("myForm").submit();
-            swal({
-                title: "Abonelik ekleme başarılı!",
-                icon: "success",
-                button: "Tamam",
-            }).then(value => {
-                window.location.href = "/Abonelik/Liste/";
-            });
-            return true;
-        }
-    }
-    
-</script>
+}

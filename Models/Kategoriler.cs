@@ -20,7 +20,8 @@ namespace DergiAboneProje.Models
         [Required(ErrorMessage = "Kategori adı boş bırakılamaz.")]
         [DataType(DataType.Text)]
         [Display(Name ="Kategori Adı")]
-        [RegularExpression(@"^[a-zA-Z]{1,17}$", ErrorMessage = "Kategori adı sayı içeremez.")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Kategori adı sayı içeremez.")]       
+        [MaxLength(16, ErrorMessage = "Kategori adı en az 3 en fazla 16 haneli olabilir.")]        
         public string KategoriAD { get; set; }
         
 

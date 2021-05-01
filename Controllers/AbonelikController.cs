@@ -35,7 +35,7 @@ namespace DergiAboneProje.Controllers
                 c.SaveChanges();
                 //if (TempData.ContainsKey("UyeKey"))
                 //{
-                //    return RedirectToAction("Detay", "Uye",new { id =TempData["UyeKey"]});
+                //    return RedirectToAction("Detay", "Uye", new { id = TempData["UyeKey"] });
                 //}
                 //else if (TempData.ContainsKey("DergiKey"))
                 //{
@@ -73,52 +73,58 @@ namespace DergiAboneProje.Controllers
             }
             return NoContent();
         }
-        [HttpGet]
-        public IActionResult Ekle()
+        public void getUye_DergiIDsList()
         {
             List<SelectListItem> _uyeID = (from x in c.Uyelers.ToList()
-                                             select new SelectListItem
-                                             {
-                                                 Text = x.UyeAD,
-                                                 Value = x.UyeID.ToString()
-                                             }).ToList();
-            ViewBag.uID = _uyeID;
+                                           select new SelectListItem
+                                           {
+                                               Text = "(" + x.UyeID.ToString() + ") " + x.UyeAD,
+                                               Value = x.UyeID.ToString()
+                                           }).ToList();
+            ViewBag.UyeID = _uyeID;
             List<SelectListItem> _dergiID = (from x in c.Dergilers.ToList()
                                              select new SelectListItem
                                              {
-                                                 Text = x.DergiAD,
+                                                 Text = "(" + x.DergiID.ToString() + ") " + x.DergiAD,
                                                  Value = x.DergiID.ToString()
                                              }).ToList();
-            ViewBag.dID = _dergiID;
+            ViewBag.DergiID = _dergiID;
+        }
+        [HttpGet]
+        public IActionResult Ekle()
+        {
+            getUye_DergiIDsList();
             return View();
         }
         [HttpPost]
         public IActionResult Ekle(Abonelikler b)
         {
             b.KayıtSuresi *= 30;
-            
-            if (ModelState.IsValid)
+            var ActiveAbonelik = c.Aboneliklers.Where(x => x.UyeID == b.UyeID && x.DergiID == b.DergiID && x.KayıtTarihi.AddDays(x.KayıtSuresi - 2).Date >= DateTime.Now.Date);
+            var CheckActiveAbonelik = ActiveAbonelik.Count() != 0;           
+            if (CheckActiveAbonelik)
+            {
+                var IDActiveAbonelik = ActiveAbonelik.FirstOrDefault().KayıtID;
+                ModelState.AddModelError("CheckActiveAbonelik", "Bu üyenin bu dergiye zaten aktif bir üyeliği var. Abonelik ID: " + IDActiveAbonelik);
+            }
+           
+            else if (ModelState.IsValid)
             {
                 
-                //&& x => (x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days > 0
-                var temp = c.Aboneliklers.Where(x => x.UyeID == b.UyeID && x.DergiID == b.DergiID && x.KayıtTarihi.AddDays(x.KayıtSuresi-2).Date >= DateTime.Now.Date);
-                
-                if (temp.Count() == 0)
+                try
                 {
-                    try
-                    {
-                        c.Aboneliklers.Add(b);
-                        c.SaveChanges();
-                        //return RedirectToAction("Liste");
-                    }
-                    catch
-                    {
-
-                    }
+                    c.Aboneliklers.Add(b);
+                    c.SaveChanges();
+                    return RedirectToAction("Liste");
                 }
-                
+                catch
+                {
+
+                }
+
             }
-            return NoContent();
+            getUye_DergiIDsList();
+            return View();
 
 
         }
@@ -126,46 +132,48 @@ namespace DergiAboneProje.Controllers
         [HttpGet]
         public IActionResult Duzenle(int id)
         {
-            List<SelectListItem> _uyeID = (from x in c.Uyelers.ToList()
-                                           select new SelectListItem
-                                           {
-                                               Text = x.UyeAD,
-                                               Value = x.UyeID.ToString()
-                                           }).ToList();
-            ViewBag.uID = _uyeID;
-            List<SelectListItem> _dergiID = (from x in c.Dergilers.ToList()
-                                             select new SelectListItem
-                                             {
-                                                 Text = x.DergiAD,
-                                                 Value = x.DergiID.ToString()
-                                             }).ToList();
-            ViewBag.dID = _dergiID;
-            ViewBag.kTarihi = c.Aboneliklers.Select(x => x.KayıtTarihi);
+            getUye_DergiIDsList();
+            
             var abone = c.Aboneliklers.Find(id);
+            ViewBag.KayıtTarihi = abone.KayıtTarihi.ToShortDateString();
+            ViewBag.KayıtID = id;
             abone.KayıtSuresi /= 30;
             return View("Duzenle", abone);
         }
         [HttpPost]
         public IActionResult Duzenle(Abonelikler b)
         {
-            var temp = c.Aboneliklers.Where(x => x.UyeID == b.UyeID && x.DergiID == b.DergiID && x.KayıtTarihi.AddDays(x.KayıtSuresi - 2).Date >= DateTime.Now.Date);
-           
-            if (temp.Count() == 0)
+            b.KayıtSuresi *= 30;
+            var ActiveAbonelik = c.Aboneliklers.Where(x => x.UyeID == b.UyeID && x.DergiID == b.DergiID && x.KayıtID != b.KayıtID && x.KayıtTarihi.AddDays(x.KayıtSuresi - 2).Date >= DateTime.Now.Date);
+            var CheckActiveAbonelik = ActiveAbonelik.Count() != 0;
+            var ChangesNotMade = c.Aboneliklers.Where(x => x.KayıtID == b.KayıtID && x.KayıtSuresi == b.KayıtSuresi && x.DergiID == b.DergiID && x.UyeID == b.UyeID).Count() != 0;
+            if (CheckActiveAbonelik)
+            {
+                var IDActiveAbonelik = ActiveAbonelik.FirstOrDefault().KayıtID;
+                ModelState.AddModelError("CheckActiveAbonelik", "Bu üyenin bu dergiye zaten aktif bir üyeliği var. Abonelik ID: " + IDActiveAbonelik);
+            }
+            if (ChangesNotMade)
+            {
+                ModelState.AddModelError("!ChangesMade", "Düzenleme yapmadınız.");
+            }
+            else if (ModelState.IsValid)
             {
                 try
                 {
-                    b.KayıtSuresi *= 30;
+                    
                     c.Aboneliklers.Update(b);
                     c.SaveChanges();
-                    //return RedirectToAction("Liste");
+                    return RedirectToAction("Liste");
                 }
                 catch
                 {
 
                 }
             }
-            
-            return NoContent();
+            ViewBag.KayıtTarihi = b.KayıtTarihi.ToShortDateString();
+            ViewBag.KayıtID = b.KayıtID;
+            getUye_DergiIDsList();
+            return View();
         }
     }
 }

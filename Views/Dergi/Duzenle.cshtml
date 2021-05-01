@@ -23,7 +23,7 @@
                 <br />
                 <div class="form-group">
                     <label asp-for="DergiAD"></label>
-                    @Html.TextBoxFor(x => x.DergiAD, new { @class = "form-control" })
+                    <input asp-for="DergiAD" class="form-control" maxlength="50" />
                     @*<span asp-validation-for="DergiAD" class="text-danger"></span>*@
                 </div>
                 <br />
