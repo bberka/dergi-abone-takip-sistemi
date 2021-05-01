@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lFQJ6q0X2Etwl8NMZosaFsG9v3+4efoCvwzTe1rEsAJyRO+OY6qVrErjSPScQjp5XEh8+mN2qJzDF3myTacvtg==",
+  "dgSpecHash": "fhmBkYXxGXf1o6AA3Cd1nzN/unTQlEVZFDGovj73nvzUd1ZmRFwAH3NQnEQ/BcBv2x6h3jrt61nfSR4KvH9WNg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\berka\\source\\repos\\DAboneTakip\\DAboneTakip.csproj",
+  "projectFilePath": "C:\\Users\\berka\\source\\repos\\dergi-abone-takip-sistemi\\DAboneTakip.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\berka\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\berka\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.13\\microsoft.aspnetcore.cryptography.internal.3.1.13.nupkg.sha512",
