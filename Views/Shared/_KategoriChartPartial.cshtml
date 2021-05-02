@@ -1,0 +1,50 @@
+﻿
+<script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json",
+                url: '@Url.Action("VKategoriChart", "Home")',
+                success: function (result) {
+                    google.charts.load('current', {
+                        'packages': ['corechart']
+                    });
+                    google.charts.setOnLoadCallback(function () {
+                        drawChart(result);
+                    });
+                }
+            });
+
+
+        });
+
+    function drawChart(result) {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Kategori');
+            data.addColumn('number', 'Dergi Sayısı');
+            var dataArray = [];
+
+            $.each(result, function (i, obj) {
+                dataArray.push([obj.kategori, obj.dergisayi]);
+            });
+            data.addRows(dataArray);
+
+            var columnChartOptions = {
+                title: "Kategori - Dergi Sayısı Grafiği",
+                width: 1000,
+                height: 400,
+                bar: { groupWidth: "20%" },
+            };
+
+            var columnChart = new google.visualization.PieChart(document.getElementById('Piechart_div'));
+
+            columnChart.draw(data, columnChartOptions);
+    }
+    
+</script>
+
+
+
+
+<div id="Piechart_div"></div>

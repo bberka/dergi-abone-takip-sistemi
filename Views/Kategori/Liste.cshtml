@@ -30,7 +30,7 @@
                 <tr>
                     <td>@x.KategoriID</td>
                     <td>@x.KategoriAD</td>
-                    <td>@x.Dergilers.Where(x => x.KategoriID == x.KategoriID).Count()</td>
+                    <td>@x.Dergilers.Where(a => a.KategoriID == x.KategoriID).Count()</td>
                     <td><a href="/Kategori/Duzenle/@x.KategoriID" class="btn btn-success">Düzenle</a></td>
                     <td><a href="#" onclick="Confirm(@x.KategoriID)" class="btn btn-danger ksilbtn">Sil</a></td>
                     <td><a href="/Kategori/Detay/@x.KategoriID" class="btn btn-warning">Detaylar</a></td>

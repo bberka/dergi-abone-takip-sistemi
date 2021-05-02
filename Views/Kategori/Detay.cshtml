@@ -1,7 +1,7 @@
 ﻿@using DergiAboneProje.Models
 @model List<Dergiler>
 @{
-    ViewData["Title"] = @ViewBag.kategoriad + " Kategorisindeki Dergiler || Kategori ID: " + @ViewBag.ktgid;
+    ViewData["Title"] = "(ID: " +@ViewBag.ktgid + ") " + @ViewBag.kategoriad + " Kategorisindeki Dergiler ";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 

@@ -16,7 +16,7 @@ namespace DergiAboneProje.Models
 
         [Required(ErrorMessage = "Üye adı boş bırakılamaz")]
         [Display(Name = "Üye Adı Soyadı")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Üye adı soyadı sayı içeremez.")]
+        [RegularExpression(@"^[A-z^şŞıİçÇöÖüÜĞğ ]+$", ErrorMessage = "Üye adı sadece harf içerebilir.")]
         [MaxLength(50,ErrorMessage = "Üye adı soyadı en fazla 50 haneli olabilir")]       
         public string UyeAD { get; set; }
 
