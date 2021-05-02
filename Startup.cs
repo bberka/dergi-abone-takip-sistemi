@@ -42,6 +42,7 @@ namespace DAboneTakip
                 .AddCookie(x =>
                 {
                     x.LoginPath = "/Login/GirisYap/";
+                    x.AccessDeniedPath = "/Login/ErisimEngel/";
                 });
             services.AddMvc(config =>
             {

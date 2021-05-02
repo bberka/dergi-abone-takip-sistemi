@@ -3,9 +3,7 @@ using DergiAboneProje.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -16,8 +14,11 @@ namespace DAboneTakip.Controllers
     [AllowAnonymous]
     public class LoginController : Controller
     {
-        DergiDbContext c = new DergiDbContext();
-
+        readonly DergiDbContext c = new DergiDbContext();
+        public IActionResult ErisimEngel()
+        {
+            return View();
+        }
         [HttpGet]
         public IActionResult GirisYap()
         {
@@ -32,10 +33,10 @@ namespace DAboneTakip.Controllers
                 if (bilgiler != null)
                 {
                     var claims = new List<Claim>
-                {
-                     new Claim(ClaimTypes.Name,p.KullaniciAD),
-                     new Claim(ClaimTypes.Role,bilgiler.Rol)
-                };
+                    {
+                         new Claim(ClaimTypes.Name,p.KullaniciAD),
+                         new Claim(ClaimTypes.Role,bilgiler.Rol)
+                    };
                     var useridentity = new ClaimsIdentity(claims, "Login");
                     ClaimsPrincipal principal = new ClaimsPrincipal(useridentity);
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
@@ -58,6 +59,7 @@ namespace DAboneTakip.Controllers
         {
             return View();
         }
+        
         [HttpPost]
         public IActionResult KayitOl(Admin a)
         {
@@ -66,7 +68,66 @@ namespace DAboneTakip.Controllers
                 c.Admins.Add(a);
                 c.SaveChanges();
             }
-            return RedirectToAction("GirisYap");
+            return RedirectToAction("GirisYap", "Login");
+        }
+        
+        [Authorize(Roles = "A")]
+        public IActionResult Adminler()
+        {
+            var degerler = c.Admins
+                   .ToList();
+            return View(degerler);
+        }
+        [Authorize(Roles = "A")]
+        public IActionResult AdminYap(int id)
+        {
+            try
+            {
+                var acc = c.Admins.Find(id);
+                acc.Rol = "A";
+                c.Admins.Update(acc);
+                c.SaveChanges();
+            }
+            catch
+            {
+
+            }
+            return RedirectToAction("Adminler");
+        }
+        [Authorize(Roles = "A")]
+        public IActionResult UserYap(int id)
+        {
+            try
+            {
+                var acc = c.Admins.Find(id);
+                acc.Rol = "U";
+                c.Admins.Update(acc);
+                c.SaveChanges();
+            }
+            catch
+            {
+
+            }
+            return RedirectToAction("Adminler");
+        }
+        [Authorize(Roles = "A")]
+        public IActionResult Sil(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var admn = c.Admins.Find(id);
+                    c.Admins.Remove(admn);
+                    c.SaveChanges();
+                    //return RedirectToAction("Liste");
+                }
+                catch
+                {
+
+                }
+            }
+            return NoContent();
         }
     }
 

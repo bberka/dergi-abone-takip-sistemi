@@ -14,7 +14,7 @@ namespace DergiAboneProje.Controllers
     public class KategoriController : Controller
     {
 
-        DergiDbContext c = new DergiDbContext();
+        readonly DergiDbContext c = new DergiDbContext();
 
         
         public IActionResult Liste()

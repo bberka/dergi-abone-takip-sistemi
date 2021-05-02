@@ -4,26 +4,35 @@
     ViewData["Title"] = "Kayıt Ol";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div class="row">
-    <div class="col-md-4">
+<link href="~/css/login.css" rel="stylesheet" />
+<div class="container logindiv">
+    <br />
+    <h2>@ViewData["Title"]</h2>
+    <div class="eklediv">
         <form asp-action="KayitOl">
+            <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="KullaniciAD" class="control-label"></label>
-                <input asp-for="KullaniciAD" class="form-control" />
-               @* <span asp-validation-for="KullaniciAD" class="text-danger"></span>*@
+                @*  <label asp-for="KullaniciAD" class="control-label"></label>*@
+                <input asp-for="KullaniciAD" class="form-control" placeholder="Kullanıcı adı" />
+                @* <span asp-validation-for="KullaniciAD" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                <label asp-for="Sifre" class="control-label"></label>
-                <input asp-for="Sifre" class="form-control" />
-             @*   <span asp-validation-for="Sifre" class="text-danger"></span>*@
+                @* <label asp-for="Sifre" class="control-label"></label>*@
+                <input asp-for="Sifre" class="form-control" placeholder="Şifre" type="password" />
+                @*   <span asp-validation-for="Sifre" class="text-danger"></span>*@
             </div>
-                <input asp-for="Rol" type="hidden" class="form-control" value="U" />
-                 <button type="submit" class="btn btn-success">Kayıt Ol</button>
-            
+            <input asp-for="Rol" type="hidden" class="form-control" value="U" />
+            <button type="submit" class="btn btn-primary border-0 btn-outline-info" style="width:100%; background-color:rgb(0, 150, 136)">Kayıt Ol</button>
+
         </form>
+
     </div>
+    <br />
+    <a asp-action="GirisYap">Giris Yap</a>
 </div>
 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 

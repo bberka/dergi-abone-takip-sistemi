@@ -15,7 +15,7 @@ namespace DergiAboneProje.Controllers
     [Authorize(Roles = "A")]
     public class AbonelikController : Controller
     {
-        DergiDbContext c = new DergiDbContext();
+        readonly DergiDbContext c = new DergiDbContext();
         public IActionResult Liste()
         {
             TempData.Clear();
@@ -54,7 +54,7 @@ namespace DergiAboneProje.Controllers
             try
             {
                 var abn = c.Aboneliklers.Find(id);
-                abn.KayıtSuresi =  abn.KayıtSuresi - (abn.KayıtTarihi.AddDays(abn.KayıtSuresi) - DateTime.Now).Days;
+                abn.KayıtSuresi -=  (abn.KayıtTarihi.AddDays(abn.KayıtSuresi) - DateTime.Now).Days;
                 c.Aboneliklers.Update(abn);
                 c.SaveChanges();
                 //if (TempData.ContainsKey("UyeKey"))
@@ -73,7 +73,7 @@ namespace DergiAboneProje.Controllers
             }
             return NoContent();
         }
-        public void getUye_DergiIDsList()
+        public void GetUye_DergiIDsList()
         {
             List<SelectListItem> _uyeID = (from x in c.Uyelers.ToList()
                                            select new SelectListItem
@@ -93,7 +93,7 @@ namespace DergiAboneProje.Controllers
         [HttpGet]
         public IActionResult Ekle()
         {
-            getUye_DergiIDsList();
+            GetUye_DergiIDsList();
             return View();
         }
         [HttpPost]
@@ -123,7 +123,7 @@ namespace DergiAboneProje.Controllers
                 }
 
             }
-            getUye_DergiIDsList();
+            GetUye_DergiIDsList();
             return View();
 
 
@@ -132,7 +132,7 @@ namespace DergiAboneProje.Controllers
         [HttpGet]
         public IActionResult Duzenle(int id)
         {
-            getUye_DergiIDsList();
+            GetUye_DergiIDsList();
             
             var abone = c.Aboneliklers.Find(id);
             ViewBag.KayıtTarihi = abone.KayıtTarihi.ToShortDateString();
@@ -172,7 +172,7 @@ namespace DergiAboneProje.Controllers
             }
             ViewBag.KayıtTarihi = b.KayıtTarihi.ToShortDateString();
             ViewBag.KayıtID = b.KayıtID;
-            getUye_DergiIDsList();
+            GetUye_DergiIDsList();
             return View();
         }
     }

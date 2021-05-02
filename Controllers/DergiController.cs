@@ -17,7 +17,7 @@ namespace DergiAboneProje.Controllers
     [Authorize(Roles = "A")]
     public class DergiController : Controller
     {
-        DergiDbContext c = new DergiDbContext();
+        readonly DergiDbContext c = new DergiDbContext();
         public IActionResult Liste()
         {
             
@@ -31,7 +31,7 @@ namespace DergiAboneProje.Controllers
         public IActionResult Ekle()
         {
 
-            getKategoriIDsList();
+            GetKategoriIDsList();
             return View();
         }
         [HttpPost]
@@ -57,7 +57,7 @@ namespace DergiAboneProje.Controllers
 
                 }
             }
-            getKategoriIDsList();
+            GetKategoriIDsList();
             return View();
         }
         public bool _AbonelikExistResult;
@@ -98,7 +98,7 @@ namespace DergiAboneProje.Controllers
             return NoContent();
         }
        
-        public void getKategoriIDsList()
+        public void GetKategoriIDsList()
         {
             List<SelectListItem> degerler = (from x in c.Kategorilers.ToList()
                                              select new SelectListItem
@@ -113,7 +113,7 @@ namespace DergiAboneProje.Controllers
         public IActionResult Duzenle(int id)
         {
 
-            getKategoriIDsList();
+            GetKategoriIDsList();
 
              var drg = c.Dergilers.Find(id);
             ViewBag.drgid = id;
@@ -148,7 +148,7 @@ namespace DergiAboneProje.Controllers
 
                 }
             }
-            getKategoriIDsList();
+            GetKategoriIDsList();
             
             var drg = c.Dergilers.Find(d.DergiID);
             ViewBag.drgid = drg.DergiID;

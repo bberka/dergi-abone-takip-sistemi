@@ -1,0 +1,110 @@
+﻿@using DergiAboneProje.Models
+@model List<Admin>
+@using DergiAboneProje.Controllers
+
+@{
+    ViewData["Title"] = "Adminler";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div>
+
+
+    <div>
+        <table id="AdminTable" class="row-border stripe hover table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Kullanıcı Adı</th>
+                    <th>Şifre</th>
+                    <th>Rol</th>
+                    <th>Sil</th>
+                    <th>Yetki Düzenle</th>
+
+                </tr>
+            </thead>
+
+            @foreach (var x in Model)
+            {
+
+                <tr>
+                    <td>@x.ID</td>
+                    <td>@x.KullaniciAD</td>      
+                    <td>
+                        <input type="password" disabled="disabled" value="@x.Sifre" id="MyInput(@x.ID)"/>  <input type="checkbox" class="w3-check" onclick="myFunction(@x.ID)">
+                    </td>
+                    <td>@if (x.Rol == "A")
+                {
+                    <label>Admin</label>
+                }
+                    else if(x.Rol == "U")
+                {
+                    <label>User</label>
+                }   </td>
+                    <td><a href="#" onclick="Confirm(@x.ID)" class="btn btn-danger ksilbtn">Sil</a></td>
+                    <td>
+                        @if (x.Rol == "A")
+                        {
+                        <a href="/Login/UserYap/@x.ID" class="btn btn-success">User Yap</a>
+                        }
+                        else if (x.Rol == "U")
+                        {
+                            <a href="/Login/AdminYap/@x.ID"  class="btn btn-primary">Admin Yap</a>
+                        }
+                    </td>
+                    
+                </tr>
+            }
+            @*href="/Kategori/Sil/@x.KategoriID"*@
+        </table>
+    </div>
+
+    @*<a href="/Login/AdminEkle/" class="btn btn-success">Yeni Admin Ekle</a>*@
+
+    <script>
+        function myFunction(id) {
+            var x = document.getElementById("MyInput(" + id + ")");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+        function Confirm(id) {
+            swal({
+                title: "Silmek istediğinize emin misiniz ?",
+                text: "(ID: " + id + ")",
+                icon: "warning",
+                buttons: {
+                    cancel: "Hayır",
+                    true: "Evet",
+                },
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "/Login/Sil/" + id;
+                        swal({
+                            title: "Hesap silme işlemi başarılı!",
+                            icon: "success",
+                            buttons: "Tamam",
+                        }).then(value => {
+                            window.location.href = "/Login/Adminler/";
+                        });
+                    }
+
+                });
+        }
+
+        $(document).ready(function () {
+            $('#AdminTable').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+            });
+        });
+
+    </script>
+</div>
+
+
