@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace DAboneTakip.Migrations.DergiDb
+namespace DAboneTakip.Migrations
 {
     [DbContext(typeof(DergiDbContext))]
-    [Migration("20210426171406_alter3")]
-    partial class alter3
+    [Migration("20210501223003_initalcreate")]
+    partial class initalcreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,24 @@ namespace DAboneTakip.Migrations.DergiDb
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("DAboneTakip.Models.Admin", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("KullaniciAD")
+                        .HasColumnType("Varchar(16)");
+
+                    b.Property<string>("Sifre")
+                        .HasColumnType("Varchar(16)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Admins");
+                });
 
             modelBuilder.Entity("DergiAboneProje.Models.Abonelikler", b =>
                 {
@@ -60,7 +78,8 @@ namespace DAboneTakip.Migrations.DergiDb
 
                     b.Property<string>("DergiAD")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("DergiTARIH")
                         .HasColumnType("datetime2");
@@ -69,9 +88,14 @@ namespace DAboneTakip.Migrations.DergiDb
                         .IsRequired()
                         .HasColumnType("int");
 
+                    b.Property<int?>("UyelerUyeID")
+                        .HasColumnType("int");
+
                     b.HasKey("DergiID");
 
                     b.HasIndex("KategoriID");
+
+                    b.HasIndex("UyelerUyeID");
 
                     b.ToTable("Dergilers");
                 });
@@ -85,7 +109,8 @@ namespace DAboneTakip.Migrations.DergiDb
 
                     b.Property<string>("KategoriAD")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.HasKey("KategoriID");
 
@@ -111,7 +136,8 @@ namespace DAboneTakip.Migrations.DergiDb
 
                     b.Property<string>("UyeAD")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("UyeID");
 
@@ -145,7 +171,13 @@ namespace DAboneTakip.Migrations.DergiDb
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DergiAboneProje.Models.Uyeler", "Uyeler")
+                        .WithMany()
+                        .HasForeignKey("UyelerUyeID");
+
                     b.Navigation("Kategoriler");
+
+                    b.Navigation("Uyeler");
                 });
 
             modelBuilder.Entity("DergiAboneProje.Models.Kategoriler", b =>

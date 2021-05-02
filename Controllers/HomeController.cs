@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DAboneTakip.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "A")]
     public class HomeController : Controller
     {
         DergiDbContext c = new DergiDbContext();

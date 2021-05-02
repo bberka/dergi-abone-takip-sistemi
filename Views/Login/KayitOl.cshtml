@@ -1,0 +1,29 @@
+﻿@model DAboneTakip.Models.Admin
+
+@{
+    ViewData["Title"] = "Kayıt Ol";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="KayitOl">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="KullaniciAD" class="control-label"></label>
+                <input asp-for="KullaniciAD" class="form-control" />
+               @* <span asp-validation-for="KullaniciAD" class="text-danger"></span>*@
+            </div>
+            <div class="form-group">
+                <label asp-for="Sifre" class="control-label"></label>
+                <input asp-for="Sifre" class="form-control" />
+             @*   <span asp-validation-for="Sifre" class="text-danger"></span>*@
+            </div>
+                <input asp-for="Rol" type="hidden" class="form-control" value="U" />
+                 <button type="submit" class="btn btn-success">Kayıt Ol</button>
+            
+        </form>
+    </div>
+</div>
+
+

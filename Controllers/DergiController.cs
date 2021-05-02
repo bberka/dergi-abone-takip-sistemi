@@ -14,7 +14,7 @@ using System.Text.Json;
 
 namespace DergiAboneProje.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "A")]
     public class DergiController : Controller
     {
         DergiDbContext c = new DergiDbContext();

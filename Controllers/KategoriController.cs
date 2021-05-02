@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace DergiAboneProje.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "A")]
     public class KategoriController : Controller
     {
 

@@ -12,7 +12,7 @@ namespace DergiAboneProje.Models
 {
     public class Kategoriler
     {
-        private const string V = "asd";
+        
 
         [Key]
         public int KategoriID { get; set; }

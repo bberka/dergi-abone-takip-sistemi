@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DergiAboneProje.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "A")]
     public class UyeController : Controller
     {
         DergiDbContext c = new DergiDbContext();

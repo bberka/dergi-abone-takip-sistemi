@@ -20,6 +20,7 @@ namespace DAboneTakip.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("AuthDbContextConnection")));
 
+
                 services.AddDefaultIdentity<AuthDbUser>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = false;
@@ -32,6 +33,10 @@ namespace DAboneTakip.Areas.Identity
                 )
                     .AddEntityFrameworkStores<AuthDbContext>();
             });
+
+
         }
+
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DAboneTakip.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,13 @@ namespace DergiAboneProje.Models
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=DESKTOP-F9KH9U2\\SQLEXPRESS;database=DAboneTakipProje; integrated security= true;");
+            optionsBuilder.UseSqlServer("server=DESKTOP-F9KH9U2\\SQLEXPRESS;database=DergiAboneTakipProje; integrated security= true;");
         }
         public DbSet<Dergiler> Dergilers { get; set; }
         public DbSet<Uyeler> Uyelers { get; set; }
         public DbSet<Kategoriler> Kategorilers { get; set; }
         public DbSet<Abonelikler> Aboneliklers { get; set; }
+        public DbSet<Admin> Admins { get; set; }
         
     }
 }

@@ -12,7 +12,7 @@ using System.IO;
 
 namespace DergiAboneProje.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "A")]
     public class AbonelikController : Controller
     {
         DergiDbContext c = new DergiDbContext();
