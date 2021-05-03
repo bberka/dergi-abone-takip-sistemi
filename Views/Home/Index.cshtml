@@ -3,14 +3,117 @@
     ViewData["Title"] = "Anasayfa";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<div class="row">    
-    <div id="KategoriChart"></div> 
-    <div id="DergiChart" ></div>    
-    <div id="AbonelikChart"></div>
-    <div id="UyelerChart"></div>
+
+
+
+
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+
+
+    
+  
+    <!-- Custom Theme files -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Metro Panel Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!--webfont-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <link href="~/web/css/jqvmap.css" media="screen" rel="stylesheet" type="text/css" />
+
+<div>
+
+        <div class="total-content">
+            <div class="list_of_members">
+                <div class="sales" style="background-color:#1abc9c">
+  
+                    <div class="icon-text">
+                        <h3>@ViewBag.count_uye</h3>
+                        <p>Üye Sayısı</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="new-users" style="background-color:#2ecc71">
+                    <div class="icon-text">
+                        <h3>@ViewBag.count_abone</h3>
+                        <p>Toplam Abonelik Kaydı</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="orders" style="background-color:#3498db">
+
+                    <div class="icon-text">
+                        <h3>@ViewBag.count_dergi</h3>
+                        <p>Dergi Sayısı</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="visitors" style="background-color:#9b59b6">
+                    <div class="icon-text">
+                        <h3>@ViewBag.count_kategori</h3>
+                        <p>Kategori Sayısı</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="total-content">
+            <div class="list_of_members">
+                <div class="sales" style="background-color:#16a085">
+                    <div class="icon-text">
+                        <h3>@ViewBag.count_aktifabone</h3>
+                        <p>Aktif Abonelikler</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="new-users" style="background-color:#27ae60">
+                    <div class="icon-text " >
+                        <h3>@(ViewBag.count_abone - ViewBag.count_aktifabone)</h3>
+                        <p>Pasif Abonelikler</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="orders" style="background-color:#2980b9">
+
+                    <div class="icon-text">
+                        <h3>@ViewBag.bugun_eklenen</h3>
+                        <p>Bugün Eklenen Abonelikler</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="visitors" style="background-color:#8e44ad">
+
+                    <div class="icon-text">
+                        <h3>@ViewBag.count_bitecek</h3>
+                        <p>Yakında Bitecek Abonelikler</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
 </div>
 
-<script>
+
+
+
+        <div class="row">
+            <div id="KategoriChart" style="margin:auto"></div>
+            <div id="DergiChart" style="margin:auto"></div>
+            <div id="AbonelikChart"></div>
+            <div id="UyelerChart"></div>
+        </div>
+
+        <script>
             $(document).ready(function () {
                 $.ajax({
                 type: "GET",
@@ -105,4 +208,4 @@
 
         columnChart.draw(data, columnChartOptions);
     }
-</script>
+        </script>

@@ -12,7 +12,7 @@ using System.IO;
 
 namespace DergiAboneProje.Controllers
 {
-    [Authorize(Roles = "A")]
+    [Authorize(Roles = "A,O")]
     public class AbonelikController : Controller
     {
         readonly DergiDbContext c = new DergiDbContext();
@@ -33,15 +33,7 @@ namespace DergiAboneProje.Controllers
                 var abn = c.Aboneliklers.Find(id);
                 c.Aboneliklers.Remove(abn);
                 c.SaveChanges();
-                //if (TempData.ContainsKey("UyeKey"))
-                //{
-                //    return RedirectToAction("Detay", "Uye", new { id = TempData["UyeKey"] });
-                //}
-                //else if (TempData.ContainsKey("DergiKey"))
-                //{
-                //    return RedirectToAction("Detay", "Dergi", new { id = TempData["DergiKey"] });
-                //}
-                //return RedirectToAction("Liste");
+
             }
             catch
             {
@@ -57,15 +49,7 @@ namespace DergiAboneProje.Controllers
                 abn.KayıtSuresi -=  (abn.KayıtTarihi.AddDays(abn.KayıtSuresi) - DateTime.Now).Days;
                 c.Aboneliklers.Update(abn);
                 c.SaveChanges();
-                //if (TempData.ContainsKey("UyeKey"))
-                //{
-                //    return RedirectToAction("Detay", "Uye", new { id = TempData["UyeKey"] });
-                //}
-                //else if (TempData.ContainsKey("DergiKey"))
-                //{
-                //    return RedirectToAction("Detay", "Dergi", new { id = TempData["DergiKey"] });
-                //}
-                //return RedirectToAction("Liste");
+
             }
             catch
             {

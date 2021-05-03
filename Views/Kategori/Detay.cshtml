@@ -8,9 +8,9 @@
 
 <div>
 
-    
 
-    
+
+
     <table id="DergiTable" class="row-border stripe hover table-bordered">
         <thead>
             <tr>
@@ -24,21 +24,29 @@
         </thead>
         <tbody>
             @foreach (var x in Model)
-            {   
-            <tr>
-                <td>@x.DergiID</td>
-                <td>@x.DergiAD</td>
-                <td>@x.DergiTARIH.ToString("dd/MM/yyyy")</td>
-                <td><a href="/Dergi/Duzenle/@x.DergiID" class="btn btn-success">Düzenle</a></td>
-                <td><a href="#" onclick="Confirm(@x.DergiID)" class="btn btn-danger">Sil</a></td>
-                <td><a href="/Dergi/Detay/@x.DergiID" class="btn btn-warning">Detaylar</a></td>
-            </tr>
+            {
+                <tr>
+                    <td>@x.DergiID</td>
+                    <td>@x.DergiAD</td>
+                    <td>@x.DergiTARIH.ToString("dd/MM/yyyy")</td>
+                    <td><a href="/Dergi/Duzenle/@x.DergiID" class="btn btn-success">Düzenle</a></td>
+                    <td><a href="#" onclick="Confirm(@x.DergiID)" class="btn btn-danger">Sil</a></td>
+                    <td><a href="/Dergi/Detay/@x.DergiID" class="btn btn-warning">Detaylar</a></td>
+                </tr>
             }
         <tbody>
 
     </table>
+    <br />
+    <div>
+        <a asp-action="Liste">Listeye Dön</a>
+    </div>
     
-    <script>
+
+</div>
+
+
+<script>
         function Confirm(id) {
             swal({
                 title: "Silmek istediğinize emin misiniz ? (ID: " + id + ")",
@@ -69,12 +77,4 @@
                 }
             });
         });
-    </script>
-
-</div>
-
-
-
-
-
-
+</script>

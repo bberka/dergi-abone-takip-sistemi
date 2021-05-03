@@ -3,7 +3,7 @@
 @using DergiAboneProje.Controllers
 
 @{
-    ViewData["Title"] = "Adminler";
+    ViewData["Title"] = "Adminler" + ViewBag.UID;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -27,36 +27,40 @@
 
             @foreach (var x in Model)
             {
-
+                if (x.Rol == "O") continue;
                 <tr>
                     <td>@x.ID</td>
-                    <td>@x.KullaniciAD</td>      
+                    <td>@x.KullaniciAD</td>
                     <td>
-                        <input type="password" disabled="disabled" value="@x.Sifre" id="MyInput(@x.ID)"/>  <input type="checkbox" class="w3-check" onclick="myFunction(@x.ID)">
+                        <input type="password" disabled="disabled" value="@x.Sifre" id="MyInput(@x.ID)" />  <input type="checkbox" class="w3-check" onclick="myFunction(@x.ID)">
                     </td>
-                    <td>@if (x.Rol == "A")
-                {
-                    <label>Admin</label>
-                }
-                    else if(x.Rol == "U")
-                {
-                    <label>User</label>
-                }   </td>
-                    <td><a href="#" onclick="Confirm(@x.ID)" class="btn btn-danger ksilbtn">Sil</a></td>
                     <td>
                         @if (x.Rol == "A")
                         {
-                        <a href="/Login/UserYap/@x.ID" class="btn btn-success">User Yap</a>
+                            <label>Admin</label>
                         }
                         else if (x.Rol == "U")
                         {
-                            <a href="/Login/AdminYap/@x.ID"  class="btn btn-primary">Admin Yap</a>
+                            <label>User</label>
                         }
-                    </td>
-                    
-                </tr>
-            }
-            @*href="/Kategori/Sil/@x.KategoriID"*@
+                </td>
+                <td><a href="#" onclick="Confirm(@x.ID)" class="btn btn-danger ksilbtn">Sil</a></td>
+                <td>
+                    @if (x.Rol == "A")
+                    {
+                        <a href="/Login/UserYap/@x.ID" class="btn btn-success">User Yap</a>
+                    }
+                    else if (x.Rol == "U")
+                    {
+                        <a href="/Login/AdminYap/@x.ID" class="btn btn-primary">Admin Yap</a>
+                    }
+
+                </td>
+
+
+            </tr>
+        }
+          
         </table>
     </div>
 

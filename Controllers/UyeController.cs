@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DergiAboneProje.Controllers
 {
-    [Authorize(Roles = "A")]
+    [Authorize(Roles = "A,O")]
     public class UyeController : Controller
     {
         DergiDbContext c = new DergiDbContext();
@@ -66,6 +66,8 @@ namespace DergiAboneProje.Controllers
         
         public IActionResult Ekle(Uyeler b)
         {
+            b.UyeAD = b.UyeAD.Trim();
+            b.Email = b.Email.Trim();
             bool UyeAlreadyExist = c.Uyelers.Where(x => x.Email == b.Email).Count() != 0;
             bool BirtDateCheck = Convert.ToDateTime(b.Tarih).AddYears(18) >= DateTime.Now;
             bool PhoneNumberCheck = b.TelNo.ToString().Length != 10 || !b.TelNo.ToString().All(char.IsDigit) ;
@@ -116,12 +118,14 @@ namespace DergiAboneProje.Controllers
         [HttpPost]
         public IActionResult Duzenle(Uyeler b)
         {
+            b.UyeAD = b.UyeAD.Trim();
+            b.Email = b.Email.Trim();
             ViewBag.UID = b.UyeID;
             
-            bool ChangesMade = c.Uyelers.Where(x => x.Email == b.Email &&                                                            x.UyeAD == b.UyeAD && x.Tarih == b.Tarih && x.TelNo == b.TelNo).Count() != 0;
+            bool ChangesMade = c.Uyelers.Where(x => x.Email == b.Email && x.UyeAD == b.UyeAD && x.Tarih == b.Tarih && x.TelNo == b.TelNo).Count() != 0;
             bool BirtDateCheck = Convert.ToDateTime(b.Tarih).AddYears(18) >= DateTime.Now;
             bool PhoneNumberCheck = b.TelNo.ToString().Length != 10 || !b.TelNo.ToString().All(char.IsDigit);
-            bool UyeAlreadyExist = c.Uyelers.Where(x => x.Email == b.Email).Count() != 0; 
+            bool UyeAlreadyExist = c.Uyelers.Where(x => x.Email == b.Email && x.UyeID != b.UyeID).Count() != 0; 
             if (ChangesMade)
             {
                 ModelState.AddModelError("ChangesMade", "Değişiklik yapmadınız.");

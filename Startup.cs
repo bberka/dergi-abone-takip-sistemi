@@ -32,6 +32,7 @@ namespace DAboneTakip
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddMvc();
+            services.AddHttpContextAccessor();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;

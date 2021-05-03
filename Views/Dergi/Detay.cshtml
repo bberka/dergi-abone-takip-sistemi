@@ -36,20 +36,20 @@
                 {
                     continue;
                 }
-        <tr>
-            <td>@x.KayıtID</td>
-            <td>@x.KayıtTarihi.ToShortDateString()</td>
-            <td>@((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days)</td>
-            <td>@x.UyeID</td>
-            <td>@x.Uye.UyeAD</td>
-            <td><a href="/Abonelik/Duzenle/@x.KayıtID" class="btn btn-success">Düzenle</a></td>
-            <td><a href="#" onclick="Confirm2(@x.KayıtID)" class="btn btn-danger">İptal</a></td>
-        </tr>
+                <tr>
+                    <td>@x.KayıtID</td>
+                    <td>@x.KayıtTarihi.ToShortDateString()</td>
+                    <td>@((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days)</td>
+                    <td>@x.UyeID</td>
+                    <td>@x.Uye.UyeAD</td>
+                    <td><a href="/Abonelik/Duzenle/@x.KayıtID" class="btn btn-success">Düzenle</a></td>
+                    <td><a href="#" onclick="Confirm2(@x.KayıtID)" class="btn btn-danger">İptal</a></td>
+                </tr>
             }
 
         </table>
     </div>
-    
+
     <div id="PasifT" class="table" style="display:none">
         <table id="PasifTable" class="row-border stripe hover table-bordered">
             <thead>
@@ -81,7 +81,13 @@
 
         </table>
     </div>
-    <script>
+    <br />
+    <div>
+        <a asp-action="Liste">Listeye Dön</a>
+    </div>
+        
+</div>
+<script>
         function Confirm(id) {
             swal({
                 title: "Silmek istediğinize emin misiniz ? (ID: " + id + ")",
@@ -162,5 +168,4 @@
         }
 
 
-    </script>
-</div>
+</script>

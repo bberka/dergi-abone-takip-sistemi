@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace DergiAboneProje.Controllers
 {
-    [Authorize(Roles = "A")]
+    [Authorize(Roles = "A,O")]
     public class KategoriController : Controller
     {
 
@@ -35,7 +35,7 @@ namespace DergiAboneProje.Controllers
         [HttpPost]
         public IActionResult Ekle(Kategoriler k)
         {
-           
+            k.KategoriAD = k.KategoriAD.Trim();
             bool NameAlreadyExist = c.Kategorilers.Where(x => x.KategoriAD == k.KategoriAD).Count() != 0;
             if (NameAlreadyExist)
             {
@@ -107,6 +107,7 @@ namespace DergiAboneProje.Controllers
         [HttpPost]
         public IActionResult Duzenle(Kategoriler k)
         {
+            k.KategoriAD = k.KategoriAD.Trim();
             bool NameAlreadyExist = c.Kategorilers.Where(x => x.KategoriAD == k.KategoriAD).Count() != 0;
             bool NameSame = c.Kategorilers.Where(x => x.KategoriID == k.KategoriID && x.KategoriAD == k.KategoriAD).Count() != 0;
             if (NameSame)

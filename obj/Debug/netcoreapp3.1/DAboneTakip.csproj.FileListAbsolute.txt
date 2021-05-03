@@ -386,6 +386,5 @@ C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\st
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\staticwebassets\DAboneTakip.StaticWebAssets.xml
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\scopedcss\bundle\DAboneTakip.styles.css
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Login\Adminler.cshtml.g.cs
-C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_KategoriChartPartial.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ChartScriptsPartial.cshtml.g.cs
-C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_DergiChartPartial.cshtml.g.cs
+C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Login\Bilgiler.cshtml.g.cs

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace DAboneTakip.Controllers
 {
-    [Authorize(Roles = "A")]
+    [Authorize(Roles = "A,O")]
     public class HomeController : Controller
     {
         readonly DergiDbContext c = new DergiDbContext();
@@ -26,7 +26,58 @@ namespace DAboneTakip.Controllers
 
         public IActionResult Index()
         {
+            var list_abone = c.Aboneliklers.ToList();
+            var list_dergi = c.Dergilers.ToList();
+            var list_kategori = c.Kategorilers.ToList();
+            var list_uye = c.Uyelers.ToList();
 
+            ViewBag.count_uye = list_uye.Count();
+            ViewBag.count_kategori = list_kategori.Count();
+            ViewBag.count_dergi = list_dergi.Count();
+            ViewBag.count_abone = list_abone.Count();
+
+            int bugun_eklenen = 0;
+            foreach (var x in c.Aboneliklers)
+            {
+                bool a = x.KayıtTarihi.ToShortDateString() == DateTime.Now.ToShortDateString();
+               
+                if (a)
+                {
+                    if(x.KayıtSuresi != 1)
+                    {
+                        bugun_eklenen++;
+                    }
+                    
+                }
+                
+            }
+            ViewBag.bugun_eklenen = bugun_eklenen;
+
+            int aktif_abone = 0;
+            int bitecek_abone = 0;
+            
+            foreach (var x in c.Aboneliklers)
+            {
+                var a = (x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days;
+                if (a <= 0)
+                {
+                    
+                    continue;
+                }
+                aktif_abone++;
+            }
+            ViewBag.count_aktifabone = aktif_abone;
+
+            foreach (var x in c.Aboneliklers)
+            {
+                var a = (x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days;
+                if (a <= 0 || a >= 30)
+                {
+                    continue;
+                }
+                bitecek_abone++;
+            }
+            ViewBag.count_bitecek = bitecek_abone;
             return View();
         }
         public List<ChartKategori> VKategoriChart() 

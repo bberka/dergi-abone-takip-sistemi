@@ -21,6 +21,7 @@
     <div class="col-md-4">
         <h5>Kayıt ID: @ViewBag.KayıtID</h5>
         <h5>Kayıt Tarihi: @ViewBag.KayıtTarihi</h5>
+        <br />
         <form asp-action="Duzenle">
             <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="KayıtID" />

@@ -14,7 +14,7 @@ using System.Text.Json;
 
 namespace DergiAboneProje.Controllers
 {
-    [Authorize(Roles = "A")]
+    [Authorize(Roles = "A,O")]
     public class DergiController : Controller
     {
         readonly DergiDbContext c = new DergiDbContext();
@@ -37,7 +37,7 @@ namespace DergiAboneProje.Controllers
         [HttpPost]
         public IActionResult Ekle(Dergiler d)
         {
-            
+            d.DergiAD = d.DergiAD.Trim();
             bool NameAlreadyExist = c.Dergilers.Where(x => x.DergiAD == d.DergiAD).Count() != 0;
             if (NameAlreadyExist)
             {
@@ -123,6 +123,7 @@ namespace DergiAboneProje.Controllers
         [HttpPost]
         public IActionResult Duzenle(Dergiler d)
         {
+            d.DergiAD = d.DergiAD.Trim();
             bool NameAlreadyExist = c.Dergilers.Where(x => x.DergiAD == d.DergiAD && x.DergiID != d.DergiID).Count() != 0;
             bool NameSame = c.Dergilers.Where(x => x.DergiID == d.DergiID && x.DergiAD == d.DergiAD ).Count() != 0;
             bool KategoriSame = c.Dergilers.Where(x => x.DergiID == d.DergiID && x.KategoriID == d.KategoriID).Count() != 0;
@@ -141,6 +142,10 @@ namespace DergiAboneProje.Controllers
                 {
                     c.Dergilers.Update(d);
                     c.SaveChanges();
+                    //if(TempData.ContainsKey("KtgKey"))
+                    //{
+                    //    return RedirectToAction("Detay", "Kategori", new { id = TempData["KtgKey"] });
+                    //}
                     return RedirectToAction("Liste");
                 }
                 catch
