@@ -10,7 +10,7 @@ namespace DergiAboneProje.Controllers
     [Authorize(Roles = "A,O")]
     public class UyeController : Controller
     {
-        DergiDbContext c = new DergiDbContext();
+        readonly DergiDbContext c = new DergiDbContext();
         public bool _AbonelikExistResult;
         public IActionResult Liste()
         {

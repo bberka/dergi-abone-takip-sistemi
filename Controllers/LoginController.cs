@@ -16,6 +16,25 @@ namespace DAboneTakip.Controllers
     public class LoginController : Controller
     {
         readonly DergiDbContext c = new DergiDbContext();
+        string _CurrentUserRole;
+        public bool CheckIfOwner(int id)
+        {
+            var a = c.Admins.Find(id);
+            if (a.Rol == "O") return true;
+            return false;
+        }
+        public int GetUserID() //Giriş yapmış kullanıcının idsini alır
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                string a = this.User.Identity.Name;
+                int uid = c.Admins.Where(x => x.KullaniciAD == a).Select(x => x.ID).FirstOrDefault();
+                _CurrentUserRole = c.Admins.Where(x => x.KullaniciAD == a).Select(x => x.Rol).FirstOrDefault();
+                ViewBag.UID = uid;
+                return uid;
+            }
+            return -1;
+        }
         public IActionResult ErisimEngel()
         {
             return View();
@@ -45,24 +64,14 @@ namespace DAboneTakip.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
             }
-            else
+            else if (bilgiler == null)
             {
                 ModelState.AddModelError("", "Kullanıcı adı veya şifre yanlış.");
                 return View();
             }
-
             return RedirectToAction("Index", "Home");
         }
-        public int GetUserID() //Giriş yapmış kullanıcının idsini alır
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                string a = this.User.Identity.Name;
-                int uid = c.Admins.Where(x => x.KullaniciAD == a).Select(x => x.ID).FirstOrDefault();
-                return uid;
-            }
-            return -1;
-        }
+
         [AllowAnonymous]
         public async Task<IActionResult> CikisYap()
         {
@@ -80,19 +89,17 @@ namespace DAboneTakip.Controllers
         [AllowAnonymous]
         public IActionResult KayitOl(Admin a)
         {
-            if (ModelState.IsValid)
+            bool CheckIfUserExist = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD).Count() != 0;
+            if (CheckIfUserExist) ModelState.AddModelError("", "Bu kullanıcı adı zaten kullanılıyor.");
+            else if (ModelState.IsValid)
             {
                 c.Admins.Add(a);
                 c.SaveChanges();
+                return RedirectToAction("GirisYap", "Login");
             }
-            return RedirectToAction("GirisYap", "Login");
+            return View();
         }
-        public bool CheckIfOwner(int id)
-        {
-            var a = c.Admins.Find(id);
-            if (a.Rol == "O") return true;
-            return false;
-        }
+
         [Authorize(Roles = "O")]
         public IActionResult Adminler()
         {
@@ -101,44 +108,7 @@ namespace DAboneTakip.Controllers
                    .ToList();
             return View(degerler);
         }
-        [Authorize(Roles = "O")]
-        public IActionResult AdminYap(int id)
-        {
-            if (!CheckIfOwner(id))
-            {
-                try
-                {
-                    var acc = c.Admins.Find(id);
-                    acc.Rol = "A";
-                    c.Admins.Update(acc);
-                    c.SaveChanges();
-                }
-                catch
-                {
 
-                }
-            }
-            return RedirectToAction("Adminler");
-        }
-        [Authorize(Roles = "O")]
-        public IActionResult UserYap(int id)
-        {
-            if (!CheckIfOwner(id))
-            {
-                try
-                {
-                    var acc = c.Admins.Find(id);
-                    acc.Rol = "U";
-                    c.Admins.Update(acc);
-                    c.SaveChanges();
-                }
-                catch
-                {
-
-                }
-            }
-            return RedirectToAction("Adminler");
-        }
         [Authorize(Roles = "O")]
         public IActionResult Sil(int id)
         {
@@ -191,24 +161,48 @@ namespace DAboneTakip.Controllers
         [Authorize(Roles = "O")]
         public IActionResult Duzenle(Admin a)
         {
+            bool CheckIfUserExist = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD && x.ID != a.ID).Count() != 0;
+            bool CheckChanges = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD && x.Sifre == a.Sifre && x.Rol == a.Rol).Count() != 0;
+            if (CheckIfUserExist) ModelState.AddModelError("", "Bu kullanıcı adı zaten kullanılıyor.");
+            if (CheckChanges) ModelState.AddModelError("", "Düzenleme yapmadınız.");
             if (ModelState.IsValid)
             {
                 c.Admins.Update(a);
                 c.SaveChanges();
+                return RedirectToAction("Adminler");
             }
-            return RedirectToAction("Adminler");
+            return View("Duzenle", c.Admins.Find(a.ID));
         }
 
         [HttpGet]
-        [Authorize(Roles = "O,A,U")]
+        [Authorize(Roles = "O,A")]
         public IActionResult SifreDegis()
         {
+            GetUserID();
             return View();
         }
         [HttpPost]
-        [Authorize(Roles = "O,A,U")]
-        public IActionResult SifreDegis(Admin a)
+        [Authorize(Roles = "O,A")]
+        public IActionResult SifreDegis(ChangePass a)
         {
+            int id = GetUserID();
+            bool CheckOldPass = c.Admins.Where(x => x.ID == id && x.Sifre == a.OldPass).Count() != 0;
+            bool CheckNewPassMatch = a.NewPass == a.NewPass2;
+            var _admin = new Admin
+            {
+                ID = id,
+                KullaniciAD = this.User.Identity.Name,
+                Sifre = a.NewPass,
+                Rol = _CurrentUserRole
+            };
+            if (!CheckOldPass) ModelState.AddModelError("", "Geçerli şifreyi yanlış girdiniz.");
+            else if (!CheckNewPassMatch) ModelState.AddModelError("", "Yeni şifre eşleşmiyor.");
+            else if (ModelState.IsValid)
+            {
+                c.Admins.Update(_admin);
+                c.SaveChanges();
+                return RedirectToAction("CikisYap");
+            }
             return View();
         }
     }

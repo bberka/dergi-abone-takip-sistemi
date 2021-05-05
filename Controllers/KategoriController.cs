@@ -15,7 +15,6 @@ namespace DergiAboneProje.Controllers
             var degerler = c.Kategorilers
                 .Include(x => x.Dergilers)
                 .ToList();
-
             return View(degerler);
         }
 

@@ -1,0 +1,31 @@
+﻿@model DAboneTakip.Models.ChangePass
+@{
+    ViewData["Title"] = "Sifre Değiştir";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>ID: @ViewBag.UID</h3>
+        <br />
+        <form asp-action="SifreDegis">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="OldPass">Geçerli Şifre</label>
+                <input asp-for="OldPass" class="form-control" maxlength="16" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="NewPass">Yeni Şifre</label>
+                <input asp-for="NewPass" class="form-control" maxlength="16" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="NewPass2">Yeni Şifre Tekrar</label>
+                <input asp-for="NewPass2" class="form-control" maxlength="16" />
+            </div>
+            <button class="btn btn-success" type="submit">Şifre Değiştir</button>
+        </form>
+    </div>
+</div>
+

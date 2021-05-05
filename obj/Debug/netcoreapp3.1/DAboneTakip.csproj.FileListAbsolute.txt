@@ -389,3 +389,4 @@ C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Ra
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ChartScriptsPartial.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Login\Duzenle.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Login\AdminEkle.cshtml.g.cs
+C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Login\SifreDegis.cshtml.g.cs
