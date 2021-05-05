@@ -19,9 +19,8 @@
                     <th>Kullanıcı Adı</th>
                     <th>Şifre</th>
                     <th>Rol</th>
+                    <th>Düzenle</th>
                     <th>Sil</th>
-                    <th>Yetki Düzenle</th>
-
                 </tr>
             </thead>
 
@@ -43,25 +42,17 @@
                         {
                             <label>User</label>
                         }
-                </td>
-                <td><a href="#" onclick="Confirm(@x.ID)" class="btn btn-danger ksilbtn">Sil</a></td>
-                <td>
-                    @if (x.Rol == "A")
-                    {
-                        <a href="/Login/UserYap/@x.ID" class="btn btn-success">User Yap</a>
-                    }
-                    else if (x.Rol == "U")
-                    {
-                        <a href="/Login/AdminYap/@x.ID" class="btn btn-primary">Admin Yap</a>
-                    }
-
-                </td>
+                    </td>
+                    <td><a href="/Login/Duzenle/@x.ID" class="btn btn-success">Düzenle</a></td>
+                    <td><a href="#" onclick="Confirm(@x.ID)" class="btn btn-danger ksilbtn">Sil</a></td>
 
 
-            </tr>
-        }
-          
+
+                </tr>
+            }
+
         </table>
+        <a href="/Login/AdminEkle/" class="btn btn-success">Yeni Admin Ekle</a>
     </div>
 
     @*<a href="/Login/AdminEkle/" class="btn btn-success">Yeni Admin Ekle</a>*@

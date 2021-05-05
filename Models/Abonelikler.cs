@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DergiAboneProje.Models
@@ -26,7 +23,7 @@ namespace DergiAboneProje.Models
         public int? UyeID { get; set; }
         [ForeignKey("UyeID")]
         public virtual Uyeler Uye { get; set; }
-        
+
         [Required(ErrorMessage = "Dergi seçiniz.")]
         [Display(Name = "Dergi Adı")]
         public int? DergiID { get; set; }

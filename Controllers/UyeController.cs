@@ -1,11 +1,9 @@
 ﻿using DergiAboneProje.Models;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace DergiAboneProje.Controllers
 {
@@ -13,13 +11,12 @@ namespace DergiAboneProje.Controllers
     public class UyeController : Controller
     {
         DergiDbContext c = new DergiDbContext();
+        public bool _AbonelikExistResult;
         public IActionResult Liste()
         {
-            
             var degerler = c.Uyelers.ToList();
             return View(degerler);
         }
-        public bool _AbonelikExistResult;
         public JsonResult CheckAbonelik(int id)
         {
             bool AbonelikExist = c.Aboneliklers.Where(x => x.UyeID == id).Count() != 0;
@@ -45,15 +42,11 @@ namespace DergiAboneProje.Controllers
                     var a = c.Uyelers.Find(id);
                     c.Uyelers.Remove(a);
                     c.SaveChanges();
-                    //return RedirectToAction("Liste");
                 }
                 catch
                 {
-
                 }
             }
-            
-            
             return NoContent();
         }
 
@@ -63,26 +56,19 @@ namespace DergiAboneProje.Controllers
             return View();
         }
         [HttpPost]
-        
+
         public IActionResult Ekle(Uyeler b)
         {
             b.UyeAD = b.UyeAD.Trim();
             b.Email = b.Email.Trim();
             bool UyeAlreadyExist = c.Uyelers.Where(x => x.Email == b.Email).Count() != 0;
             bool BirtDateCheck = Convert.ToDateTime(b.Tarih).AddYears(18) >= DateTime.Now;
-            bool PhoneNumberCheck = b.TelNo.ToString().Length != 10 || !b.TelNo.ToString().All(char.IsDigit) ;
-            if (UyeAlreadyExist)
-            {
-                ModelState.AddModelError("UyeAlreadyExist", "Bu email adresi zaten kullanılıyor.");
-            }
-            else if (BirtDateCheck)
-            {
-                ModelState.AddModelError("BirtDateCheck", "Üye 18 yaşından büyük olmalıdır.");
-            }
-            else if (PhoneNumberCheck)
-            {
-                ModelState.AddModelError("PhoneNumberCheck", "Geçersiz telefon numarası girdiniz.");
-            }
+            bool PhoneNumberCheck = b.TelNo.ToString().Length != 10 || !b.TelNo.ToString().All(char.IsDigit);
+
+            if (UyeAlreadyExist) ModelState.AddModelError("UyeAlreadyExist", "Bu email adresi zaten kullanılıyor.");
+            else if (BirtDateCheck) ModelState.AddModelError("BirtDateCheck", "Üye 18 yaşından büyük olmalıdır.");
+            else if (PhoneNumberCheck) ModelState.AddModelError("PhoneNumberCheck", "Geçersiz telefon numarası girdiniz.");
+
             else if (ModelState.IsValid)
             {
                 try
@@ -93,25 +79,22 @@ namespace DergiAboneProje.Controllers
                 }
                 catch
                 {
-
                 }
             }
             return View();
-
         }
         [HttpGet]
         public IActionResult Duzenle(int id)
         {
             try
             {
-                ViewBag.UID = id;                
+                ViewBag.UID = id;
                 var uye = c.Uyelers.Find(id);
-                
+
                 return View("Duzenle", uye);
             }
             catch
             {
-
             }
             return View();
         }
@@ -121,42 +104,28 @@ namespace DergiAboneProje.Controllers
             b.UyeAD = b.UyeAD.Trim();
             b.Email = b.Email.Trim();
             ViewBag.UID = b.UyeID;
-            
+
             bool ChangesMade = c.Uyelers.Where(x => x.Email == b.Email && x.UyeAD == b.UyeAD && x.Tarih == b.Tarih && x.TelNo == b.TelNo).Count() != 0;
             bool BirtDateCheck = Convert.ToDateTime(b.Tarih).AddYears(18) >= DateTime.Now;
             bool PhoneNumberCheck = b.TelNo.ToString().Length != 10 || !b.TelNo.ToString().All(char.IsDigit);
-            bool UyeAlreadyExist = c.Uyelers.Where(x => x.Email == b.Email && x.UyeID != b.UyeID).Count() != 0; 
-            if (ChangesMade)
-            {
-                ModelState.AddModelError("ChangesMade", "Değişiklik yapmadınız.");
-            }
-            else if (UyeAlreadyExist)
-            {
-                ModelState.AddModelError("UyeAlreadyExist", "Bu email adresi zaten kullanılıyor.");
-            }
-            else if (BirtDateCheck)
-            {
-                ModelState.AddModelError("BirtDateCheck", "Üye 18 yaşından büyük olmalıdır.");
-            }
-            else if (PhoneNumberCheck)
-            {
-                ModelState.AddModelError("PhoneNumberCheck", "Geçersiz telefon numarası girdiniz.");
-            }
+            bool UyeAlreadyExist = c.Uyelers.Where(x => x.Email == b.Email && x.UyeID != b.UyeID).Count() != 0;
+
+            if (ChangesMade) ModelState.AddModelError("ChangesMade", "Değişiklik yapmadınız.");
+            else if (UyeAlreadyExist) ModelState.AddModelError("UyeAlreadyExist", "Bu email adresi zaten kullanılıyor.");
+            else if (BirtDateCheck) ModelState.AddModelError("BirtDateCheck", "Üye 18 yaşından büyük olmalıdır.");
+            else if (PhoneNumberCheck) ModelState.AddModelError("PhoneNumberCheck", "Geçersiz telefon numarası girdiniz.");
             else if (ModelState.IsValid)
             {
                 try
                 {
-
                     c.Uyelers.Update(b);
                     c.SaveChanges();
                     return RedirectToAction("Liste");
                 }
                 catch
                 {
-
                 }
             }
-            
             return View();
         }
         public IActionResult Detay(int id)

@@ -1,30 +1,33 @@
 ﻿@model DAboneTakip.Models.Admin
 
 @{
-    ViewData["Title"] = "Bilgiler";
+    ViewData["Title"] = "Admin Ekle";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 
 <div class="row">
     <div class="col-md-4">
-        <h3>ID: </h3>
-        <form asp-action="Bilgiler">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <input type="hidden" asp-for="ID" />
-            <input type="hidden" asp-for="Rol" />
+        <form asp-action="AdminEkle">
+            <div asp-validation-summary="All" class="text-danger"></div>            
+            <input type="hidden" asp-for="Rol" value="A" />            
             <div class="form-group">
                 <label asp-for="KullaniciAD" class="control-label"></label>
                 <input asp-for="KullaniciAD" class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="Sifre" class="control-label"></label>
-                <input asp-for="Sifre" class="form-control" />                
+                <input asp-for="Sifre" class="form-control" />
             </div>
+           
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Admin Ekle" class="btn btn-primary" />
             </div>
         </form>
     </div>
+</div>
+<br />
+<div>
+    <a asp-action="Adminler">Listeye Dön</a>
 </div>
 

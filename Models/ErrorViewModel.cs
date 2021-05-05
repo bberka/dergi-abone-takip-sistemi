@@ -1,5 +1,3 @@
-using System;
-
 namespace DAboneTakip.Models
 {
     public class ErrorViewModel

@@ -1,9 +1,5 @@
 ﻿using DAboneTakip.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DergiAboneProje.Models
 {
@@ -18,6 +14,6 @@ namespace DergiAboneProje.Models
         public DbSet<Kategoriler> Kategorilers { get; set; }
         public DbSet<Abonelikler> Aboneliklers { get; set; }
         public DbSet<Admin> Admins { get; set; }
-        
+
     }
 }

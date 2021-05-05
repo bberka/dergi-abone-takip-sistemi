@@ -3,13 +3,11 @@ using DAboneTakip.Models.ChartModels;
 using DergiAboneProje.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace DAboneTakip.Controllers
 {
@@ -40,28 +38,28 @@ namespace DAboneTakip.Controllers
             foreach (var x in c.Aboneliklers)
             {
                 bool a = x.KayıtTarihi.ToShortDateString() == DateTime.Now.ToShortDateString();
-               
+
                 if (a)
                 {
-                    if(x.KayıtSuresi != 1)
+                    if (x.KayıtSuresi != 1)
                     {
                         bugun_eklenen++;
                     }
-                    
+
                 }
-                
+
             }
             ViewBag.bugun_eklenen = bugun_eklenen;
 
             int aktif_abone = 0;
             int bitecek_abone = 0;
-            
+
             foreach (var x in c.Aboneliklers)
             {
                 var a = (x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days;
                 if (a <= 0)
                 {
-                    
+
                     continue;
                 }
                 aktif_abone++;
@@ -80,7 +78,7 @@ namespace DAboneTakip.Controllers
             ViewBag.count_bitecek = bitecek_abone;
             return View();
         }
-        public List<ChartKategori> VKategoriChart() 
+        public List<ChartKategori> VKategoriChart()
         {
             List<ChartKategori> a = new List<ChartKategori>();
             using (var c = new DergiDbContext())
@@ -88,13 +86,13 @@ namespace DAboneTakip.Controllers
                 a = c.Kategorilers.Select(x => new ChartKategori
                 {
                     kategori = x.KategoriAD,
-                    dergisayi = c.Dergilers.Where(a=> a.KategoriID == x.KategoriID).Count()
+                    dergisayi = c.Dergilers.Where(a => a.KategoriID == x.KategoriID).Count()
                 }).ToList();
             }
             return a;
         }
 
-       
+
         public List<ChartDergi> VDergiChart()
         {
             List<ChartDergi> a = new List<ChartDergi>();
@@ -102,18 +100,18 @@ namespace DAboneTakip.Controllers
             {
                 a = c.Dergilers.Select(x => new ChartDergi
                 {
-                    dergi = x.DergiAD, 
-                    abonesayi = c.Aboneliklers.Where(a => a.DergiID == x.DergiID && a.KayıtTarihi.AddDays(a.KayıtSuresi- 1) > DateTime.Now).Count()
+                    dergi = x.DergiAD,
+                    abonesayi = c.Aboneliklers.Where(a => a.DergiID == x.DergiID && a.KayıtTarihi.AddDays(a.KayıtSuresi - 1) > DateTime.Now).Count()
                 }).ToList();
             }
             return a;
         }
-        
+
         public IActionResult Privacy()
         {
             return View();
         }
-        
+
         public IActionResult Admin()
         {
             return View();
@@ -123,6 +121,6 @@ namespace DAboneTakip.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-       
+
     }
 }

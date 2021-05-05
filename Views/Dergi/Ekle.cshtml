@@ -15,8 +15,7 @@
             </div>
             <br />
             <div class="form-group">
-                <label asp-for="KategoriID">Kategori Adı</label>
-                
+                <label asp-for="KategoriID">Kategori Adı</label>                
                 <select class="form-control chosen-select" asp-for="KategoriID" asp-items="@ViewBag.KategoriID">       
                     <option selected disabled value="-1" style="display:none">Kategori Seçiniz... </option>
                 </select>
@@ -27,7 +26,6 @@
         
     </div>
 </div>
-
 <br />
 <div>
     <a asp-action="Liste">Listeye Dön</a>

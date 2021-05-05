@@ -50,6 +50,7 @@
             <i class="fas fa-th-list maric my-icon"></i>
             <label class="my-label">Kategoriler</label>
         </a>
+        
         @if (this.User.IsInRole("O"))
         {
             <a href="/Login/Adminler/" class="w3-bar-item w3-button w3-hover-teal my-button" style="text-decoration: none;">
@@ -62,7 +63,7 @@
             <i class="fas fa-sign-out-alt maric my-icon"></i>
             <label class="my-label">Çıkış Yap</label>
         </a>
-        <a  class="w3-bar-item my-button" style="text-decoration: none;">            
+        <a class="w3-bar-item my-button" style="text-decoration: none;">
             <label class="my-label">Hoşgeldin @this.User.Identity.Name!</label>
         </a>
     </div>
