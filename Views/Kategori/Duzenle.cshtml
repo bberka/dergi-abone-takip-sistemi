@@ -11,19 +11,16 @@
         <br />
         <form asp-action="Duzenle" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>            
-            @Html.HiddenFor(x => x.KategoriID)
-           
+            @Html.HiddenFor(x => x.KategoriID)           
             <div class="form-group">
                 <label asp-for="KategoriAD"></label>
                 <input asp-for="KategoriAD" class="form-control"  type="text" maxlength="30" />
-                @*<span asp-validation-for="KategoriAD" class="text-danger"></span>*@
             </div>
 
             <button class="btn btn-info" type="submit">Düzenlemeyi Kaydet</button>
         </form>
     </div>
 </div>
-
 <br />
 <div>
     <a asp-action="Liste">Listeye Dön</a>

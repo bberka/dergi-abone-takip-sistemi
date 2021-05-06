@@ -4,9 +4,6 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
-
-
 <div class="row">
     <div class="col-md-4">
         <h5>Dergi ID : @ViewBag.drgid</h5>
@@ -22,14 +19,12 @@
                 <div class="form-group">
                     <label asp-for="DergiAD"></label>
                     <input asp-for="DergiAD" class="form-control" maxlength="50" />
-                    @*<span asp-validation-for="DergiAD" class="text-danger"></span>*@
                 </div>
                 <br />
                 <div>
                     <label asp-for="KategoriID">Kategori Adı</label>
                     <select class="form-control chosen-select" asp-for="KategoriID" asp-items="@ViewBag.KategoriID">
                     </select>
-                    @*<span asp-validation-for="KategoriID" class="text-danger"></span>*@
                 </div>
             </div>
             <br />
@@ -37,19 +32,16 @@
         </form>
     </div>
 </div>
-
 <br />
-        <div>
-            <a asp-action="Liste">Listeye Dön</a>
-        </div>
-        @section Scripts {
-            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<div>
+      <a asp-action="Liste">Listeye Dön</a>
+</div>
 
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
             <script>
                 $("#KategoriID").chosen({
                     no_results_text: "Eşleşme bulunamadı!"
                 })
-
-
             </script>
-        }
+}

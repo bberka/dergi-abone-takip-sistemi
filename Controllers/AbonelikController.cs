@@ -80,15 +80,19 @@ namespace DergiAboneProje.Controllers
         [HttpPost]
         public IActionResult Ekle(Abonelikler b)
         {
+            bool CheckAboneSuresi = b.KayıtSuresi > 24;
             b.KayıtSuresi *= 30;
             var ActiveAbonelik = c.Aboneliklers.Where(x => x.UyeID == b.UyeID && x.DergiID == b.DergiID && x.KayıtTarihi.AddDays(x.KayıtSuresi - 2).Date >= DateTime.Now.Date);
-            var CheckActiveAbonelik = ActiveAbonelik.Count() != 0;
+            bool CheckActiveAbonelik = ActiveAbonelik.Count() != 0;            
             if (CheckActiveAbonelik)
             {
                 var IDActiveAbonelik = ActiveAbonelik.FirstOrDefault().KayıtID;
                 ModelState.AddModelError("CheckActiveAbonelik", "Bu üyenin bu dergiye zaten aktif bir üyeliği var. Abonelik ID: " + IDActiveAbonelik);
             }
-
+            else if (CheckAboneSuresi)
+            {
+                ModelState.AddModelError("CheckAboneSuresi", "Abonelik süresi 24 aydan fazla olamaz.");
+            }
             else if (ModelState.IsValid)
             {
                 try
@@ -109,8 +113,9 @@ namespace DergiAboneProje.Controllers
         [HttpGet]
         public IActionResult Duzenle(int id)
         {
+            bool CheckEndedAbone = c.Aboneliklers.Where(x =>x.KayıtID == id && x.KayıtTarihi.AddDays(x.KayıtSuresi) < DateTime.Now).Count() != 0;
+            if (CheckEndedAbone) return RedirectToAction("Index","Home");
             GetUye_DergiIDsList();
-
             var abone = c.Aboneliklers.Find(id);
             ViewBag.KayıtTarihi = abone.KayıtTarihi.ToShortDateString();
             ViewBag.KayıtID = id;
@@ -122,14 +127,14 @@ namespace DergiAboneProje.Controllers
         {
             b.KayıtSuresi *= 30;
             var ActiveAbonelik = c.Aboneliklers.Where(x => x.UyeID == b.UyeID && x.DergiID == b.DergiID && x.KayıtID != b.KayıtID && x.KayıtTarihi.AddDays(x.KayıtSuresi - 2).Date >= DateTime.Now.Date);
-            var CheckActiveAbonelik = ActiveAbonelik.Count() != 0;
-            var ChangesNotMade = c.Aboneliklers.Where(x => x.KayıtID == b.KayıtID && x.KayıtSuresi == b.KayıtSuresi && x.DergiID == b.DergiID && x.UyeID == b.UyeID).Count() != 0;
+            bool CheckActiveAbonelik = ActiveAbonelik.Count() != 0;
+            bool ChangesNotMade = c.Aboneliklers.Where(x => x.KayıtID == b.KayıtID && x.KayıtSuresi == b.KayıtSuresi && x.DergiID == b.DergiID && x.UyeID == b.UyeID).Count() != 0;
             if (CheckActiveAbonelik)
             {
                 var IDActiveAbonelik = ActiveAbonelik.FirstOrDefault().KayıtID;
                 ModelState.AddModelError("CheckActiveAbonelik", "Bu üyenin bu dergiye zaten aktif bir üyeliği var. Abonelik ID: " + IDActiveAbonelik);
             }
-            if (ChangesNotMade) ModelState.AddModelError("!ChangesMade", "Düzenleme yapmadınız.");
+            else if (ChangesNotMade) ModelState.AddModelError("ChangesNotMade", "Düzenleme yapmadınız.");            
             else if (ModelState.IsValid)
             {
                 try

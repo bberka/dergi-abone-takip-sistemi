@@ -11,7 +11,6 @@
             <div class="form-group">
                 <label asp-for="DergiAD"></label>
                 <input asp-for="DergiAD" class="form-control" maxlength="50" />
-                @*<span asp-validation-for="DergiAD" class="text-danger"></span>*@
             </div>
             <br />
             <div class="form-group">
@@ -19,11 +18,9 @@
                 <select class="form-control chosen-select" asp-for="KategoriID" asp-items="@ViewBag.KategoriID">       
                     <option selected disabled value="-1" style="display:none">Kategori Seçiniz... </option>
                 </select>
-                @* <span asp-validation-for="KategoriID" class="text-danger"></span>*@
             </div>
             <button class="btn btn-success" type="submit">Dergi Ekle</button>
-        </form>
-        
+        </form>        
     </div>
 </div>
 <br />

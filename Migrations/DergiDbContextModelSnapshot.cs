@@ -94,14 +94,9 @@ namespace DAboneTakip.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int?>("UyelerUyeID")
-                        .HasColumnType("int");
-
                     b.HasKey("DergiID");
 
                     b.HasIndex("KategoriID");
-
-                    b.HasIndex("UyelerUyeID");
 
                     b.ToTable("Dergilers");
                 });
@@ -130,6 +125,9 @@ namespace DAboneTakip.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("DergilerDergiID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -146,6 +144,8 @@ namespace DAboneTakip.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("UyeID");
+
+                    b.HasIndex("DergilerDergiID");
 
                     b.ToTable("Uyelers");
                 });
@@ -177,12 +177,18 @@ namespace DAboneTakip.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DergiAboneProje.Models.Uyeler", "Uyeler")
-                        .WithMany()
-                        .HasForeignKey("UyelerUyeID");
-
                     b.Navigation("Kategoriler");
+                });
 
+            modelBuilder.Entity("DergiAboneProje.Models.Uyeler", b =>
+                {
+                    b.HasOne("DergiAboneProje.Models.Dergiler", null)
+                        .WithMany("Uyeler")
+                        .HasForeignKey("DergilerDergiID");
+                });
+
+            modelBuilder.Entity("DergiAboneProje.Models.Dergiler", b =>
+                {
                     b.Navigation("Uyeler");
                 });
 

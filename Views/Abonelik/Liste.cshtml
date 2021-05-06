@@ -8,7 +8,6 @@
 
 <link href="~/css/tableactive.css" rel="stylesheet" />
 <div>
-
     <div class="w3-bar" id="tabDIV">
         <a class="btn zbtn zactive" style="font-size:20px" onclick="openTable('AktifT')">Aktif Abonelikleri Listele</a>
         <a class="btn zbtn" style="font-size:20px" onclick="openTable('PasifT')">Pasif Abonelikleri Listele</a>
@@ -29,10 +28,8 @@
                     <th>İptal</th>
                 </tr>
             </thead>
-
             @foreach (var x in Model)
             {
-
                 if ((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days <= 0)
                 {
                     continue;
@@ -49,7 +46,6 @@
                     <td><a href="#" class="btn btn-danger" onclick="Confirm2(@x.KayıtID)">İptal</a></td>
                 </tr>
             }
-
         </table>
     </div>
     <div id="PasifT" class="table"  style="display:none"> 
@@ -66,7 +62,6 @@
                     <th>Kaydı Sil</th>
                 </tr>
             </thead>
-
             @foreach (var x in Model)
             {
                 if ((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days > 0)
@@ -84,13 +79,9 @@
                     <td><a href="#" class="btn btn-danger" onclick="Confirm(@x.KayıtID)">Kaydı Sil</a></td>
                 </tr>
             }
-
         </table>
     </div>    
-    <a href="/Abonelik/Ekle/" class="btn btn-success">Yeni Abonelik Ekle</a>
-    
-   
-
+    <a href="/Abonelik/Ekle/" class="btn btn-success">Yeni Abonelik Ekle</a> 
 
     <script>
         function Confirm(id) {
@@ -171,7 +162,6 @@
             });
         });
     </script>
-
 </div>
 
 

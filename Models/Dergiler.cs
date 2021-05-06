@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,7 +22,8 @@ namespace DergiAboneProje.Models
         [ForeignKey("KategoriID")]
         public virtual Kategoriler Kategoriler { get; set; }
 
-        public virtual Uyeler Uyeler { get; set; }
+        
+        public IList<Uyeler> Uyeler { get; set; }
 
     }
 }
