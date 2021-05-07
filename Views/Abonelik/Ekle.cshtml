@@ -26,7 +26,6 @@
             <div class="form-group">
                 <label asp-for="KayıtSuresi" class="control-label"></label> 
                 <input asp-for="KayıtSuresi" class="form-control InputNumber" maxlength="2" type="text" />
-                @* <span asp-validation-for="KayıtSuresi" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <label asp-for="UyeID" class="control-label"></label>
@@ -40,7 +39,7 @@
                     <option selected disabled value="-1" style="display:none">Dergi Seçiniz... </option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Abone Ekle</button>
+            <button type="submit" class="btn btn-success">Abone Ekle</button>
         </form>
     </div>
 </div>
@@ -52,6 +51,7 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
+        //chosen dropdownlist JS kütüphanesi kullanıldı arama da yapılabildiği için çok kayıt olduğunda kolaylık için
         $("#UyeID").chosen({
             no_results_text: "Eşleşme bulunamadı!"
         });

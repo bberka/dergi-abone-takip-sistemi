@@ -9,8 +9,6 @@
 
 
 <div>
-
-
     <div>
         <table id="KategoriTable" class="row-border stripe hover table-bordered">
             <thead>
@@ -26,7 +24,6 @@
 
             @foreach (var x in Model)
             {
-
                 <tr>
                     <td>@x.KategoriID</td>
                     <td>@x.KategoriAD</td>
@@ -39,11 +36,10 @@
             @*href="/Kategori/Sil/@x.KategoriID"*@
         </table>
     </div>
-
     <a href="/Kategori/Ekle/" class="btn btn-success">Yeni Kategori Ekle</a>
 
     <script>
-       
+       //sweetalert ile  silme işlemi onayı
         function Confirm(id) {
             swal({
                 title: "Silmek istediğinize emin misiniz ?",
@@ -75,7 +71,7 @@
 
                 });
         }
-
+         //datatables JS kütüphanesi kullanıldı ve türkçe arayüz yüklendi
         $(document).ready(function () {
             $('#KategoriTable').DataTable({
                 "language": {

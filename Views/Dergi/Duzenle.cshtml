@@ -40,6 +40,7 @@
 @section Scripts {
 @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
             <script>
+                 //chosen dropdownlist JS kütüphanesi kullanıldı arama da yapılabildiği için çok kayıt olduğunda kolaylık için
                 $("#KategoriID").chosen({
                     no_results_text: "Eşleşme bulunamadı!"
                 })

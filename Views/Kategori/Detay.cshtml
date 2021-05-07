@@ -7,10 +7,6 @@
 
 
 <div>
-
-
-
-
     <table id="DergiTable" class="row-border stripe hover table-bordered">
         <thead>
             <tr>
@@ -41,12 +37,11 @@
     <div>
         <a asp-action="Liste">Listeye Dön</a>
     </div>
-    
-
 </div>
 
 
 <script>
+    //sweetalert ile  silme işlemi onayı
         function Confirm(id) {
             swal({
                 title: "Silmek istediğinize emin misiniz ? (ID: " + id + ")",
@@ -69,7 +64,8 @@
                     }
 
                 });
-        }
+    }
+     //datatables JS kütüphanesi kullanıldı ve türkçe arayüz yüklendi
         $(document).ready(function () {
             $('#DergiTable').DataTable({
                 "language": {

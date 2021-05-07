@@ -26,21 +26,17 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="KayıtID" />
             <input type="hidden" asp-for="KayıtTarihi" />
-
             <div class="form-group">
                 <label asp-for="KayıtSuresi" class="control-label"></label>
-                <input asp-for="KayıtSuresi" class="form-control" type="number" min="1" max="24"/>
-              @*  <span asp-validation-for="KayıtSuresi" class="text-danger"></span>*@
+                <input asp-for="KayıtSuresi" class="form-control" maxlength="2" type="text"/>
             </div>
             <div class="form-group">
                 <label asp-for="UyeID" class="control-label"></label>
                 <select asp-for="UyeID" class="form-control" asp-items="ViewBag.UyeID" ></select>
-                @*<span asp-validation-for="UyeID" class="text-danger"></span>*@
             </div>
             <div class="form-group">    
                 <label asp-for="DergiID" class="control-label"></label>
                 <select asp-for="DergiID" class="form-control" asp-items="ViewBag.DergiID" ></select>
-               @* <span asp-validation-for="DergiID" class="text-danger"></span>*@
             </div>
           <button type="submit" class="btn btn-info">Düzenlemeyi Kaydet</button>
         </form>
@@ -55,6 +51,7 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
+         //chosen dropdownlist JS kütüphanesi kullanıldı arama da yapılabildiği için çok kayıt olduğunda kolaylık için
         $("#UyeID").chosen({
             no_results_text: "Eşleşme bulunamadı!"
         });

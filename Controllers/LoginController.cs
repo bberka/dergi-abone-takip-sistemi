@@ -17,7 +17,7 @@ namespace DAboneTakip.Controllers
     {
         readonly DergiDbContext c = new DergiDbContext();
         string _CurrentUserRole;
-        public bool CheckIfOwner(int id)
+        public bool CheckIfOwner(int id) //verilen parametre id nin owner rolünde olup olmadığına bakılıyor
         {
             var a = c.Admins.Find(id);
             if (a.Rol == "O") return true;
@@ -29,14 +29,16 @@ namespace DAboneTakip.Controllers
             {
                 string a = this.User.Identity.Name;
                 int uid = c.Admins.Where(x => x.KullaniciAD == a).Select(x => x.ID).FirstOrDefault();
-                _CurrentUserRole = c.Admins.Where(x => x.KullaniciAD == a).Select(x => x.Rol).FirstOrDefault();
+                _CurrentUserRole = c.Admins.Where(x => x.KullaniciAD == a).Select(x => x.Rol).FirstOrDefault(); //giriş ypamış kullanıcının rolünü alır
                 ViewBag.UID = uid;
                 return uid;
             }
             return -1;
         }
-        public IActionResult ErisimEngel()
+
+        public IActionResult ErisimEngel() 
         {
+            //erişim engeli sayfası startup.cs e tanımlandı eğer kullanıcı yeni kayıt olduysa ve yetki verilmediyse burada takılır
             return View();
         }
         [HttpGet]
@@ -49,6 +51,7 @@ namespace DAboneTakip.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GirisYap(Admin p)
         {
+            //giriş yapma işlemleri 
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             var bilgiler = c.Admins.FirstOrDefault(x => x.KullaniciAD == p.KullaniciAD && x.Sifre == p.Sifre);
 
@@ -75,6 +78,7 @@ namespace DAboneTakip.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CikisYap()
         {
+            //çıkış yapma işlemleri
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("GirisYap", "Login");
         }
@@ -89,9 +93,9 @@ namespace DAboneTakip.Controllers
         [AllowAnonymous]
         public IActionResult KayitOl(Admin a)
         {
-            bool CheckIfUserExist = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD).Count() != 0;
+            bool CheckIfUserExist = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD).Count() != 0; //bu kullanıcı adı varmı kontrolü
             if (CheckIfUserExist) ModelState.AddModelError("", "Bu kullanıcı adı zaten kullanılıyor.");
-            else if (ModelState.IsValid)
+            else if (ModelState.IsValid) //veritabanı işlemleri
             {
                 c.Admins.Add(a);
                 c.SaveChanges();
@@ -103,7 +107,7 @@ namespace DAboneTakip.Controllers
         [Authorize(Roles = "O")]
         public IActionResult Adminler()
         {
-
+            //siteye erişimi olan olmayan tüm hesapların listesi düzenleme silme ve bilgileri görme işlemlerini sadece Owner rolü olan kişi yapabilir.
             var degerler = c.Admins
                    .ToList();
             return View(degerler);
@@ -112,9 +116,10 @@ namespace DAboneTakip.Controllers
         [Authorize(Roles = "O")]
         public IActionResult Sil(int id)
         {
-            if (ModelState.IsValid)
+            if (CheckIfOwner(id)) return RedirectToAction("Adminler"); //eğer url ile owner hesabı silmeye çalışırsa engeller
+            else if (ModelState.IsValid)
             {
-                try
+                try //silme işlemi
                 {
                     var admn = c.Admins.Find(id);
                     c.Admins.Remove(admn);
@@ -136,7 +141,9 @@ namespace DAboneTakip.Controllers
         [Authorize(Roles = "O")]
         public IActionResult AdminEkle(Admin a)
         {
-            if (ModelState.IsValid)
+            bool CheckIfUserExist = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD).Count() != 0; //bu kullanıcı adı varmı kontrolü
+            if (CheckIfUserExist) ModelState.AddModelError("", "Bu kullanıcı adı zaten kullanılıyor.");
+            else if (ModelState.IsValid)
             {
                 c.Admins.Add(a);
                 c.SaveChanges();
@@ -147,7 +154,8 @@ namespace DAboneTakip.Controllers
         [HttpGet]
         [Authorize(Roles = "O")]
         public IActionResult Duzenle(int id)
-        {
+        {  
+            //idsi girilen hesabın verilerini çeker
             ViewBag._CurrentUserID = id;
             if (ModelState.IsValid)
             {
@@ -161,8 +169,10 @@ namespace DAboneTakip.Controllers
         [Authorize(Roles = "O")]
         public IActionResult Duzenle(Admin a)
         {
-            bool CheckIfUserExist = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD && x.ID != a.ID).Count() != 0;
-            bool CheckChanges = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD && x.Sifre == a.Sifre && x.Rol == a.Rol).Count() != 0;
+            
+            bool CheckIfUserExist = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD && x.ID != a.ID).Count() != 0; //kullanıcı adı varmı kontrolü
+            bool CheckChanges = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD && x.Sifre == a.Sifre && x.Rol == a.Rol).Count() != 0; //değişiklik kontrolü
+            //yukarıdaki validationların uyarıları viewe yollanır
             if (CheckIfUserExist) ModelState.AddModelError("", "Bu kullanıcı adı zaten kullanılıyor.");
             if (CheckChanges) ModelState.AddModelError("", "Düzenleme yapmadınız.");
             if (ModelState.IsValid)
@@ -178,16 +188,16 @@ namespace DAboneTakip.Controllers
         [Authorize(Roles = "O,A")]
         public IActionResult SifreDegis()
         {
-            GetUserID();
+            GetUserID(); //user idsini alır 
             return View();
         }
         [HttpPost]
         [Authorize(Roles = "O,A")]
         public IActionResult SifreDegis(ChangePass a)
         {
-            int id = GetUserID();
-            bool CheckOldPass = c.Admins.Where(x => x.ID == id && x.Sifre == a.OldPass).Count() != 0;
-            bool CheckNewPassMatch = a.NewPass == a.NewPass2;
+            int id = GetUserID(); //user idsini değişkene atar
+            bool CheckOldPass = c.Admins.Where(x => x.ID == id && x.Sifre == a.OldPass).Count() != 0; //mevcut şifre doğrumu kontrolü
+            bool CheckNewPassMatch = a.NewPass == a.NewPass2; //yeni şifreler eşleşiyormu kontrolü
             var _admin = new Admin
             {
                 ID = id,
@@ -195,9 +205,10 @@ namespace DAboneTakip.Controllers
                 Sifre = a.NewPass,
                 Rol = _CurrentUserRole
             };
+            //validation uyarıları
             if (!CheckOldPass) ModelState.AddModelError("", "Geçerli şifreyi yanlış girdiniz.");
             else if (!CheckNewPassMatch) ModelState.AddModelError("", "Yeni şifre eşleşmiyor.");
-            else if (ModelState.IsValid)
+            else if (ModelState.IsValid) //veritabanı işlemleri
             {
                 c.Admins.Update(_admin);
                 c.SaveChanges();

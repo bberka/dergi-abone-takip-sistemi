@@ -51,7 +51,7 @@
             <label class="my-label">Kategoriler</label>
         </a>
 
-        @if (this.User.IsInRole("O"))
+        @if (this.User.IsInRole("O")) //giriş yapan kullanıcının owner olup olmadığı kontrolü url ile giriş engelli
         {
             <a href="/Login/Adminler/" class="w3-bar-item w3-button w3-hover-teal my-button" style="text-decoration: none;">
                 <i class="fas fa-user-lock maric my-icon"></i>

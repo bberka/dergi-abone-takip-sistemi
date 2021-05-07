@@ -79,6 +79,7 @@
     </div>        
 </div>
 <script>
+     //sweetalert ile  silme işlemi onayı
         function Confirm(id) {
             swal({
                 title: "Silmek istediğinize emin misiniz ? (ID: " + id + ")",
@@ -101,7 +102,8 @@
                     }
 
                 });
-        }
+    }
+     //sweetalert ile  silme işlemi onayı
         function Confirm2(id) {
             swal({
                 title: "İptal etmek istediğinize emin misiniz ? (ID: " + id + ")",
@@ -124,7 +126,8 @@
                     }
 
                 });
-        }
+    }
+    //aktif pasif table göster gizlemek için
         var header = document.getElementById("tabDIV");
         var btns = header.getElementsByClassName("zbtn");
         for (var i = 0; i < btns.length; i++) {
@@ -133,7 +136,16 @@
                 current[0].className = current[0].className.replace(" zactive", "");
                 this.className += " zactive";
             });
+     }
+    function openTable(tableName) {
+        var i;
+        var x = document.getElementsByClassName("table");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
         }
+        document.getElementById(tableName).style.display = "block";
+    }
+     //datatables JS kütüphanesi kullanıldı ve türkçe arayüz yüklendi
         $(document).ready(function () {
             $('#AktifTable').DataTable({
                 "language": {
@@ -148,12 +160,5 @@
                 }
             });
         });
-        function openTable(tableName) {
-            var i;
-            var x = document.getElementsByClassName("table");
-            for (i = 0; i < x.length; i++) {
-                x[i].style.display = "none";
-            }
-            document.getElementById(tableName).style.display = "block";
-        }
+        
 </script>

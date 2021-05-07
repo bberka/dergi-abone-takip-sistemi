@@ -15,25 +15,21 @@
             <div class="form-group">
                 <label asp-for="UyeAD"></label>
                 <input asp-for="UyeAD" class="form-control" maxlength="50" />
-                @*<span asp-validation-for="DergiAD" class="text-danger"></span>*@
             </div>
             <br />
             <div class="form-group">
                 <label asp-for="Email"></label>
                 <input asp-for="Email" class="form-control" />
-                @*<span asp-validation-for="DergiAD" class="text-danger"></span>*@
             </div>
             <br />
             <div class="form-group">
                 <label asp-for="TelNo"></label>
                 <input asp-for="TelNo"class="form-control" type="text" maxlength="10"/>
-                @*<span asp-validation-for="DergiAD" class="text-danger"></span>*@
             </div>
             <br />
             <div class="form-group">
                 <label asp-for="Tarih">Doğum Tarihi (Ay/Gün/Yıl)</label>
                 <input asp-for="Tarih" type="text" asp-format="MM/dd/yyyy" class="form-control"  maxlength="10" id="TarihSec" />
-                @*<span asp-validation-for="DergiAD" class="text-danger"></span>*@
             </div>
             <button class="btn btn-success" type="submit">Üye Ekle</button>
         </form>
@@ -54,6 +50,7 @@
     <script type="text/javascript" src="js/moment/tr.js"></script>
     <script>
 
+        //datetimepicker 
         var today = new Date();
         var date = (today.getMonth() + 1) + '/' +  today.getDate() + '/' + (today.getFullYear() - 18); 
         $('#TarihSec').datepicker({

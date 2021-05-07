@@ -16,7 +16,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link href="~/web/css/jqvmap.css" media="screen" rel="stylesheet" type="text/css" />
 
 <div>
-
+    @*İstatistik gösterimi*@
         <div class="total-content">
             <div class="list_of_members">
                 <div class="sales" style="background-color:#1abc9c">
@@ -90,17 +90,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </div>
 </div>
 
-
-
-
         <div class="row">
             <div id="KategoriChart" style="margin:auto"></div>
             <div id="DergiChart" style="margin:auto"></div>
-            <div id="AbonelikChart"></div>
-            <div id="UyelerChart"></div>
         </div>
 
         <script>
+            //google pie chart JS kütüphanesi ile grafik gösterimi
             $(document).ready(function () {
                 $.ajax({
                 type: "GET",
@@ -132,22 +128,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 }
             });
 
-                $.ajax({
-                type: "GET",
-                dataType: "json",
-                contentType: "application/json",
-                url: '@Url.Action("VDergiChart", "Home")',
-                success: function (result2) {
-                    google.charts.load('current', {
-                        'packages': ['corechart']
-                    });
-                    google.charts.setOnLoadCallback(function () {
-                        drawChart2(result2);
-                    });
-                }
-            });
         });
 
+             
     function drawChart(result) {
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Kategori');
@@ -172,7 +155,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     }
 
 
-
+           
     function drawChart2(result2) {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Dergi');

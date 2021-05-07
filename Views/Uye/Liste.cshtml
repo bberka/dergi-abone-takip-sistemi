@@ -6,13 +6,7 @@
 }
 
 
-
-
-
 <div>
-
-
-
     <table id="AboneTable" class="row-border stripe hover table-bordered">
         <thead>
             <tr>
@@ -45,8 +39,7 @@
     
     <a href="/Uye/Ekle/" class="btn btn-success">Yeni Üye Ekle</a>
     <script>
-        function Confirm(id) {
-
+        function Confirm(id) { //sweetalert ile  silme işlemi onayı
             swal({
                 title: "Silmek istediğinize emin misiniz ?",
                 text: "(ID: " + id + ")",
@@ -77,9 +70,7 @@
 
                 });
         }
-
-        
-
+        //datatables JS kütüphanesi kullanıldı ve türkçe arayüz yüklendi
         $(document).ready(function () {
             $('#AboneTable').DataTable({
                 "language": {

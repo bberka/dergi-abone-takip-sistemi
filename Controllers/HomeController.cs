@@ -24,6 +24,7 @@ namespace DAboneTakip.Controllers
 
         public IActionResult Index()
         {
+            //istatistik verileri çekilir
             var list_abone = c.Aboneliklers.ToList();
             var list_dergi = c.Dergilers.ToList();
             var list_kategori = c.Kategorilers.ToList();
@@ -35,6 +36,9 @@ namespace DAboneTakip.Controllers
             ViewBag.count_abone = list_abone.Count();
 
             int bugun_eklenen = 0;
+            int aktif_abone = 0;
+            int bitecek_abone = 0;
+            //bugün eklenen abonelik sayısı            
             foreach (var x in c.Aboneliklers)
             {
                 bool a = x.KayıtTarihi.ToShortDateString() == DateTime.Now.ToShortDateString();
@@ -49,11 +53,9 @@ namespace DAboneTakip.Controllers
                 }
 
             }
-            ViewBag.bugun_eklenen = bugun_eklenen;
+            ViewBag.bugun_eklenen = bugun_eklenen;  //bugün eklenen abonelik sayısı değişkene atanır            
 
-            int aktif_abone = 0;
-            int bitecek_abone = 0;
-
+            //Aktif abonelik sayısı
             foreach (var x in c.Aboneliklers)
             {
                 var a = (x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days;
@@ -64,8 +66,9 @@ namespace DAboneTakip.Controllers
                 }
                 aktif_abone++;
             }
-            ViewBag.count_aktifabone = aktif_abone;
+            ViewBag.count_aktifabone = aktif_abone; //Aktif abonelik sayısı değişkene atama
 
+            //pasif bitmiş abonelik sayısı
             foreach (var x in c.Aboneliklers)
             {
                 var a = (x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days;
@@ -75,10 +78,10 @@ namespace DAboneTakip.Controllers
                 }
                 bitecek_abone++;
             }
-            ViewBag.count_bitecek = bitecek_abone;
+            ViewBag.count_bitecek = bitecek_abone; //pasif bitmiş abonelik sayısı değişkene atama
             return View();
         }
-        public List<ChartKategori> VKategoriChart()
+        public List<ChartKategori> VKategoriChart() //kategori dergi sayısı pie chartı verileri viewde çekilir
         {
             List<ChartKategori> a = new List<ChartKategori>();
             using (var c = new DergiDbContext())
@@ -91,9 +94,7 @@ namespace DAboneTakip.Controllers
             }
             return a;
         }
-
-
-        public List<ChartDergi> VDergiChart()
+        public List<ChartDergi> VDergiChart() //dergi abonelik sayısı pie chartı verileri viewde çekilir
         {
             List<ChartDergi> a = new List<ChartDergi>();
             using (var c = new DergiDbContext())
@@ -107,15 +108,11 @@ namespace DAboneTakip.Controllers
             return a;
         }
 
-        public IActionResult Privacy()
+        public IActionResult Privacy() //gizlilik politikası
         {
             return View();
         }
 
-        public IActionResult Admin()
-        {
-            return View();
-        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

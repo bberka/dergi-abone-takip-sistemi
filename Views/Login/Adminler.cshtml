@@ -58,6 +58,7 @@
     @*<a href="/Login/AdminEkle/" class="btn btn-success">Yeni Admin Ekle</a>*@
 
     <script>
+        //şifre göster gizle
         function myFunction(id) {
             var x = document.getElementById("MyInput(" + id + ")");
             if (x.type === "password") {
@@ -66,6 +67,7 @@
                 x.type = "password";
             }
         }
+         //sweetalert ile  silme işlemi onayı
         function Confirm(id) {
             swal({
                 title: "Silmek istediğinize emin misiniz ?",
@@ -90,7 +92,7 @@
 
                 });
         }
-
+         //datatables JS kütüphanesi kullanıldı ve türkçe arayüz yüklendi
         $(document).ready(function () {
             $('#AdminTable').DataTable({
                 "language": {
