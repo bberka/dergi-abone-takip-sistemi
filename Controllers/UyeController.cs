@@ -62,13 +62,14 @@ namespace DergiAboneProje.Controllers
             //Ad ve email stringine trim uygulanıyor
             b.UyeAD = b.UyeAD.Trim();
             b.Email = b.Email.Trim();
+            b.UyeAD = b.UyeAD.ToUpper();
             bool UyeAlreadyExist = c.Uyelers.Where(x => x.Email == b.Email).Count() != 0; //girilen emailin veritabanında kaydı varmı diye kontrol ediliyor 
-            bool BirtDateCheck = Convert.ToDateTime(b.Tarih).AddYears(18) >= DateTime.Now; //Doğum tarihinin 18 yaşından büyük olduğu kontrol ediliyor.
+            bool BirtDateCheck = Convert.ToDateTime(b.DogumTarihi).AddYears(18) >= DateTime.Now; //Doğum tarihinin 18 yaşından büyük olduğu kontrol ediliyor.
             bool PhoneNumberCheck = b.TelNo.ToString().Length != 10 || !b.TelNo.ToString().All(char.IsDigit); //Telefon numarasına sayı girilip girilmediği kontrolü
             //Yukarıdaki kontrollere uygun validation uyarıları viewe gönderiliyor
             if (UyeAlreadyExist) ModelState.AddModelError("UyeAlreadyExist", "Bu email adresi zaten kullanılıyor.");
-            else if (BirtDateCheck) ModelState.AddModelError("BirtDateCheck", "Üye 18 yaşından büyük olmalıdır.");
-            else if (PhoneNumberCheck) ModelState.AddModelError("PhoneNumberCheck", "Geçersiz telefon numarası girdiniz.");
+            else if (PhoneNumberCheck) ModelState.AddModelError("PhoneNumberCheck", "Geçersiz telefon numarası girdiniz, başına sıfır koymadan 10 haneli olarak giriniz.");
+            else if (BirtDateCheck) ModelState.AddModelError("BirtDateCheck", "Üye 18 yaşından büyük olmalıdır.");            
             else if (ModelState.IsValid)
             {
                 try//veritabanı ekleme işlemi
@@ -90,6 +91,8 @@ namespace DergiAboneProje.Controllers
             {
                 ViewBag.UID = id;
                 var uye = c.Uyelers.Find(id);
+                ViewBag.KTarih = uye.KayitTarihi.ToString("dd/MM/yyyy");
+                ViewBag.DTarih = uye.DogumTarihi.ToString("dd/MM/yyyy");
                 return View("Duzenle", uye);
             }
             catch
@@ -103,18 +106,21 @@ namespace DergiAboneProje.Controllers
             //Ad ve mail için trim
             b.UyeAD = b.UyeAD.Trim();
             b.Email = b.Email.Trim();
-            //üye id yi viewbag olara view e yolluyor.
+            b.UyeAD = b.UyeAD.ToUpper();
+            //üye id yi ve kayıttarihini viewbag olara view e yolluyor.
             ViewBag.UID = b.UyeID;
+            ViewBag.KTarih = b.KayitTarihi.ToShortDateString();
+            ViewBag.DTarih = b.DogumTarihi.ToShortDateString();
 
-            bool ChangesMade = c.Uyelers.Where(x => x.Email == b.Email && x.UyeAD == b.UyeAD && x.Tarih == b.Tarih && x.TelNo == b.TelNo).Count() != 0; //verilerde değişiklik yapıldımı kontrol
-            bool BirtDateCheck = Convert.ToDateTime(b.Tarih).AddYears(18) >= DateTime.Now; //18 yaş kontrolü
+            bool ChangesMade = c.Uyelers.Where(x => x.Email == b.Email && x.UyeAD == b.UyeAD && x.DogumTarihi == b.DogumTarihi && x.TelNo == b.TelNo).Count() != 0; //verilerde değişiklik yapıldımı kontrol
+            bool BirtDateCheck = Convert.ToDateTime(b.DogumTarihi).AddYears(18) >= DateTime.Now; //18 yaş kontrolü
             bool PhoneNumberCheck = b.TelNo.ToString().Length != 10 || !b.TelNo.ToString().All(char.IsDigit); //telefon numarasında sadece sayı kontrolü
             bool UyeAlreadyExist = c.Uyelers.Where(x => x.Email == b.Email && x.UyeID != b.UyeID).Count() != 0; //mail verisi veritabanında varmı kontrolü
             //yukarıdaki kontrollere göre validation mesajları viewe yollanıyor
             if (ChangesMade) ModelState.AddModelError("ChangesMade", "Değişiklik yapmadınız.");
             else if (UyeAlreadyExist) ModelState.AddModelError("UyeAlreadyExist", "Bu email adresi zaten kullanılıyor.");
             else if (BirtDateCheck) ModelState.AddModelError("BirtDateCheck", "Üye 18 yaşından büyük olmalıdır.");
-            else if (PhoneNumberCheck) ModelState.AddModelError("PhoneNumberCheck", "Geçersiz telefon numarası girdiniz.");
+            else if (PhoneNumberCheck) ModelState.AddModelError("PhoneNumberCheck", "Telefon numarasını başında sıfır olmadan 10 haneli olarak giriniz.");
             else if (ModelState.IsValid)
             {
                 try //veritabanı kayıt güncelleme işlemi

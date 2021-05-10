@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAboneTakip.Migrations
 {
-    public partial class initalcreate : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,8 +13,9 @@ namespace DAboneTakip.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    KullaniciAD = table.Column<string>(type: "Varchar(16)", nullable: true),
-                    Sifre = table.Column<string>(type: "Varchar(16)", nullable: true)
+                    KullaniciAD = table.Column<string>(type: "Varchar(16)", maxLength: 16, nullable: false),
+                    Sifre = table.Column<string>(type: "Varchar(16)", maxLength: 16, nullable: false),
+                    Rol = table.Column<string>(type: "Varchar(1)", maxLength: 1, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -27,11 +28,32 @@ namespace DAboneTakip.Migrations
                 {
                     KategoriID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    KategoriAD = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false)
+                    KategoriAD = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Kategorilers", x => x.KategoriID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Dergilers",
+                columns: table => new
+                {
+                    DergiID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DergiAD = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    DergiTARIH = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    KategoriID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Dergilers", x => x.DergiID);
+                    table.ForeignKey(
+                        name: "FK_Dergilers_Kategorilers_KategoriID",
+                        column: x => x.KategoriID,
+                        principalTable: "Kategorilers",
+                        principalColumn: "KategoriID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,38 +65,18 @@ namespace DAboneTakip.Migrations
                     UyeAD = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TelNo = table.Column<long>(type: "bigint", nullable: false),
-                    Tarih = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DogumTarihi = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    KayitTarihi = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DergilerDergiID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Uyelers", x => x.UyeID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Dergilers",
-                columns: table => new
-                {
-                    DergiID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DergiAD = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    DergiTARIH = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    KategoriID = table.Column<int>(type: "int", nullable: false),
-                    UyelerUyeID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Dergilers", x => x.DergiID);
                     table.ForeignKey(
-                        name: "FK_Dergilers_Kategorilers_KategoriID",
-                        column: x => x.KategoriID,
-                        principalTable: "Kategorilers",
-                        principalColumn: "KategoriID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Dergilers_Uyelers_UyelerUyeID",
-                        column: x => x.UyelerUyeID,
-                        principalTable: "Uyelers",
-                        principalColumn: "UyeID",
+                        name: "FK_Uyelers_Dergilers_DergilerDergiID",
+                        column: x => x.DergilerDergiID,
+                        principalTable: "Dergilers",
+                        principalColumn: "DergiID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -122,9 +124,9 @@ namespace DAboneTakip.Migrations
                 column: "KategoriID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Dergilers_UyelerUyeID",
-                table: "Dergilers",
-                column: "UyelerUyeID");
+                name: "IX_Uyelers_DergilerDergiID",
+                table: "Uyelers",
+                column: "DergilerDergiID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -136,13 +138,13 @@ namespace DAboneTakip.Migrations
                 name: "Admins");
 
             migrationBuilder.DropTable(
+                name: "Uyelers");
+
+            migrationBuilder.DropTable(
                 name: "Dergilers");
 
             migrationBuilder.DropTable(
                 name: "Kategorilers");
-
-            migrationBuilder.DropTable(
-                name: "Uyelers");
         }
     }
 }

@@ -21,12 +21,16 @@ namespace DergiAboneProje.Models
 
         [Required(ErrorMessage = "Tel no boş bırakılamaz.")]
         [Display(Name = "Tel No")]
-        public long TelNo { get; set; }
+        public long TelNo { get; set; } 
 
         [Required(ErrorMessage = "Doğum Tarihi boş bırakılamaz.")]
         [Display(Name = "Doğum Tarihi")]
         [DataType(DataType.Date)]
-        public DateTime Tarih { get; set; }
+        public DateTime DogumTarihi { get; set; }
+
+        [Display(Name = "Kayıt Tarihi")]
+        [DataType(DataType.Date)]
+        public DateTime KayitTarihi { get; set; } = DateTime.Now;
 
     }
 }

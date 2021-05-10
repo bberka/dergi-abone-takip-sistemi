@@ -15,7 +15,8 @@ namespace DergiAboneProje.Models
         [DataType(DataType.Text)]
         [Display(Name = "Kategori Adı")]
         [RegularExpression(@"^[A-z^şŞıİçÇöÖüÜĞğ ]+$", ErrorMessage = "Kategori adı sadece harf içerebilir.")]
-        [MaxLength(30, ErrorMessage = "Kategori adı en az 3 en fazla 30 haneli olabilir.")]
+        [MaxLength(50, ErrorMessage = "Kategori adı en az 3 en fazla 50 haneli olabilir.")]
+        
         public string KategoriAD { get; set; }
 
 

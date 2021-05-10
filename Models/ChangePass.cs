@@ -14,11 +14,12 @@ namespace DAboneTakip.Models
         [Column(TypeName = "Varchar(16)")]
         [Display(Name = "Yeni Şifre")]
         [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Şifre boş bırakılamaz.")]
+        [Required(ErrorMessage = "Yeni Şifre boş bırakılamaz.")]
         [MinLength(3, ErrorMessage = "Yeni şifre en az 3 en fazla 16 haneli olabilir.")]
         [MaxLength(16, ErrorMessage = "Yeni şifre en az 3 en fazla 16 haneli olabilir.")]
         public string NewPass { get; set; }
 
+        [Required(ErrorMessage = "Yeni şifre tekrar boş bırakılamaz.")]
         [Column(TypeName = "Varchar(16)")]
         [Display(Name = "Yeni Şifre Tekrar")]
         [DataType(DataType.Password)]

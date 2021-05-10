@@ -7,7 +7,18 @@
 
 <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
 
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Ekle">
@@ -24,14 +35,15 @@
             <br />
             <div class="form-group">
                 <label asp-for="TelNo"></label>
-                <input asp-for="TelNo"class="form-control" type="text" maxlength="10"/>
+                <input asp-for="TelNo" class="form-control" type="number" onkeypress="validate(event);" />
             </div>
             <br />
             <div class="form-group">
-                <label asp-for="Tarih">Doğum Tarihi (Ay/Gün/Yıl)</label>
-                <input asp-for="Tarih" type="text" asp-format="MM/dd/yyyy" class="form-control"  maxlength="10" id="TarihSec" />
+                <label asp-for="DogumTarihi"></label>
+                <input type="text" class="form-control" maxlength="10" id="TarihSec" onkeypress="event.preventDefault()" onchange="dateswap()" />
             </div>
             <button class="btn btn-success" type="submit">Üye Ekle</button>
+            <input asp-for="DogumTarihi" type="text" style="visibility:hidden; height:1px; width:1px" maxlength="10" readonly/>
         </form>
 
     </div>
@@ -52,17 +64,38 @@
 
         //datetimepicker 
         var today = new Date();
-        var date = (today.getMonth() + 1) + '/' +  today.getDate() + '/' + (today.getFullYear() - 18); 
+        var date = (today.getDate()+ '/' + today.getMonth() + 1) + '/' + (today.getFullYear() - 18); 
         $('#TarihSec').datepicker({
-            format: 'mm/dd/yyyy',
+            format: 'dd/mm/yyyy',
             autoclose: true,
             language: "tr",
             weekStart: 1,
             endDate: date,
             startDate: '01/01/1900'
         });
+        function dateswap() {
+            var x = document.getElementById("TarihSec").value;
+            if (x.length == 10) {
+                var day = x.slice(0, 2);
+                var month = x.slice(3, 5);
+                var year = x.slice(6, 10);
+                document.getElementById("DogumTarihi").value = month + "/" + day + "/" + year;
+            }    
+        }
 
+        
+        function validate(evt) {
+            var theEvent = evt || window.event;
+            var tbox = document.getElementById("TelNo").value;
+
+            if (tbox.length >= 10) {
+                theEvent.preventDefault();
+            }
+
+           
+        }
     </script>
+
 
 
 }

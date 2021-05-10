@@ -17,7 +17,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>KayıtTarihi(Ay/Gün/Yıl)</th>
+                    <th>KayıtTarihi</th>
                     <th>Kalan Gün</th>
                     <th>Üye ID</th>
                     <th>Üye Adı</th>
@@ -33,7 +33,7 @@
                 }
                 <tr>
                     <td>@x.KayıtID</td>
-                    <td>@x.KayıtTarihi.ToShortDateString()</td>
+                    <td>@x.KayıtTarihi.ToString("dd/MM/yyyy")</td>
                     <td>@((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days)</td>
                     <td>@x.UyeID</td>
                     <td>@x.Uye.UyeAD</td>

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAboneTakip.Migrations
 {
     [DbContext(typeof(DergiDbContext))]
-    [Migration("20210501225640_mg")]
-    partial class mg
+    [Migration("20210509192215_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,13 +30,16 @@ namespace DAboneTakip.Migrations
 
                     b.Property<string>("KullaniciAD")
                         .IsRequired()
+                        .HasMaxLength(16)
                         .HasColumnType("Varchar(16)");
 
                     b.Property<string>("Rol")
-                        .HasColumnType("Varchar(10)");
+                        .HasMaxLength(1)
+                        .HasColumnType("Varchar(1)");
 
                     b.Property<string>("Sifre")
                         .IsRequired()
+                        .HasMaxLength(16)
                         .HasColumnType("Varchar(16)");
 
                     b.HasKey("ID");
@@ -93,14 +96,9 @@ namespace DAboneTakip.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int?>("UyelerUyeID")
-                        .HasColumnType("int");
-
                     b.HasKey("DergiID");
 
                     b.HasIndex("KategoriID");
-
-                    b.HasIndex("UyelerUyeID");
 
                     b.ToTable("Dergilers");
                 });
@@ -114,8 +112,8 @@ namespace DAboneTakip.Migrations
 
                     b.Property<string>("KategoriAD")
                         .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("KategoriID");
 
@@ -129,11 +127,17 @@ namespace DAboneTakip.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("DergilerDergiID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DogumTarihi")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Tarih")
+                    b.Property<DateTime>("KayitTarihi")
                         .HasColumnType("datetime2");
 
                     b.Property<long>("TelNo")
@@ -145,6 +149,8 @@ namespace DAboneTakip.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("UyeID");
+
+                    b.HasIndex("DergilerDergiID");
 
                     b.ToTable("Uyelers");
                 });
@@ -176,12 +182,18 @@ namespace DAboneTakip.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DergiAboneProje.Models.Uyeler", "Uyeler")
-                        .WithMany()
-                        .HasForeignKey("UyelerUyeID");
-
                     b.Navigation("Kategoriler");
+                });
 
+            modelBuilder.Entity("DergiAboneProje.Models.Uyeler", b =>
+                {
+                    b.HasOne("DergiAboneProje.Models.Dergiler", null)
+                        .WithMany("Uyeler")
+                        .HasForeignKey("DergilerDergiID");
+                });
+
+            modelBuilder.Entity("DergiAboneProje.Models.Dergiler", b =>
+                {
                     b.Navigation("Uyeler");
                 });
 

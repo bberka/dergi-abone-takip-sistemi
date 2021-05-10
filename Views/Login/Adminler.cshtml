@@ -26,7 +26,8 @@
 
             @foreach (var x in Model)
             {
-                if (x.Rol == "O") continue;
+                string role = x.Rol.ToUpper();
+                if (role == "O") continue;
                 <tr>
                     <td>@x.ID</td>
                     <td>@x.KullaniciAD</td>
@@ -34,19 +35,20 @@
                         <input type="password" disabled="disabled" value="@x.Sifre" id="MyInput(@x.ID)" />  <input type="checkbox" class="w3-check" onclick="myFunction(@x.ID)">
                     </td>
                     <td>
-                        @if (x.Rol == "A")
+                        @if (role == "A")
                         {
-                            <label>Admin</label>
+                            
+                            <text>Admin</text>
                         }
-                        else if (x.Rol == "U")
+                        else if (role == "U")
                         {
-                            <label>User</label>
+                            <text>User</text>
                         }
                     </td>
+
                     <td><a href="/Login/Duzenle/@x.ID" class="btn btn-success">Düzenle</a></td>
                     <td><a href="#" onclick="Confirm(@x.ID)" class="btn btn-danger ksilbtn">Sil</a></td>
-
-
+    
 
                 </tr>
             }
@@ -54,8 +56,6 @@
         </table>
         <a href="/Login/AdminEkle/" class="btn btn-success">Yeni Admin Ekle</a>
     </div>
-
-    @*<a href="/Login/AdminEkle/" class="btn btn-success">Yeni Admin Ekle</a>*@
 
     <script>
         //şifre göster gizle

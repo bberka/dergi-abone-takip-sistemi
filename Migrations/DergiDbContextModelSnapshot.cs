@@ -128,11 +128,14 @@ namespace DAboneTakip.Migrations
                     b.Property<int?>("DergilerDergiID")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("DogumTarihi")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Tarih")
+                    b.Property<DateTime>("KayitTarihi")
                         .HasColumnType("datetime2");
 
                     b.Property<long>("TelNo")

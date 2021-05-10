@@ -14,7 +14,9 @@
         <form asp-action="Duzenle">
             <div asp-validation-summary="All" class="text-danger"></div>
             @Html.HiddenFor(x => x.UyeID)
+            @Html.HiddenFor(x => x.KayitTarihi)
             <h5>Üye ID : @ViewBag.UID</h5>
+            <h5>Kayıt Tarihi : @ViewBag.KTarih</h5>
             <br />
             <div class="form-group">
                 <label asp-for="UyeAD"></label>
@@ -32,10 +34,11 @@
             </div>
             <br />
             <div class="form-group">
-                <label asp-for="Tarih"></label>
-                <input asp-for="Tarih" type="text" class="form-control" maxlength="10" id="TarihSec" />
+                <label asp-for="DogumTarihi"></label>
+                <input type="text" value="@ViewBag.DTarih" class="form-control" maxlength="10" id="TarihSec" onkeypress="event.preventDefault()" onchange="dateswap()" />
             </div>
             <button class="btn btn-info" type="submit">Düzenlemeyi Kaydet</button>
+            <input asp-for="DogumTarihi" type="text" style="visibility:hidden ;height:1px; width:1px" maxlength="10" readonly />
         </form>
 
     </div>
@@ -58,9 +61,9 @@
 
         //datetimepicker 
         var today = new Date();
-        var date = (today.getMonth() + 1) + '/' + today.getDate() + '/' + (today.getFullYear() - 18);
+        var date = (today.getDate() + '/' + today.getMonth() + 1) + '/' + (today.getFullYear() - 18); 
         $('#TarihSec').datepicker({
-            format: 'mm/dd/yyyy',
+            format: 'dd/mm/yyyy',
             autoclose: true,
             language: "tr",
             weekStart: 1,
@@ -68,7 +71,15 @@
             startDate: '01/01/1900'
         });
 
-
+        function dateswap() {
+            var x = document.getElementById("TarihSec").value;
+            if (x.length == 10) {
+                var day = x.slice(0, 2);
+                var month = x.slice(3, 5);
+                var year = x.slice(6, 10);
+                document.getElementById("DogumTarihi").value = month + "/" + day + "/" + year;
+            }
+        }
     </script>
 
 

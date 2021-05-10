@@ -53,24 +53,25 @@ namespace DAboneTakip.Controllers
         {
             //giriş yapma işlemleri 
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            var bilgiler = c.Admins.FirstOrDefault(x => x.KullaniciAD == p.KullaniciAD && x.Sifre == p.Sifre);
-
-            if (bilgiler != null)
+            var bilgiler = c.Admins.FirstOrDefault(x => x.KullaniciAD == p.KullaniciAD &&  x.Sifre == p.Sifre);
+            bool PassCheck = string.Equals(bilgiler.Sifre,p.Sifre);
+            
+            if (bilgiler == null || !PassCheck)
+            {
+                ModelState.AddModelError("", "Kullanıcı adı veya şifre yanlış.");
+                return View();
+            }
+            else if (bilgiler != null || ModelState.IsValid)
             {
                 var claims = new List<Claim>
                     {
-                         new Claim(ClaimTypes.Name,p.KullaniciAD),
-                         new Claim(ClaimTypes.Role,bilgiler.Rol)
+                         new Claim(ClaimTypes.Name,bilgiler.KullaniciAD),
+                         new Claim(ClaimTypes.Role,bilgiler.Rol.ToUpper())
                     };
                 var useridentity = new ClaimsIdentity(claims, "Login");
                 ClaimsPrincipal principal = new ClaimsPrincipal(useridentity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-            }
-            else if (bilgiler == null)
-            {
-                ModelState.AddModelError("", "Kullanıcı adı veya şifre yanlış.");
-                return View();
             }
             return RedirectToAction("Index", "Home");
         }
@@ -206,9 +207,10 @@ namespace DAboneTakip.Controllers
                 Rol = _CurrentUserRole
             };
             //validation uyarıları
-            if (!CheckOldPass) ModelState.AddModelError("", "Geçerli şifreyi yanlış girdiniz.");
+            
+            if(!CheckOldPass) ModelState.AddModelError("", "Geçerli şifreyi yanlış girdiniz.");
             else if (!CheckNewPassMatch) ModelState.AddModelError("", "Yeni şifre eşleşmiyor.");
-            else if (ModelState.IsValid) //veritabanı işlemleri
+            else if(ModelState.IsValid) //veritabanı işlemleri
             {
                 c.Admins.Update(_admin);
                 c.SaveChanges();
