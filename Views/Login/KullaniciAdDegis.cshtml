@@ -1,0 +1,33 @@
+﻿@model DAboneTakip.Models.AccountModels.ChangeUsername
+@{
+    ViewData["Title"] = "Kullanıcı Adı Değiştir";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <h5>ID: @ViewBag.UID</h5>
+        <h5>Kullanıcı Adı: @this.User.Identity.Name</h5>
+        <br />
+        <form asp-action="KullaniciAdDegis">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NewUsername">Yeni Kullancı Adı</label>
+                <input asp-for="NewUsername" class="form-control" maxlength="16" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Password">Geçerli Şifre</label>
+                <input asp-for="Password" class="form-control" maxlength="16" />
+            </div>
+            <br />
+            <button class="btn btn-success" type="submit">Kullanıcı Ad Değiştir</button>
+        </form>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}

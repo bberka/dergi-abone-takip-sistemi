@@ -367,7 +367,6 @@ C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\DA
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\DAboneTakip.pdb
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\DAboneTakip.genruntimeconfig.cache
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Login\GirisYap.cshtml.g.cs
-C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Login\KayitOl.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Login\ErisimEngel.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\bin\Debug\netcoreapp3.1\DAboneTakip.StaticWebAssets.xml
@@ -390,3 +389,4 @@ C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Ra
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Login\Duzenle.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Login\AdminEkle.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Login\SifreDegis.cshtml.g.cs
+C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Login\KullaniciAdDegis.cshtml.g.cs

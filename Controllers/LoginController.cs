@@ -1,4 +1,5 @@
 ﻿using DAboneTakip.Models;
+using DAboneTakip.Models.AccountModels;
 using DergiAboneProje.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -17,6 +18,23 @@ namespace DAboneTakip.Controllers
     {
         readonly DergiDbContext c = new DergiDbContext();
         string _CurrentUserRole;
+
+        public bool CreateDefaultAdmin() 
+        {
+            //eğer adminlerde hiçbir kayıt yok ise owner rolünde bir default hesap oluşturur 
+            if (c.Admins.ToList().Count is 0)
+            {
+                Admin defadmin = new Admin{ 
+                KullaniciAD = "owner",
+                Sifre = "123456",
+                Rol = "O"
+                };
+                c.Admins.Add(defadmin);
+                c.SaveChanges();
+                return true;
+            }
+            return false;
+        }
         public bool CheckIfOwner(int id) //verilen parametre id nin owner rolünde olup olmadığına bakılıyor
         {
             var a = c.Admins.Find(id);
@@ -45,6 +63,7 @@ namespace DAboneTakip.Controllers
         [AllowAnonymous]
         public IActionResult GirisYap()
         {
+            CreateDefaultAdmin();
             return View();
         }
         [HttpPost]
@@ -52,10 +71,10 @@ namespace DAboneTakip.Controllers
         public async Task<IActionResult> GirisYap(Admin p)
         {
             //giriş yapma işlemleri 
+            bool PassCheck = false;
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            var bilgiler = c.Admins.FirstOrDefault(x => x.KullaniciAD == p.KullaniciAD &&  x.Sifre == p.Sifre);
-            bool PassCheck = string.Equals(bilgiler.Sifre,p.Sifre);
-            
+            var bilgiler = c.Admins.FirstOrDefault(x => x.KullaniciAD == p.KullaniciAD && x.Sifre == p.Sifre);
+            if (bilgiler != null)  PassCheck = string.Equals(bilgiler.Sifre, p.Sifre);  
             if (bilgiler == null || !PassCheck)
             {
                 ModelState.AddModelError("", "Kullanıcı adı veya şifre yanlış.");
@@ -82,27 +101,6 @@ namespace DAboneTakip.Controllers
             //çıkış yapma işlemleri
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("GirisYap", "Login");
-        }
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult KayitOl()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        public IActionResult KayitOl(Admin a)
-        {
-            bool CheckIfUserExist = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD).Count() != 0; //bu kullanıcı adı varmı kontrolü
-            if (CheckIfUserExist) ModelState.AddModelError("", "Bu kullanıcı adı zaten kullanılıyor.");
-            else if (ModelState.IsValid) //veritabanı işlemleri
-            {
-                c.Admins.Add(a);
-                c.SaveChanges();
-                return RedirectToAction("GirisYap", "Login");
-            }
-            return View();
         }
 
         [Authorize(Roles = "O")]
@@ -142,8 +140,20 @@ namespace DAboneTakip.Controllers
         [Authorize(Roles = "O")]
         public IActionResult AdminEkle(Admin a)
         {
-            bool CheckIfUserExist = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD).Count() != 0; //bu kullanıcı adı varmı kontrolü
-            if (CheckIfUserExist) ModelState.AddModelError("", "Bu kullanıcı adı zaten kullanılıyor.");
+            bool CheckSpace = false;
+            if (a.KullaniciAD != null)
+            {
+                CheckSpace = a.KullaniciAD.Contains(" ");
+                a.KullaniciAD = a.KullaniciAD.Trim().ToLower();
+            }                        
+            if (a.Sifre != null)
+            {
+                a.Sifre = a.Sifre.Trim();
+                CheckSpace = a.Sifre.Contains(" ");
+            }
+            bool CheckIfUserExist = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD).Count() != 0; //bu kullanıcı adı varmı kontrolü 
+            if (CheckSpace) ModelState.AddModelError("", "Kullanıcı adı ve şifre boşluk içeremez.");
+            else if (CheckIfUserExist) ModelState.AddModelError("", "Bu kullanıcı adı zaten kullanılıyor.");
             else if (ModelState.IsValid)
             {
                 c.Admins.Add(a);
@@ -170,13 +180,25 @@ namespace DAboneTakip.Controllers
         [Authorize(Roles = "O")]
         public IActionResult Duzenle(Admin a)
         {
-            
+            bool CheckSpace = false;
+            if (a.KullaniciAD != null)
+            {
+                CheckSpace = a.KullaniciAD.Contains(" ");
+                a.KullaniciAD = a.KullaniciAD.Trim().ToLower();
+            }
+            if (a.Sifre != null)
+            {
+                a.Sifre = a.Sifre.Trim();
+                CheckSpace = a.Sifre.Contains(" ");
+            }
             bool CheckIfUserExist = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD && x.ID != a.ID).Count() != 0; //kullanıcı adı varmı kontrolü
             bool CheckChanges = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD && x.Sifre == a.Sifre && x.Rol == a.Rol).Count() != 0; //değişiklik kontrolü
             //yukarıdaki validationların uyarıları viewe yollanır
-            if (CheckIfUserExist) ModelState.AddModelError("", "Bu kullanıcı adı zaten kullanılıyor.");
-            if (CheckChanges) ModelState.AddModelError("", "Düzenleme yapmadınız.");
-            if (ModelState.IsValid)
+
+            if (CheckSpace) ModelState.AddModelError("", "Kullanıcı adı ve şifre boşluk içeremez.");
+            else if(CheckIfUserExist) ModelState.AddModelError("", "Bu kullanıcı adı zaten kullanılıyor.");
+            else if (CheckChanges) ModelState.AddModelError("", "Düzenleme yapmadınız.");
+            else if (ModelState.IsValid)
             {
                 c.Admins.Update(a);
                 c.SaveChanges();
@@ -212,6 +234,47 @@ namespace DAboneTakip.Controllers
             else if (!CheckNewPassMatch) ModelState.AddModelError("", "Yeni şifre eşleşmiyor.");
             else if(ModelState.IsValid) //veritabanı işlemleri
             {
+                c.Admins.Update(_admin);
+                c.SaveChanges();
+                return RedirectToAction("CikisYap");
+            }
+            return View();
+        }
+        [HttpGet]
+        [Authorize(Roles = "O,A")]
+        public IActionResult KullaniciAdDegis()
+        {
+            GetUserID(); //user idsini alır 
+            return View();
+        }
+        [HttpPost]
+        [Authorize(Roles = "O,A")]
+        public IActionResult KullaniciAdDegis(ChangeUsername a)
+        {
+            bool CheckSpace = false;
+            if (a.NewUsername != null)
+            {
+                CheckSpace = a.NewUsername.Contains(" ");
+                a.NewUsername = a.NewUsername.Trim().ToLower();
+            }
+            int id = GetUserID(); //user idsini değişkene atar
+            bool CheckPass = c.Admins.Where(x => x.ID == id && x.Sifre == a.Password).Count() != 0; //mevcut şifre doğrumu kontrolü
+            bool CheckIfUserExist = c.Admins.Where(x => x.KullaniciAD == a.NewUsername && x.ID != id).Count() != 0; //kullanıcı adı varmı kontrolü
+
+            //validation uyarıları
+
+            if (CheckSpace) ModelState.AddModelError("", "Kullanıcı adı boşluk içeremez.");
+            else if(!CheckPass) ModelState.AddModelError("", "Şifreyi yanlış girdiniz.");
+            else if (CheckIfUserExist) ModelState.AddModelError("", "Bu kullanıcı adı zaten kullanılıyor.");
+            else if (ModelState.IsValid) //veritabanı işlemleri
+            {
+                var _admin = new Admin
+                {
+                    ID = id,
+                    KullaniciAD = a.NewUsername,
+                    Sifre = a.Password,
+                    Rol = _CurrentUserRole
+                };
                 c.Admins.Update(_admin);
                 c.SaveChanges();
                 return RedirectToAction("CikisYap");

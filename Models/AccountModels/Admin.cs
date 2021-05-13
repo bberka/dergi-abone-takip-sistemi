@@ -7,17 +7,15 @@ namespace DAboneTakip.Models
     {
         [Key]
         public int ID { get; set; }
-
-        [Column(TypeName = "Varchar(16)")]
-        [Display(Name = "Kullanıcı Adı")]
         [Required(ErrorMessage = "Kullanıcı adı boş bırakılamaz.")]
+        [Column(TypeName = "Varchar(16)")]
+        [Display(Name = "Kullanıcı Adı")]        
         [MaxLength(16, ErrorMessage = "Kullanıcı adı en fazla 16 haneli olabilir.")]
         public string KullaniciAD { get; set; }
-
+        [Required(ErrorMessage = "Şifre boş bırakılamaz.")]
         [Column(TypeName = "Varchar(16)")]
         [Display(Name = "Şifre")]
-        [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Şifre boş bırakılamaz.")]
+        [DataType(DataType.Password)]        
         [MinLength(3, ErrorMessage = "Şifre en az 3 en fazla 16 haneli olabilir.")]
         [MaxLength(16, ErrorMessage = "Şifre en az 3 en fazla 16 haneli olabilir.")]
         public string Sifre { get; set; }
