@@ -94,7 +94,7 @@ body {
         cursor: pointer;
     }
 .my-div {
-    width:235px;
+    width:200px;
 }
 .my-icon {
     font-size: 20px;
@@ -106,8 +106,12 @@ body {
     height: 60px;
     text-decoration: none;
 }
+.my-nav {
+    margin-left:50px;
+}
+
 .render-div {
-   margin-left:235px;
+   margin-left:200px;
 
 }
 /*.my-header {
@@ -121,7 +125,7 @@ body {
         font-size: 0px;
     }
     .my-div{
-        width:75px;
+        width:70px;
     }
     .my-icon {
         font-size: 25px;
@@ -134,7 +138,7 @@ body {
         height: 60px;
     }
     .render-div {
-        margin-left:75px;
+        margin-left:70px;
     }
 }
 /*--------------------------------------------*/

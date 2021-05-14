@@ -1,11 +1,12 @@
 ﻿@model DAboneTakip.Models.ChangePass
 @{
     ViewData["Title"] = "Sifre Değiştir";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_HesapYonet.cshtml";
 }
 
-<div class="row">
-    <div class="col-md-4">
+
+
+    <div>
         <h5>ID: @ViewBag.UID</h5>
         <h5>Kullanıcı Adı: @this.User.Identity.Name</h5>
         <br />
@@ -29,7 +30,6 @@
         </form>
     </div>
 
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -390,3 +390,4 @@ C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Ra
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Login\AdminEkle.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Login\SifreDegis.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Login\KullaniciAdDegis.cshtml.g.cs
+C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_HesapYonet.cshtml.g.cs

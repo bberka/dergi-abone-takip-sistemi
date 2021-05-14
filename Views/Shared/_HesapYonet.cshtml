@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "Hesabını Yönet";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+ 
+    <div >
+        <div class="col-md-2">
+            <ul class="nav nav-pills flex-column" style="margin-left:0px">
+                <li class="nav-item"><a href="/Login/KullaniciAdDegis" class="btn form-control btn-primary w3-hover-blue" style="text-decoration:none; width:300px;">Kullanıcı Adı Değiştir</a></li>
+                <li></li>
+                <li class="nav-item"><a href="/Login/SifreDegis" class="btn form-control btn-primary  w3-hover-blue" style="text-decoration:none; width:300px">Şifre Değiştir</a></li>
+            </ul>
+        </div>
+        <hr />
+        <div style="width:300px">
+            @RenderBody()
+        </div>
+    </div>
+
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}
