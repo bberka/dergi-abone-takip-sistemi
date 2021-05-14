@@ -35,7 +35,7 @@
             <br />
             <div class="form-group">
                 <label asp-for="TelNo"></label>
-                <input asp-for="TelNo" class="form-control" type="number" onkeypress="validate(event);" />
+                <input asp-for="TelNo" class="form-control" type="tel" onkeypress="validate(event);" maxlength="10"/>
             </div>
             <br />
             <div class="form-group">
@@ -61,6 +61,10 @@
     <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.tr.min.js"></script>
     <script type="text/javascript" src="js/moment/tr.js"></script>
     <script>
+        //pageloadında gizli datepcikerdaki valueyi görünüre aktarır validation view tekrar dönderdiği için bu değer gidiyordu onun fixlenmesi için
+        var dateval = document.getElementById("DogumTarihi").value;
+        document.getElementById("TarihSec").value = dateval;
+
 
         //datetimepicker 
         var today = new Date();
@@ -83,17 +87,14 @@
             }    
         }
 
-        
-        function validate(evt) {
-            var theEvent = evt || window.event;
-            var tbox = document.getElementById("TelNo").value;
-
-            if (tbox.length >= 10) {
-                theEvent.preventDefault();
-            }
-
-           
-        }
+        //tel no alanına sadece sayı girilmesi için
+        $('[type=tel]').on('change', function (e) {
+            $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''))
+        })
+        $('[type=tel]').on('keypress', function (e) {
+            keys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.']
+            return keys.indexOf(event.key) > -1
+        })
     </script>
 
 

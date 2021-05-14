@@ -23,6 +23,6 @@ namespace DAboneTakip.Models
         [Column(TypeName = "Varchar(10)")]
         [Display(Name = "Rol")]
         [StringLength(1)]
-        public string Rol { get; set; } = "U"; //U = User ** A = Admin ** O = Owner
+        public string Rol { get; set; } = "U"; //A = Admin ** O = Owner
     }
 }

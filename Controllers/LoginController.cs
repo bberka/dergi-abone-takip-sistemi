@@ -21,8 +21,8 @@ namespace DAboneTakip.Controllers
 
         public bool CreateDefaultAdmin() 
         {
-            //eğer adminlerde hiçbir kayıt yok ise owner rolünde bir default hesap oluşturur 
-            if (c.Admins.ToList().Count is 0)
+            //eğer adminlerde owner rolünde hiçbir kayıt yok ise owner rolünde bir default hesap oluşturur 
+            if (c.Admins.Where(x=> x.Rol == "O" ).ToList().Count is 0)
             {
                 Admin defadmin = new Admin{ 
                 KullaniciAD = "owner",
@@ -56,7 +56,7 @@ namespace DAboneTakip.Controllers
 
         public IActionResult ErisimEngel() 
         {
-            //erişim engeli sayfası startup.cs e tanımlandı eğer kullanıcı yeni kayıt olduysa ve yetki verilmediyse burada takılır
+            //erişim engeli sayfası startup.cs e tanımlandı eğer kullanıcının yetkisi yoska bu sayfaya yönlendirir
             return View();
         }
         [HttpGet]
@@ -108,7 +108,8 @@ namespace DAboneTakip.Controllers
         {
             //siteye erişimi olan olmayan tüm hesapların listesi düzenleme silme ve bilgileri görme işlemlerini sadece Owner rolü olan kişi yapabilir.
             var degerler = c.Admins
-                   .ToList();
+                .Where(x=> x.Rol != "O")
+                .ToList();
             return View(degerler);
         }
 
@@ -165,10 +166,11 @@ namespace DAboneTakip.Controllers
         [HttpGet]
         [Authorize(Roles = "O")]
         public IActionResult Duzenle(int id)
-        {  
-            //idsi girilen hesabın verilerini çeker
+        {
             ViewBag._CurrentUserID = id;
-            if (ModelState.IsValid)
+            if (CheckIfOwner(id)) return RedirectToAction("Adminler"); //eğer url ile owner hesabı silmeye çalışırsa engeller
+            //idsi girilen hesabın verilerini çeker
+            else if (ModelState.IsValid)
             {
                 var admin = c.Admins.Find(id);
                 return View("Duzenle", admin);

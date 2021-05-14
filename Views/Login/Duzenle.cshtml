@@ -13,6 +13,7 @@
         <form asp-action="Duzenle">
             <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
+            <input type="hidden" asp-for="Rol" />
             <div class="form-group">
                 <label asp-for="KullaniciAD" class="control-label"></label>
                 <input asp-for="KullaniciAD" class="form-control" />
@@ -22,13 +23,6 @@
                 <div style="display: flex; justify-content: space-between;">
                     <input asp-for="Sifre" value="@Model.Sifre" class="form-control" />&nbsp;<input type="checkbox" class="w3-check" onclick="myFunction()">
                 </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rol" class="control-label"></label>
-                <select asp-for="Rol" class="form-control">
-                    <option value="A">Admin</option>
-                    <option value="U">User</option>
-                </select>
             </div>
             <button class="btn btn-info" type="submit">Düzenlemeyi Kaydet</button>
         </form>
