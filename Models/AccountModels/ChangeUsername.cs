@@ -15,6 +15,7 @@ namespace DAboneTakip.Models.AccountModels
         [Required(ErrorMessage = "Yeni kullanıcı adı boş bırakılamaz.")]
         [MaxLength(16, ErrorMessage = "Yeni kullanıcı adı en fazla 16 haneli olabilir.")]
         public string NewUsername { get; set; }
+
         [Required(ErrorMessage = "Şifre boş bırakılamaz.")]
         [Column(TypeName = "Varchar(16)")]
         [Display(Name = "Şifre")]

@@ -141,7 +141,7 @@ namespace DAboneTakip.Controllers
         [Authorize(Roles = "O")]
         public IActionResult AdminEkle(Admin a)
         {
-            bool CheckSpace = false;
+            bool CheckSpace = false; //boşluk varmı kontrolü
             if (a.KullaniciAD != null)
             {
                 CheckSpace = a.KullaniciAD.Contains(" ");
@@ -153,8 +153,10 @@ namespace DAboneTakip.Controllers
                 CheckSpace = a.Sifre.Contains(" ");
             }
             bool CheckIfUserExist = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD).Count() != 0; //bu kullanıcı adı varmı kontrolü 
+            //validation uyarıları
             if (CheckSpace) ModelState.AddModelError("", "Kullanıcı adı ve şifre boşluk içeremez.");
             else if (CheckIfUserExist) ModelState.AddModelError("", "Bu kullanıcı adı zaten kullanılıyor.");
+            else if (a.KullaniciAD.ToLower() == "owner") ModelState.AddModelError("", "Owner kullanıcı adında bir admin eklenemez."); //owner default hesap olduğu için
             else if (ModelState.IsValid)
             {
                 c.Admins.Add(a);

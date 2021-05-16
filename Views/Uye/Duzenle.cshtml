@@ -35,7 +35,7 @@
             <br />
             <div class="form-group">
                 <label asp-for="DogumTarihi"></label>
-                <input type="text" value="@ViewBag.DTarih" class="form-control" maxlength="10" id="TarihSec" onkeypress="event.preventDefault()" onchange="dateswap()" />
+                <input type="text" value="@ViewBag.DTarih" class="form-control" maxlength="10" id="TarihSec" onkeypress="event.preventDefault()" onchange="dateswap()" readonly/>
             </div>
             <button class="btn btn-info" type="submit">Düzenlemeyi Kaydet</button>
             <input asp-for="DogumTarihi" type="text" style="visibility:hidden ;height:1px; width:1px" maxlength="10" readonly />
