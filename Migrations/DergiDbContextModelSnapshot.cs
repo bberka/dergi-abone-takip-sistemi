@@ -56,11 +56,17 @@ namespace DAboneTakip.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<int>("KayıtSuresi")
+                    b.Property<int>("KayıtSuresiAy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("KayıtSuresiGun")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("KayıtTarihi")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("ToplamUcret")
+                        .HasColumnType("int");
 
                     b.Property<int?>("UyeID")
                         .IsRequired()
@@ -81,6 +87,9 @@ namespace DAboneTakip.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AylikUcret")
+                        .HasColumnType("int");
 
                     b.Property<string>("DergiAD")
                         .IsRequired()
@@ -110,8 +119,8 @@ namespace DAboneTakip.Migrations
 
                     b.Property<string>("KategoriAD")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("KategoriID");
 

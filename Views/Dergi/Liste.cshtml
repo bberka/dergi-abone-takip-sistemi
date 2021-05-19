@@ -12,6 +12,7 @@
             <tr>
                 <th>ID</th>
                 <th>Dergi Adı</th>
+                <th>Aylık Ücret</th>
                 <th>Kategori Adı</th>
                 <th>Kayıt Tarihi</th>
                 <th>Düzenle</th>
@@ -25,6 +26,7 @@
                 <tr>
                     <td>@x.DergiID</td>
                     <td>@x.DergiAD</td>
+                    <td>@x.AylikUcret</td>
                     <td>@x.Kategoriler.KategoriAD</td>
                     <td>@x.DergiTARIH.ToString("dd/MM/yyyy")</td>
                     <td><a href="/Dergi/Duzenle/@x.DergiID" class="btn btn-success">Düzenle</a></td>
@@ -50,7 +52,7 @@
         });
     });
 
-    function Confirm(id) {
+        function Confirm(id) {
 
         swal({
             title: "Silmek istediğinize emin misiniz ?",
@@ -81,7 +83,7 @@
                 }
 
             });
-    }
+        }
     </script>
 
 

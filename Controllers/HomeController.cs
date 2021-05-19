@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace DAboneTakip.Controllers
 {
@@ -29,12 +30,12 @@ namespace DAboneTakip.Controllers
             var list_dergi = c.Dergilers.ToList();
             var list_kategori = c.Kategorilers.ToList();
             var list_uye = c.Uyelers.ToList();
-
+            int toplamucret = 0;
             ViewBag.count_uye = list_uye.Count();
             ViewBag.count_kategori = list_kategori.Count();
             ViewBag.count_dergi = list_dergi.Count();
             ViewBag.count_abone = list_abone.Count();
-
+            
             int bugun_eklenen = 0;
             int aktif_abone = 0;
             int bitecek_abone = 0;
@@ -45,7 +46,7 @@ namespace DAboneTakip.Controllers
 
                 if (a)
                 {
-                    if (x.KayıtSuresi != 1)
+                    if (x.KayıtSuresiGun != 1)
                     {
                         bugun_eklenen++;
                     }
@@ -58,20 +59,17 @@ namespace DAboneTakip.Controllers
             //Aktif abonelik sayısı
             foreach (var x in c.Aboneliklers)
             {
-                var a = (x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days;
-                if (a <= 0)
-                {
-
-                    continue;
-                }
+                toplamucret += x.ToplamUcret;
+                int a = (x.KayıtTarihi.AddDays(x.KayıtSuresiGun) - DateTime.Now).Days;
+                if (a <= 0) continue;
                 aktif_abone++;
             }
             ViewBag.count_aktifabone = aktif_abone; //Aktif abonelik sayısı değişkene atama
-
+            ViewBag.gelir = toplamucret;
             //pasif bitmiş abonelik sayısı
             foreach (var x in c.Aboneliklers)
             {
-                var a = (x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days;
+                var a = (x.KayıtTarihi.AddDays(x.KayıtSuresiGun) - DateTime.Now).Days;
                 if (a <= 0 || a >= 30)
                 {
                     continue;
@@ -102,15 +100,10 @@ namespace DAboneTakip.Controllers
                 a = c.Dergilers.Select(x => new ChartDergi
                 {
                     dergi = x.DergiAD,
-                    abonesayi = c.Aboneliklers.Where(a => a.DergiID == x.DergiID && a.KayıtTarihi.AddDays(a.KayıtSuresi - 1) > DateTime.Now).Count()
+                    abonesayi = c.Aboneliklers.Where(a => a.DergiID == x.DergiID && a.KayıtTarihi.AddDays(a.KayıtSuresiGun - 1) > DateTime.Now).Count()
                 }).ToList();
             }
             return a;
-        }
-
-        public IActionResult Privacy() //gizlilik politikası
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

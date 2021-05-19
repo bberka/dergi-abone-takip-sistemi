@@ -55,6 +55,7 @@ namespace DergiAboneProje.Controllers
             d.DergiAD = d.DergiAD.Trim(); //ada trim uygulanır
             bool NameAlreadyExist = c.Dergilers.Where(x => x.DergiAD == d.DergiAD).Count() != 0; //dergi adı varmı kontrolü 
             if (NameAlreadyExist) ModelState.AddModelError("NameAlreadyExist", "Bu dergi adı zaten mevcut."); //dergi adı varsa uyarı mesajı
+            else if (d.AylikUcret.ToString().Length > 4) ModelState.AddModelError("AylıkÜcretFazla", "Aylık ücret 4 basamaktan fazla olamaz."); //aylık ücret uyarı mesajı
             else if (ModelState.IsValid)
             {
                 try // veritabanı işlemleri 
@@ -105,11 +106,12 @@ namespace DergiAboneProje.Controllers
         { 
             d.DergiAD = d.DergiAD.Trim(); //ada trim uygulanır
             bool NameAlreadyExist = c.Dergilers.Where(x => x.DergiAD == d.DergiAD && x.DergiID != d.DergiID).Count() != 0; //dergi adı varmı kontrolü
-            bool NameSame = c.Dergilers.Where(x => x.DergiID == d.DergiID && x.DergiAD == d.DergiAD).Count() != 0; //değişiklik yapıldımı kontrolü
-            bool KategoriSame = c.Dergilers.Where(x => x.DergiID == d.DergiID && x.KategoriID == d.KategoriID).Count() != 0; //kategori değişikliği yapıldımı kontrolü
+            bool RecordSame = c.Dergilers.Where(x => x.DergiID == d.DergiID && x.DergiAD == d.DergiAD && x.KategoriID == d.KategoriID && x.AylikUcret == d.AylikUcret).Count() != 0; //değişiklik yapıldımı kontrolü
+            
             //validation mesajları 
-            if (NameSame && KategoriSame) ModelState.AddModelError("NameSame", "Düzenleme yapmadınız.");
+            if (RecordSame) ModelState.AddModelError("RecordSame", "Düzenleme yapmadınız.");
             else if (NameAlreadyExist) ModelState.AddModelError("NameAlreadyExist", "Bu dergi adı zaten mevcut.");
+            else if (d.AylikUcret.ToString().Length > 4) ModelState.AddModelError("AylıkÜcretFazla", "Aylık ücret 4 basamaktan fazla olamaz."); //aylık ücret uyarı mesajı
             else if (ModelState.IsValid)
             {
                 try //veritabanı işlemleri

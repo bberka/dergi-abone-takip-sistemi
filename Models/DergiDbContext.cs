@@ -1,13 +1,20 @@
 ﻿using DAboneTakip.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
 
 namespace DergiAboneProje.Models
 {
-    public class DergiDbContext : Microsoft.EntityFrameworkCore.DbContext
+    public class DergiDbContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("server=DESKTOP-F9KH9U2\\SQLEXPRESS;database=DergiAboneTakipProje; integrated security= true;");
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+             .AddJsonFile("appsettings.json")
+             .Build();
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DergiDbContext"));
         }
         public DbSet<Dergiler> Dergilers { get; set; }
         public DbSet<Uyeler> Uyelers { get; set; }

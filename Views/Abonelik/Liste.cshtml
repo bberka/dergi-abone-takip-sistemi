@@ -18,8 +18,10 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Kayıt Tarihi(Gün/Ay/Yıl)</th>
+                    <th>Kayıt Tarihi</th>
+                    <th>Abonelik Süresi(Ay)</th>
                     <th>Kalan Gün</th>
+                    <th>Toplam Ücret</th>
                     <th>Üye ID</th>
                     <th>Üye Adı</th>
                     <th>Dergi ID</th>
@@ -30,21 +32,23 @@
             </thead>
             @foreach (var x in Model)
             {
-                if ((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days <= 0)
+                if ((x.KayıtTarihi.AddDays(x.KayıtSuresiGun) - DateTime.Now).Days <= 0)
                 {
                     continue;
                 }
-                <tr>
-                    <td>@x.KayıtID</td>
-                    <td>@x.KayıtTarihi.ToString("dd/MM/yyyy")</td>
-                    <td>@((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days)</td>
-                    <td>@x.UyeID</td>
-                    <td>@x.Uye.UyeAD</td>
-                    <td>@x.DergiID</td>
-                    <td>@x.Dergi.DergiAD</td>
-                    <td><a href="/Abonelik/Duzenle/@x.KayıtID" class="btn btn-success">Düzenle</a></td>
-                    <td><a href="#" class="btn btn-danger" onclick="Confirm2(@x.KayıtID)">İptal</a></td>
-                </tr>
+        <tr>
+            <td>@x.KayıtID</td>
+            <td>@x.KayıtTarihi.ToString("dd/MM/yyyy")</td>
+            <td>@x.KayıtSuresiAy</td>
+            <td>@((x.KayıtTarihi.AddDays(x.KayıtSuresiGun) - DateTime.Now).Days)</td>
+            <td>@x.ToplamUcret</td>
+            <td>@x.UyeID</td>
+            <td>@x.Uye.UyeAD</td>
+            <td>@x.DergiID</td>
+            <td>@x.Dergi.DergiAD</td>
+            <td><a href="/Abonelik/Duzenle/@x.KayıtID" class="btn btn-success">Düzenle</a></td>
+            <td><a href="#" class="btn btn-danger" onclick="Confirm2(@x.KayıtID)">İptal</a></td>
+        </tr>
             }
         </table>
     </div>
@@ -54,7 +58,9 @@
                 <tr>
                     <th>ID</th>
                     <th>Kayıt Tarihi</th>
+                    <th>Aktif Abonelik Süresi(Gün)</th>
                     <th>Gün Önce Bitti</th>
+                    <th>Toplam Ücret</th>
                     <th>Üye ID</th>
                     <th>Üye Adı</th>
                     <th>Dergi ID</th>
@@ -64,14 +70,16 @@
             </thead>
             @foreach (var x in Model)
             {
-                if ((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days > 0)
+                if ((x.KayıtTarihi.AddDays(x.KayıtSuresiGun) - DateTime.Now).Days > 0)
                 {
                     continue;
                 }
                 <tr id="ptb">
                     <td>@x.KayıtID</td>
                     <td>@x.KayıtTarihi.ToString("dd/MM/yyyy")</td>
-                    <td>@((DateTime.Now - x.KayıtTarihi.AddDays(x.KayıtSuresi)).Days)</td>
+                    <td>@x.KayıtSuresiGun</td>
+                    <td>@((DateTime.Now - x.KayıtTarihi.AddDays(x.KayıtSuresiGun)).Days)</td>
+                    <td>@x.ToplamUcret</td>
                     <td>@x.UyeID</td>
                     <td>@x.Uye.UyeAD</td>
                     <td>@x.DergiID</td>

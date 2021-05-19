@@ -12,6 +12,7 @@
             <tr>
                 <th>ID</th>
                 <th>Dergi Adı</th>
+                <th>Aylık Ücret</th>
                 <th>Dergi Kayıt Tarih(Gün/Ay/Yıl)</th>
                 <th>Düzenle</th>
                 <th>Sil</th>
@@ -24,6 +25,7 @@
                 <tr>
                     <td>@x.DergiID</td>
                     <td>@x.DergiAD</td>
+                    <td>@x.AylikUcret</td>
                     <td>@x.DergiTARIH.ToString("dd/MM/yyyy")</td>
                     <td><a href="/Dergi/Duzenle/@x.DergiID" class="btn btn-success">Düzenle</a></td>
                     <td><a href="#" onclick="Confirm(@x.DergiID)" class="btn btn-danger">Sil</a></td>
@@ -41,29 +43,38 @@
 
 <script>
     //sweetalert ile  silme işlemi onayı
-        function Confirm(id) {
-            swal({
-                title: "Silmek istediğinize emin misiniz ? (ID: " + id + ")",
-                icon: "warning",
-                buttons: {
-                    cancel: "Hayır",
-                    true: "Evet",
-                },
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        window.location.href = "/Dergi/Sil/" + id;
-                        swal({
-                            title: "Dergi silme işlemi başarılı!",
-                            icon: "success",
-                            buttons: "Tamam",
-                        }).then(value => {
-                            window.location.href = "/Kategori/Detay/" + @ViewBag.ktgid;
-                        });
-                    }
+                function Confirm(id) {
 
-                });
-    }
+        swal({
+            title: "Silmek istediğinize emin misiniz ?",
+            text: "(ID: " + id + ")",
+            icon: "warning",
+            buttons: {
+                cancel: "Hayır",
+                true: "Evet",
+            },
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                $.get('/Dergi/CheckAbonelik',{'id':id},function(response){
+                    if(response.result) {
+                     swal("Uyarı", "Bu dergiyi, dergiye abonelik kaydı varken silemessiniz.", "error");
+                     }
+                    else {
+                     window.location.href = "/Dergi/Sil/" + id;
+                     swal({
+                     title: "Dergi silme işlemi başarılı!",
+                     icon: "success",
+                     buttons: "Tamam",
+                     }).then(value => {
+                     window.location.href = "/Kategori/Detay/" + @ViewBag.ktgid;
+                     });
+                    }
+                })
+                }
+
+            });
+        }
      //datatables JS kütüphanesi kullanıldı ve türkçe arayüz yüklendi
         $(document).ready(function () {
             $('#DergiTable').DataTable({

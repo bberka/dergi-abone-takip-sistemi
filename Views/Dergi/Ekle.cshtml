@@ -13,9 +13,15 @@
                 <input asp-for="DergiAD" class="form-control" maxlength="50" />
             </div>
             <br />
+            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="KategoriID">Kategori Adı</label>                
-                <select class="form-control chosen-select" asp-for="KategoriID" asp-items="@ViewBag.KategoriID">       
+                <label asp-for="AylikUcret"></label>
+                <input asp-for="AylikUcret" class="form-control" type="tel" onkeypress="validate(event);" maxlength="4" />
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="KategoriID">Kategori Adı</label>
+                <select class="form-control chosen-select" asp-for="KategoriID" asp-items="@ViewBag.KategoriID">
                     <option selected disabled value="-1" style="display:none">Kategori Seçiniz... </option>
                 </select>
             </div>
@@ -36,5 +42,14 @@
             $("#KategoriID").chosen({
                 no_results_text: "Eşleşme bulunamadı!"
             });
+
+            //aylık ücret alanına sadece sayı girilmesi için
+            $('[type=tel]').on('change', function (e) {
+                $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''))
+            })
+            $('[type=tel]').on('keypress', function (e) {
+                keys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.']
+                return keys.indexOf(event.key) > -1
+            })
         </script>
     }

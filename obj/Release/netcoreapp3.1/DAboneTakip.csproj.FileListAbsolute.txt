@@ -168,7 +168,6 @@ C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\Razor\Views\Login\Duzenle.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\Razor\Views\Login\ErisimEngel.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\Razor\Views\Login\GirisYap.cshtml.g.cs
-C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\Razor\Views\Login\KayitOl.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\Razor\Views\Login\SifreDegis.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\Razor\Views\Shared\_AdminLayout.cshtml.g.cs
@@ -189,3 +188,5 @@ C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\DAboneTakip.dll
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\DAboneTakip.pdb
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\DAboneTakip.genruntimeconfig.cache
+C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\Razor\Views\Login\KullaniciAdDegis.cshtml.g.cs
+C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\Razor\Views\Shared\_HesapYonet.cshtml.g.cs

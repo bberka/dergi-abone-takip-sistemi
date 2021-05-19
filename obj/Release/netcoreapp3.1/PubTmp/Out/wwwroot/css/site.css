@@ -87,7 +87,7 @@ body {
     max-width: 350px;
 }
 .my-label {
-    font-size:20px;
+    font-size:18px;
     
 }
     .my-label:hover {
@@ -106,6 +106,10 @@ body {
     height: 60px;
     text-decoration: none;
 }
+.my-nav {
+    margin-left:50px;
+}
+
 .render-div {
    margin-left:200px;
 
@@ -121,7 +125,7 @@ body {
         font-size: 0px;
     }
     .my-div{
-        width:75px;
+        width:70px;
     }
     .my-icon {
         font-size: 25px;
@@ -134,7 +138,7 @@ body {
         height: 60px;
     }
     .render-div {
-        margin-left:75px;
+        margin-left:70px;
     }
 }
 /*--------------------------------------------*/

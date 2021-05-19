@@ -11,7 +11,7 @@
         <br />
         <form class="form-group" method="post">
             <div>
-                <div >
+                <div>
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <input type="hidden" asp-for="DergiID" />
                     <input type="hidden" asp-for="DergiTARIH" />
@@ -19,6 +19,11 @@
                 <div class="form-group">
                     <label asp-for="DergiAD"></label>
                     <input asp-for="DergiAD" class="form-control" maxlength="50" />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label asp-for="AylikUcret"></label>
+                    <input asp-for="AylikUcret" class="form-control" type="tel" onkeypress="validate(event);" maxlength="4"/>
                 </div>
                 <br />
                 <div>
@@ -43,6 +48,14 @@
                  //chosen dropdownlist JS kütüphanesi kullanıldı arama da yapılabildiği için çok kayıt olduğunda kolaylık için
                 $("#KategoriID").chosen({
                     no_results_text: "Eşleşme bulunamadı!"
+                })
+                //aylık ücret alanına sadece sayı girilmesi için
+                $('[type=tel]').on('change', function (e) {
+                    $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''))
+                })
+                $('[type=tel]').on('keypress', function (e) {
+                    keys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.']
+                    return keys.indexOf(event.key) > -1
                 })
             </script>
 }

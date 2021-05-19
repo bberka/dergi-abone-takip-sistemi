@@ -19,8 +19,10 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Kayıt Tarihi(Gün/Ay/Yıl)</th>
+                    <th>Kayıt Tarihi</th>
+                    <th>Abonelik Süresi(Ay)</th>
                     <th>Kalan Gün</th>
+                    <th>Toplam Ücret</th>
                     <th>Dergi ID</th>
                     <th>Dergi Adı</th>
                     <th>Düzenle</th>
@@ -30,14 +32,16 @@
 
             @foreach (var x in Model)
             {
-                if ((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days <= 0)
+                if ((x.KayıtTarihi.AddDays(x.KayıtSuresiGun) - DateTime.Now).Days <= 0)
                 {
                     continue;
                 }
                 <tr>
                     <td>@x.KayıtID</td>
                     <td>@x.KayıtTarihi.ToString("dd/MM/yyyy")</td>
-                    <td>@((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days)</td>
+                    <td>@x.KayıtSuresiAy</td>
+                    <td>@((x.KayıtTarihi.AddDays(x.KayıtSuresiGun) - DateTime.Now).Days)</td>
+                    <td>@x.ToplamUcret</td>
                     <td>@x.DergiID</td>
                     <td>@x.Dergi.DergiAD</td>
                     <td><a href="/Abonelik/Duzenle/@x.KayıtID" class="btn btn-success">Düzenle</a></td>
@@ -54,7 +58,9 @@
                 <tr>
                     <th>ID</th>
                     <th>Kayıt Tarihi</th>
+                    <th>Aktif Abonelik Süresi(Gün)</th>
                     <th>Gün Önce Bitti</th>
+                    <th>Toplam Ücret</th>
                     <th>Dergi ID</th>
                     <th>Dergi Adı</th>
                     <th>Kaydı Sil</th>
@@ -63,14 +69,16 @@
 
             @foreach (var x in Model)
             {
-                if ((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days > 0)
+                if ((x.KayıtTarihi.AddDays(x.KayıtSuresiGun) - DateTime.Now).Days > 0)
                 {
                     continue;
                 }
                 <tr>
                     <td>@x.KayıtID</td>
                     <td>@x.KayıtTarihi.ToShortDateString()</td>
-                    <td>@(Math.Abs((x.KayıtTarihi.AddDays(x.KayıtSuresi) - DateTime.Now).Days))</td>
+                    <td>@x.KayıtSuresiGun</td>
+                    <td>@(Math.Abs((x.KayıtTarihi.AddDays(x.KayıtSuresiGun) - DateTime.Now).Days))</td>
+                    <td>@x.ToplamUcret</td>
                     <td>@x.DergiID</td>
                     <td>@x.Dergi.DergiAD</td>
                     <td><a href="#" class="btn btn-danger" onclick="Confirm(@x.KayıtID)">Kaydı Sil</a></td>

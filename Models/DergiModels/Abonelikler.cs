@@ -12,11 +12,16 @@ namespace DergiAboneProje.Models
         [Required(ErrorMessage = "Kayıt tarihi boş bırakılamaz.")]
         [Display(Name = "Abonelik Başlangıç Tarihi")]
         public DateTime KayıtTarihi { get; set; } = DateTime.Now;
+        
+        [Required]
+        public int ToplamUcret { get; set; }
+        [Required]
+        public int KayıtSuresiGun { get; set; }
 
         [Required(ErrorMessage = "Kayıt süresi boş bırakılamaz.")]
         [Display(Name = "Kayıt Süresi(ay)")]
-        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Kayıt süresi sadece sayı içerebilir.")]        
-        public int KayıtSuresi { get; set; }
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Kayıt süresi sadece sayı içerebilir.")]
+        public int KayıtSuresiAy { get; set; }
 
         [Required(ErrorMessage = "Üye seçiniz.")]
         [Display(Name = "Uye Adı")]

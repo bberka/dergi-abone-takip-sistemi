@@ -1,3 +1,5 @@
+using DAboneTakip.Models;
+using DergiAboneProje.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -22,7 +24,6 @@ namespace DAboneTakip
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddMvc();
@@ -46,12 +47,14 @@ namespace DAboneTakip
                 .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
+            
+                
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -69,7 +72,7 @@ namespace DAboneTakip
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
