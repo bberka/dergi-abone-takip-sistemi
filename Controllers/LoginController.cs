@@ -18,7 +18,6 @@ namespace DAboneTakip.Controllers
     {
         readonly DergiDbContext c = new DergiDbContext();
         string _CurrentUserRole;
-
         public bool CreateDefaultAdmin() 
         {
             //eğer adminlerde owner rolünde hiçbir kayıt yok ise owner rolünde bir default hesap oluşturur 
@@ -46,8 +45,14 @@ namespace DAboneTakip.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 string a = this.User.Identity.Name;
-                int uid = c.Admins.Where(x => x.KullaniciAD == a).Select(x => x.ID).FirstOrDefault();
-                _CurrentUserRole = c.Admins.Where(x => x.KullaniciAD == a).Select(x => x.Rol).FirstOrDefault(); //giriş ypamış kullanıcının rolünü alır
+                int uid = c.Admins
+                    .Where(x => x.KullaniciAD == a)
+                    .Select(x => x.ID)
+                    .FirstOrDefault();
+                _CurrentUserRole = c.Admins
+                    .Where(x => x.KullaniciAD == a)
+                    .Select(x => x.Rol)
+                    .FirstOrDefault(); //giriş yapmış kullanıcının rolünü alır
                 ViewBag.UID = uid;
                 return uid;
             }
@@ -106,7 +111,7 @@ namespace DAboneTakip.Controllers
         [Authorize(Roles = "O")]
         public IActionResult Adminler()
         {
-            //siteye erişimi olan olmayan tüm hesapların listesi düzenleme silme ve bilgileri görme işlemlerini sadece Owner rolü olan kişi yapabilir.
+            //Owner rolünde olmayan hesapları viewe yollar
             var degerler = c.Admins
                 .Where(x=> x.Rol != "O")
                 .ToList();
@@ -185,20 +190,25 @@ namespace DAboneTakip.Controllers
         public IActionResult Duzenle(Admin a)
         {
             bool CheckSpace = false;
-            if (a.KullaniciAD != null)
+            if (a.KullaniciAD != null) //kullanıcıadı null değilse trim uygulayıp boşluk içeriyor mu kontrolü
             {
-                CheckSpace = a.KullaniciAD.Contains(" ");
                 a.KullaniciAD = a.KullaniciAD.Trim().ToLower();
+                CheckSpace = a.KullaniciAD.Contains(" ");                
             }
-            if (a.Sifre != null)
+            if (a.Sifre != null) //şifre null değilse trim uygulayıp boşluk içeriyor mu kontrolü
             {
                 a.Sifre = a.Sifre.Trim();
                 CheckSpace = a.Sifre.Contains(" ");
             }
-            bool CheckIfUserExist = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD && x.ID != a.ID).Count() != 0; //kullanıcı adı varmı kontrolü
-            bool CheckChanges = c.Admins.Where(x => x.KullaniciAD == a.KullaniciAD && x.Sifre == a.Sifre && x.Rol == a.Rol).Count() != 0; //değişiklik kontrolü
+            //kullanıcı adı var mı kontrolü
+            bool CheckIfUserExist = c.Admins
+                .Where(x => x.KullaniciAD == a.KullaniciAD && x.ID != a.ID)
+                .Count() != 0; 
+            //değişiklik yapıldı mı kontrolü
+            bool CheckChanges = c.Admins
+                .Where(x => x.KullaniciAD == a.KullaniciAD && x.Sifre == a.Sifre && x.Rol == a.Rol)
+                .Count() != 0;
             //yukarıdaki validationların uyarıları viewe yollanır
-
             if (CheckSpace) ModelState.AddModelError("", "Kullanıcı adı ve şifre boşluk içeremez.");
             else if(CheckIfUserExist) ModelState.AddModelError("", "Bu kullanıcı adı zaten kullanılıyor.");
             else if (CheckChanges) ModelState.AddModelError("", "Düzenleme yapmadınız.");
@@ -208,6 +218,7 @@ namespace DAboneTakip.Controllers
                 c.SaveChanges();
                 return RedirectToAction("Adminler");
             }
+            ViewBag._CurrentUserID = a.ID;
             return View("Duzenle", c.Admins.Find(a.ID));
         }
 

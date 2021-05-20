@@ -6,8 +6,6 @@ namespace DergiAboneProje.Models
 {
     public class Kategoriler
     {
-
-
         [Key]
         public int KategoriID { get; set; }
 
@@ -18,7 +16,6 @@ namespace DergiAboneProje.Models
         [MaxLength(50, ErrorMessage = "Kategori adı en az 3 en fazla 50 haneli olabilir.")]
         
         public string KategoriAD { get; set; }
-
 
         public IList<Dergiler> Dergilers { get; set; }
     }

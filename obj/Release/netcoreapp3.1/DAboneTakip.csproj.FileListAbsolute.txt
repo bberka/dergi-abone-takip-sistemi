@@ -158,7 +158,6 @@ C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\Razor\Views\Dergi\Ekle.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\Razor\Views\Dergi\Liste.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
-C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\Razor\Views\Kategori\Detay.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\Razor\Views\Kategori\Duzenle.cshtml.g.cs
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\Razor\Views\Kategori\Ekle.cshtml.g.cs

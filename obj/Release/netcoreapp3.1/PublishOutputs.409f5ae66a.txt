@@ -14,8 +14,6 @@ C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\js\datatable.js
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\js\fajs.js
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\js\site.js
-C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\lib\air-datepicker\css\datepicker.min.css
-C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\lib\air-datepicker\js\datepicker.min.js
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\lib\bootstrap-datepicker\css\bootstrap-datepicker.min.css
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\lib\bootstrap-datepicker\js\bootstrap-datepicker.min.js
 C:\Users\berka\source\repos\dergi-abone-takip-sistemi\obj\Release\netcoreapp3.1\PubTmp\Out\wwwroot\lib\bootstrap-datepicker\locales\bootstrap-datepicker.tr.min.js

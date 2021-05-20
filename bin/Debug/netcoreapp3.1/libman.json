@@ -21,15 +21,7 @@
     {
       "library": "twitter-bootstrap@4.6.0",
       "destination": "wwwroot/twitter-bootstrap/"
-    },
-    {
-      "library": "air-datepicker@2.2.3",
-      "destination": "wwwroot/lib/air-datepicker/",
-      "files": [
-        "js/datepicker.min.js",
-        "css/datepicker.min.css"
-      ]
-    },
+    }, 
     {
       "library": "bootstrap-datepicker@1.9.0",
       "destination": "wwwroot/bootstrap-datepicker/",

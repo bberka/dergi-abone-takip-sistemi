@@ -43,12 +43,11 @@ namespace DergiAboneProje.Controllers
             }
             return NoContent();
         }
-        public IActionResult Iptal(int id)
+        public IActionResult Iptal(int id) //iptal işlemi
         {
             var abn = c.Aboneliklers.Find(id);
             //pasif abonelik kontrolü bu işlem sadece aktif aboneliklere yapılabilir arayüz buna zaten izin vermiyor ama url ile de işlem engellendi
-            bool CheckPasifAbonelik = c.Aboneliklers.Where(x => x.KayıtID == id && x.KayıtTarihi.AddDays(x.KayıtSuresiGun - 1) < DateTime.Now).Count() != 0; 
-            
+            bool CheckPasifAbonelik = c.Aboneliklers.Where(x => x.KayıtID == id && x.KayıtTarihi.AddDays(x.KayıtSuresiGun - 1) < DateTime.Now).Count() != 0;             
             if (CheckPasifAbonelik) return RedirectToAction("Liste");
             else if(ModelState.IsValid)
             {
@@ -101,7 +100,9 @@ namespace DergiAboneProje.Controllers
         {
             bool CheckAboneSuresi = b.KayıtSuresiAy > 24 || b.KayıtSuresiAy < 1; //girilien ay verisinin kontrolü            
             //aktif abonelik verisi kontrolü ve idsi
-            var ActiveAbonelik = c.Aboneliklers.Where(x => x.UyeID == b.UyeID && x.DergiID == b.DergiID && x.KayıtTarihi.AddDays(x.KayıtSuresiGun - 2).Date >= DateTime.Now.Date);
+            var ActiveAbonelik = c.Aboneliklers
+                .Where(x => x.UyeID == b.UyeID && x.DergiID == b.DergiID && x.KayıtTarihi
+                .AddDays(x.KayıtSuresiGun - 2).Date >= DateTime.Now.Date);
             bool CheckActiveAbonelik = ActiveAbonelik.Count() != 0;            
             //yukarıdaki kontrollerin validtion uyarıları
             if (CheckActiveAbonelik)
@@ -133,7 +134,8 @@ namespace DergiAboneProje.Controllers
         public IActionResult Duzenle(int id)
         {
             //bitmiş abonelikler düzenlenemez
-            bool CheckPasifAbonelik = c.Aboneliklers.Where(x => x.KayıtID == id && x.KayıtTarihi.AddDays(x.KayıtSuresiGun - 1) < DateTime.Now).Count() != 0;
+            bool CheckPasifAbonelik = c.Aboneliklers
+                .Where(x => x.KayıtID == id && x.KayıtTarihi.AddDays(x.KayıtSuresiGun - 1) < DateTime.Now).Count() != 0;
             if (CheckPasifAbonelik) return RedirectToAction("Liste");            
             GetUye_DergiIDsList(); 
             var abone = c.Aboneliklers.Find(id);
@@ -148,9 +150,13 @@ namespace DergiAboneProje.Controllers
             bool CheckAboneSuresi = b.KayıtSuresiAy > 24 || b.KayıtSuresiAy < 1; //girilien ay verisinin kontrolü
             b.KayıtSuresiGun =  b.KayıtSuresiAy * 30;
             //aktif abonelik verisi kontrolü ve idsi
-            var ActiveAbonelik = c.Aboneliklers.Where(x => x.UyeID == b.UyeID && x.DergiID == b.DergiID && x.KayıtID != b.KayıtID && x.KayıtTarihi.AddDays(x.KayıtSuresiGun - 2).Date >= DateTime.Now.Date);
+            var ActiveAbonelik = c.Aboneliklers
+                .Where(x => x.UyeID == b.UyeID && x.DergiID == b.DergiID && x.KayıtID != b.KayıtID && x.KayıtTarihi
+                .AddDays(x.KayıtSuresiGun - 2).Date >= DateTime.Now.Date);
             bool CheckActiveAbonelik = ActiveAbonelik.Count() != 0;
-            bool ChangesNotMade = c.Aboneliklers.Where(x => x.KayıtID == b.KayıtID && x.KayıtSuresiAy == b.KayıtSuresiAy && x.DergiID == b.DergiID && x.UyeID == b.UyeID).Count() != 0;
+            bool ChangesNotMade = c.Aboneliklers
+                .Where(x => x.KayıtID == b.KayıtID && x.KayıtSuresiAy == b.KayıtSuresiAy && x.DergiID == b.DergiID && x.UyeID == b.UyeID)
+                .Count() != 0;
 
             //yukarıdaki kontrollerin validtion uyarıları
             if (CheckActiveAbonelik) 
@@ -164,7 +170,10 @@ namespace DergiAboneProje.Controllers
             {
                 try //veritabanı işlemleri
                 {
-                    b.ToplamUcret = c.Dergilers.Where(x => x.DergiID == b.DergiID).Select(x => x.AylikUcret).FirstOrDefault() * b.KayıtSuresiAy;
+                    b.ToplamUcret = c.Dergilers
+                        .Where(x => x.DergiID == b.DergiID)
+                        .Select(x => x.AylikUcret)
+                        .FirstOrDefault() * b.KayıtSuresiAy;
                     b.KayıtSuresiGun = b.KayıtSuresiAy * 30; //kayıt süresi gün tanımlanıyor
                     c.Aboneliklers.Update(b);
                     c.SaveChanges();                   
